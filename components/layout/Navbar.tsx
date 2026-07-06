@@ -122,7 +122,7 @@ export default function Navbar() {
               <Link href="/" className="flex items-center gap-4">
                 <Image 
                   src="/LOGO-TLT.png" 
-                  alt="THANA GROUP Logo" 
+                  alt="/LOGO-TLT.png" 
                   width={240} 
                   height={60} 
                   className="h-10 md:h-12 lg:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
