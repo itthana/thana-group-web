@@ -121,7 +121,7 @@ export default function Navbar() {
             <div className="flex-shrink-0 flex items-center cursor-pointer group">
               <Link href="/" className="flex items-center gap-4">
                 <Image 
-                  src="/logo.png" 
+                  src="/LOGO-TLT.png" 
                   alt="THANA GROUP Logo" 
                   width={240} 
                   height={60} 
