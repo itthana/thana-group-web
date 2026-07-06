@@ -22,7 +22,7 @@ export default function HomePage() {
         <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-fixed bg-no-repeat transform scale-105 animate-slow-zoom"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')" }}
+            style={{ backgroundImage: "url('green-hub.jpeg')" }}
           ></div>
           
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/90 via-gray-900/60 to-gray-900/90"></div>
