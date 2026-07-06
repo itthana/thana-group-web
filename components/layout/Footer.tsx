@@ -21,8 +21,8 @@ export default function Footer() {
             <div className="bg-white inline-block p-3 rounded-xl shadow-md">
               {/* ถ้ามี Logo สีขาวสำหรับพื้นหลังเข้ม สามารถเปลี่ยน src ตรงนี้ได้ครับ */}
               <Image 
-                src="/logo.png" 
-                alt="THANA GROUP Logo" 
+                src="LOGO-TLT.png" 
+                alt="LOGO-TLT.png" 
                 width={180} 
                 height={45} 
                 className="h-10 w-auto object-contain"
