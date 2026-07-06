@@ -31,10 +31,10 @@ export default function TributeModal() {
         <div className="mb-10 p-2 bg-gradient-to-b from-gray-600 to-gray-800 rounded-sm shadow-2xl">
           <div className="border border-gray-400 p-1 bg-black">
             <img 
-              src="royal-portrait.png" 
-              alt="พระรูป" 
-              className="w-full max-w-[280px] md:max-w-[320px] h-auto object-cover grayscale"
-            />
+  src="/royal-portrait.png" 
+  alt="พระรูป" 
+  className="w-full max-w-[280px] md:max-w-[320px] h-auto object-cover grayscale"
+/>
           </div>
         </div>
 
