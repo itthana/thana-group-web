@@ -79,14 +79,13 @@ export default function Navbar() {
       {/* Live Logistics Updates (Top Bar) */}
       <div className="hidden lg:flex bg-gray-900 text-gray-300 text-xs py-2 px-4 sm:px-6 lg:px-8 justify-between items-center border-b border-gray-800 shadow-inner relative">
         <div className="flex items-center gap-4 overflow-hidden w-2/3">
-          <span className="text-thana-red font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-2">
+          <span className="text-[#ff0000] font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-2">
             <i className="fas fa-broadcast-tower animate-pulse"></i> Live Updates:
           </span>
           
-          {/* กล่องตัวหนังสือวิ่ง (มี Gradient บังขอบซ้าย-ขวาให้ดูเนียนตา) */}
+          {/* กล่องตัวหนังสือวิ่ง */}
           <div className="overflow-hidden flex-grow relative h-4 w-full" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}>
             <div className="animate-marquee gap-10 cursor-default">
-              {/* วางข้อมูล 2 ชุดต่อกันเพื่อให้วิ่งวนลูปได้เนียนๆ */}
               <div className="flex gap-10 items-center">{tickerItems}</div>
               <div className="flex gap-10 items-center pl-10">{tickerItems}</div>
             </div>
@@ -117,7 +116,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             
-            {/* Logo */}
+            {/* Logo & ขนส่งด่วน ไทย-ลาว (อัปเดตขนาดใหญ่และพรีเมียมขึ้น) */}
             <div className="flex-shrink-0 flex items-center cursor-pointer group">
               <Link href="/" className="flex items-center gap-4">
                 <Image 
@@ -128,7 +127,7 @@ export default function Navbar() {
                   className="h-10 md:h-12 lg:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   priority 
                 />
-           {/* ข้อความข้างโลโก้ (ปรับให้ใหญ่และพรีเมียมขึ้น) */}
+                {/* ข้อความข้างโลโก้ */}
                 <div className="hidden sm:flex items-center ml-2">
                   <div className="h-12 w-[2px] bg-gray-300 mr-4 rounded-full"></div>
                   <div className="flex flex-col justify-center select-none">
@@ -140,80 +139,85 @@ export default function Navbar() {
                     </span>
                   </div>
                 </div>
+              </Link>
+            </div>
 
             {/* Menu Links (Desktop with Dropdowns) */}
             <div className="hidden lg:flex space-x-6 xl:space-x-8 items-center h-full">
               
-              <Link href="/" className="text-thana-blue hover:text-thana-red font-bold transition-colors text-sm uppercase tracking-wider py-6">หน้าแรก</Link>
+              <Link href="/" className="text-[#0a2540] hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider py-6">หน้าแรก</Link>
               
               {/* Dropdown 1: รู้จักองค์กร */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-gray-600 group-hover:text-thana-red font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
+                <div className="text-gray-600 group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
                   องค์กร <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
-                  <Link href="/about" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">ประวัติบริษัท</Link>
-                  <Link href="/executives" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">ทีมผู้บริหารระดับสูง (Executives)</Link>
-                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">บริษัทในเครือ (Our Group)</Link>
+                  <Link href="/about" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ประวัติบริษัท</Link>
+                  <Link href="/branches" className="px-5 py-2.5 text-sm font-bold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2">
+                    <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
+                  </Link>
+                  <Link href="/executives" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมผู้บริหารระดับสูง</Link>
+                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">บริษัทในเครือ</Link>
                   
                   {/* ลิงก์ธุรกิจ CC1971 */}
                   <Link href="/other-ventures" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                     <i className="fas fa-coffee text-amber-500"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
                   
-                  <Link href="/ceo-message" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">สารจากผู้บริหาร</Link>
-                  <Link href="/sales" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">ทีมที่ปรึกษาด้านการขาย</Link>
-                  <Link href="/careers" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">ร่วมงานกับเรา</Link>
-                  <Link href="/testimonials" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">เสียงตอบรับจากพันธมิตร</Link>
+                  <Link href="/ceo-message" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">สารจากผู้บริหาร</Link>
+                  <Link href="/sales" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมที่ปรึกษาด้านการขาย</Link>
+                  <Link href="/careers" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ร่วมงานกับเรา</Link>
+                  <Link href="/testimonials" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">เสียงตอบรับจากพันธมิตร</Link>
                 </div>
               </div>
 
               {/* Dropdown 2: ธุรกิจและบริการ */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-gray-600 group-hover:text-thana-red font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
+                <div className="text-gray-600 group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
                   บริการ <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-48 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
-                  <Link href="/#business-units" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">กลุ่มธุรกิจ</Link>
-                  <Link href="/services" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">บริการโลจิสติกส์</Link>
+                  <Link href="/#business-units" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">กลุ่มธุรกิจ</Link>
+                  <Link href="/services" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">บริการโลจิสติกส์</Link>
                   <Link href="/green-logistics" className="px-5 py-2.5 text-sm font-bold text-green-600 hover:text-green-700 hover:bg-green-50 flex items-center gap-2"><i className="fas fa-leaf"></i> รักษ์โลก (Green)</Link>
                 </div>
               </div>
 
               {/* Dropdown 3: ศูนย์ข้อมูล */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-gray-600 group-hover:text-thana-red font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
+                <div className="text-gray-600 group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
                   ข้อมูล <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-56 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
-                  <Link href="/news" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">ข่าวสารและกิจกรรม</Link>
-                  <Link href="/knowledge-hub" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">คลังความรู้</Link>
-                  <Link href="/customs-documents" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">ศูนย์เอกสารศุลกากร</Link>
-                  <Link href="/faq" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-thana-blue hover:bg-gray-50">คำถามที่พบบ่อย (FAQ)</Link>
+                  <Link href="/news" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ข่าวสารและกิจกรรม</Link>
+                  <Link href="/knowledge-hub" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">คลังความรู้</Link>
+                  <Link href="/customs-documents" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ศูนย์เอกสารศุลกากร</Link>
+                  <Link href="/faq" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">คำถามที่พบบ่อย (FAQ)</Link>
                 </div>
               </div>
 
-              {/* ปุ่ม Gallery (เพิ่มใหม่) */}
-              <Link href="/gallery" className="text-thana-blue hover:text-thana-red font-bold transition-colors text-sm uppercase tracking-wider py-6">บรรยากาศการทำงาน</Link>
+              {/* ปุ่ม Gallery */}
+              <Link href="/gallery" className="text-[#0a2540] hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider py-6">บรรยากาศการทำงาน</Link>
               
               {/* ส่วนติดต่อด่วน (Hotline & Contact Button) */}
               <div className="flex items-center pl-6 border-l border-gray-200 gap-6">
                 
                 {/* Hotline */}
                 <div className="hidden xl:flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-thana-red shrink-0 relative">
-                    <div className="absolute inset-0 rounded-full bg-thana-red opacity-20 animate-ping"></div>
+                  <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#ff0000] shrink-0 relative">
+                    <div className="absolute inset-0 rounded-full bg-[#ff0000] opacity-20 animate-ping"></div>
                     <i className="fas fa-headset text-lg relative z-10"></i>
                   </div>
                   <div className="flex flex-col justify-center">
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">24/7 Hotline <span className="text-thana-red font-medium">• เปิดบริการทุกวัน</span></span>
-                    <a href="tel:0930237931" className="text-thana-blue font-black text-base leading-none hover:text-thana-red transition-colors tracking-wide">
+                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">24/7 Hotline <span className="text-[#ff0000] font-medium">• เปิดบริการทุกวัน</span></span>
+                    <a href="tel:0930237931" className="text-[#0a2540] font-black text-base leading-none hover:text-[#ff0000] transition-colors tracking-wide">
                       093-023-7931
                     </a>
                   </div>
                 </div>
 
-                <Link href="/contact" className="bg-thana-red hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-none transition-colors text-sm uppercase shadow-md square-box btn-shine">
+                <Link href="/contact" className="bg-[#ff0000] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-none transition-colors text-sm uppercase shadow-md square-box btn-shine">
                   ติดต่อเรา
                 </Link>
               </div>
@@ -222,7 +226,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center gap-4">
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-thana-blue hover:text-thana-red focus:outline-none p-2 cursor-pointer">
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-[#0a2540] hover:text-[#ff0000] focus:outline-none p-2 cursor-pointer">
                 <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
               </button>
             </div>
@@ -234,17 +238,16 @@ export default function Navbar() {
           <div className="lg:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full max-h-[80vh] overflow-y-auto">
             <div className="px-6 pt-4 pb-8 flex flex-col gap-6">
               
-              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-thana-blue">หน้าแรก</Link>
-              
-              {/* ปุ่ม Gallery สำหรับมือถือ (เพิ่มใหม่) */}
-              <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-thana-blue">บรรยากาศการทำงาน</Link>
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-[#0a2540]">หน้าแรก</Link>
+              <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-[#0a2540]">บรรยากาศการทำงาน</Link>
               
               <div>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">รู้จักองค์กร</h3>
                 <div className="flex flex-col gap-3 pl-4 border-l-2 border-gray-100">
                   <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ประวัติบริษัท</Link>
-                  <Link href="/executives" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมผู้บริหาร (Executives)</Link>
-                  <Link href="/group-companies" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">บริษัทในเครือ (Our Group)</Link>
+                  <Link href="/branches" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-[#ff0000]"><i className="fas fa-map-location-dot"></i> สาขาของเรา</Link>
+                  <Link href="/executives" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมผู้บริหารระดับสูง</Link>
+                  <Link href="/group-companies" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">บริษัทในเครือ</Link>
                   
                   {/* ลิงก์ธุรกิจ CC1971 */}
                   <Link href="/other-ventures" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-amber-700 flex items-center gap-2">
@@ -252,7 +255,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link href="/ceo-message" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">สารจากผู้บริหาร</Link>
-                  <Link href="/sales" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมขาย</Link>
+                  <Link href="/sales" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมที่ปรึกษาด้านการขาย</Link>
                   <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ร่วมงานกับเรา</Link>
                   <Link href="/testimonials" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">เสียงตอบรับจากพันธมิตร</Link>
                 </div>
@@ -278,16 +281,16 @@ export default function Navbar() {
 
               {/* Mobile Hotline Box */}
               <div className="bg-red-50/50 rounded-xl p-4 mt-2 border border-red-100 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-thana-red shadow-sm shrink-0">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#ff0000] shadow-sm shrink-0">
                   <i className="fas fa-headset"></i>
                 </div>
                 <div>
                   <div className="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-0.5">Hotline 24 Hrs. <span className="text-gray-500 font-medium">• เปิดบริการทุกวัน</span></div>
-                  <a href="tel:0930237931" className="text-lg font-black text-thana-blue">093-023-7931</a>
+                  <a href="tel:0930237931" className="text-lg font-black text-[#0a2540]">093-023-7931</a>
                 </div>
               </div>
 
-              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="bg-thana-red text-center text-white font-bold py-3 px-6 rounded-lg">
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="bg-[#ff0000] text-center text-white font-bold py-3 px-6 rounded-lg">
                 ติดต่อเรา
               </Link>
             </div>
