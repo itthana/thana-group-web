@@ -1,11 +1,11 @@
 'use client';
 
-import TributeModal from '@/components/layout/TributeModal';
+import { useState, useEffect } from 'react';
 
 export default function TributeModal() {
   const [showTribute, setShowTribute] = useState(false);
 
-  // สั่งให้โชว์ทันทีเมื่อโหลดเว็บเสร็จ โดยไม่ต้องเช็กเงื่อนไขใดๆ
+  // สั่งให้โชว์ทันทีเมื่อโหลดเว็บเสร็จ
   useEffect(() => {
     setShowTribute(true);
     document.body.style.overflow = 'hidden';
