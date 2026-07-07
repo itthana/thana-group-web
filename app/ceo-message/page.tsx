@@ -1,93 +1,103 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
+
+export const metadata: Metadata = {
+  title: 'สารจากผู้บริหาร | THANA GROUP',
+  description: 'วิสัยทัศน์และทิศทางการดำเนินธุรกิจจากผู้บริหารระดับสูง กลุ่มบริษัท THANA GROUP',
+};
 
 export default function CeoMessagePage() {
   return (
     <>
       <Navbar />
       
-      <main className="min-h-screen bg-slate-50 pt-36 pb-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Header Section */}
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-            <h4 className="text-thana-red font-black tracking-widest uppercase mb-2 text-sm">Message From CEO</h4>
-            <h1 className="text-3xl md:text-5xl font-black text-thana-blue mb-6">สารจากผู้บริหาร</h1>
-            <div className="h-1 w-24 bg-thana-red mx-auto rounded-full mb-6"></div>
+      <main className="min-h-screen bg-slate-50 pt-20 pb-20 font-prompt">
+        
+        {/* =========================================
+            จุดที่ 1: รูปภาพพื้นหลังส่วนหัว (Hero Banner) 
+            เปลี่ยนลิงก์ตรง url('...') ให้เป็นรูปบริษัทหรือลวดลายที่ต้องการ
+        ========================================= */}
+        <section 
+          className="relative h-[250px] md:h-[300px] flex items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop')" }}
+        >
+          <div className="absolute inset-0 bg-[#0a2540]/90"></div>
+          <div className="relative z-10 text-center px-4 animate-fade-in">
+            <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-wider drop-shadow-md">
+              สารจากผู้บริหาร
+            </h1>
+            <div className="h-1 w-16 bg-[#ff0000] mx-auto rounded-full mb-4"></div>
+            <p className="text-gray-300 text-sm tracking-widest uppercase">
+              Message from CEO
+            </p>
           </div>
+        </section>
 
-          {/* Content Section (Executive Layout) */}
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative">
-            {/* Background Pattern อ่อนๆ */}
-            <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none text-9xl text-thana-blue">
-              <i className="fas fa-quote-right"></i>
-            </div>
-
-            <div className="flex flex-col lg:flex-row">
+        {/* ส่วนเนื้อหาหลัก */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="flex flex-col md:flex-row">
               
-              {/* รูปภาพผู้บริหาร (ฝั่งซ้าย) */}
-              <div className="lg:w-2/5 relative">
-                <div className="aspect-[3/4] lg:aspect-auto lg:h-full relative overflow-hidden">
-                  <img 
-                    src="ceo.png" 
-                    alt="CEO of THANA GROUP" 
-                    className="w-full h-full object-cover object-top"
-                  />
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent lg:hidden"></div>
+              {/* =========================================
+                  จุดที่ 2: รูปภาพผู้บริหาร (CEO Portrait)
+                  เปลี่ยน src="..." เป็นชื่อไฟล์รูปผู้บริหารของคุณ (เช่น src="/ceo-profile.jpg")
+              ========================================= */}
+              <div className="md:w-2/5 bg-gray-100 relative">
+                <img 
+                  src="ประธาน.jpg" 
+                  alt="CEO THANA GROUP" 
+                  className="w-full h-[400px] md:h-full object-cover object-top"
+                />
+                {/* แถบชื่อและตำแหน่ง (แสดงทับบนรูปมุมล่าง) */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a2540] to-transparent p-6 pt-16 text-white text-center md:text-left">
+                  <h3 className="text-xl font-bold mb-1">คุณชื่อ นามสกุล</h3>
+                  <p className="text-sm text-[#ff0000] font-medium tracking-wider">ประธานเจ้าหน้าที่บริหาร (CEO)</p>
                 </div>
               </div>
 
-              {/* ข้อความสารจากผู้บริหาร (ฝั่งขวา) */}
-              <div className="lg:w-3/5 p-8 md:p-12 lg:p-16 relative z-10 flex flex-col justify-center">
+              {/* ส่วนเนื้อหาสารจากผู้บริหาร */}
+              <div className="md:w-3/5 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                <i className="fas fa-quote-left text-4xl text-gray-200 mb-6"></i>
                 
-                <i className="fas fa-quote-left text-4xl text-thana-red/20 mb-6"></i>
+                <h2 className="text-2xl md:text-3xl font-bold text-[#0a2540] mb-6 leading-tight">
+                  "เรามุ่งมั่นที่จะเป็นฟันเฟืองสำคัญ <br className="hidden lg:block" />
+                  ในการขับเคลื่อนความสำเร็จของธุรกิจคุณ"
+                </h2>
                 
-                <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 leading-snug">
-                  "เราไม่ได้เป็นเพียงผู้ให้บริการขนส่ง<br />
-                  แต่เราคือ <span className="text-thana-blue">พันธมิตรที่ขับเคลื่อนธุรกิจของคุณ</span><br />
-                  ให้ก้าวข้ามทุกข้อจำกัด"
-                </h3>
-                
-                <div className="space-y-5 text-gray-600 leading-relaxed text-lg mb-10">
+                <div className="space-y-4 text-gray-600 text-sm md:text-base leading-relaxed mb-8">
                   <p>
-                    ตลอดระยะเวลากว่า 20 ปีที่ผ่านมา THANA GROUP ได้มุ่งมั่นพัฒนาศักยภาพการให้บริการโลจิสติกส์อย่างไม่หยุดยั้ง จากจุดเริ่มต้นเล็กๆ สู่การเป็นผู้นำด้านการขนส่งข้ามแดน ไทย-ลาว เราเผชิญกับความท้าทายและการเปลี่ยนแปลงของโลกธุรกิจมามากมาย แต่สิ่งหนึ่งที่ไม่เคยเปลี่ยนคือ <strong>"ความมุ่งมั่นที่จะส่งมอบบริการที่ดีที่สุด"</strong> ให้กับลูกค้าของเรา
+                    ตลอดระยะเวลากว่า 20 ปีที่ผ่านมา กลุ่มบริษัท THANA GROUP ได้เติบโตเคียงคู่กับความสำเร็จของพันธมิตรทางธุรกิจของเรา 
+                    จากจุดเริ่มต้นเล็กๆ สู่วันนี้ที่เราก้าวขึ้นเป็นผู้นำด้านบริการโลจิสติกส์และการขนส่งสินค้าระหว่างประเทศแบบครบวงจร
                   </p>
                   <p>
-                    ในยุคที่เทคโนโลยีเข้ามามีบทบาทสำคัญ เราได้ลงทุนพัฒนาระบบเทคโนโลยีสารสนเทศ ทั้งระบบติดตามรถขนส่ง (GPS Tracking) และระบบบริหารจัดการคลังสินค้า (WMS) เพื่อให้ทุกๆ การเคลื่อนย้ายสินค้าของคุณมีความโปร่งใส แม่นยำ และตรวจสอบได้แบบ Real-time
+                    ในโลกธุรกิจที่เปลี่ยนแปลงอย่างรวดเร็ว เราไม่เคยหยุดนิ่งที่จะพัฒนาระบบนิเวศการขนส่ง นำเทคโนโลยีที่ทันสมัยเข้ามาปรับใช้ 
+                    รวมถึงการให้ความสำคัญกับสิ่งแวดล้อม (Green Logistics) เพื่อส่งมอบบริการที่รวดเร็ว ปลอดภัย และคุ้มค่าที่สุดให้กับทุกท่าน
                   </p>
                   <p>
-                    ผมขอขอบพระคุณลูกค้าและพันธมิตรทุกท่านที่ให้ความไว้วางใจ THANA GROUP เสมอมา เราจะยังคงยึดมั่นในมาตรฐานสากล พัฒนาบุคลากร และยกระดับบริการของเราต่อไป เพื่อให้คุณมั่นใจได้ว่า ทุกๆ ความสำเร็จของคุณ จะมีเราเป็นส่วนหนึ่งในการขับเคลื่อนอยู่เบื้องหลังเสมอ
+                    ในนามของผู้บริหารและทีมงาน THANA GROUP ขอขอบพระคุณลูกค้าและพันธมิตรทุกท่านที่ให้ความไว้วางใจเราเสมอมา 
+                    เราขอคำมั่นสัญญาว่าจะรักษามาตรฐาน และพัฒนาบริการให้ดียิ่งขึ้นต่อไป
                   </p>
                 </div>
 
-                {/* ลายเซ็นและชื่อ */}
-                <div className="border-t border-gray-100 pt-8 mt-auto flex items-center gap-6">
-                  {/* รูปภาพลายเซ็น (Placeholder) */}
-                  <div className="w-32 h-auto opacity-70">
-                    <img 
-                      src="https://placehold.co/200x80/ffffff/0B308A?text=Signature" 
-                      alt="CEO Signature" 
-                      className="w-full h-auto"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900">นายธนาธิป กำลังเจริญ</h4>
-                    <p className="text-thana-red font-medium text-sm uppercase tracking-wider mt-1">
-                      ประธานกรรมการบริหาร (CEO)
-                    </p>
-                  </div>
+                {/* ส่วนลายเซ็น (ถ้ามีรูปภาพลายเซ็น สามารถนำมาใส่ตรงนี้ได้) */}
+                <div className="mt-auto pt-6 border-t border-gray-100">
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/commons/f/fa/John_Hancock_Signature.svg" 
+                    alt="Signature" 
+                    className="h-10 mb-2 opacity-60"
+                  />
+                  <div className="text-sm font-bold text-[#0a2540]">คุณชื่อ นามสกุล</div>
+                  <div className="text-xs text-gray-500">ประธานเจ้าหน้าที่บริหาร, กลุ่มบริษัท THANA GROUP</div>
                 </div>
 
               </div>
             </div>
           </div>
+        </section>
 
-        </div>
       </main>
-
+      
       <Footer />
     </>
   );
