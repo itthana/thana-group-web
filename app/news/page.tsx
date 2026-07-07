@@ -1,127 +1,151 @@
 'use client';
 
-import Navbar from '../../components/layout/Navbar';
-import Footer from '../../components/layout/Footer';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 
-export default function NewsPage() {
-  // ข้อมูลจำลองข่าวสาร (Mock Data)
-  const newsList = [
-    {
-      id: 1,
-      title: 'THANA GROUP เปิดเส้นทางขนส่งใหม่ มุ่งสู่เวียงจันทน์เต็มรูปแบบ',
-      date: '5 กรกฎาคม 2026',
-      category: 'Company News',
-      excerpt: 'ขยายเครือข่ายการจัดส่งให้ครอบคลุมยิ่งขึ้น พร้อมเพิ่มรอบรถบรรทุกเพื่อรองรับการเติบโตของเศรษฐกิจข้ามแดน ไทย-ลาว อย่างยั่งยืน',
-      image: 'https://placehold.co/600x400/0B308A/ffffff?text=News+Update+01'
-    },
-    {
-      id: 2,
-      title: 'คว้ารางวัล "ผู้ให้บริการโลจิสติกส์ดีเด่น" ประจำปี 2026',
-      date: '28 มิถุนายน 2026',
-      category: 'Awards',
-      excerpt: 'ตอกย้ำความสำเร็จและความมุ่งมั่นในการส่งมอบบริการที่มีคุณภาพ ด้วยรางวัลระดับประเทศจากสมาคมผู้รับจัดการขนส่งสินค้าระหว่างประเทศ',
-      image: 'https://placehold.co/600x400/E53935/ffffff?text=Award+2026'
-    },
-    {
-      id: 3,
-      title: 'อัปเกรดระบบ WMS บริหารคลังสินค้าอัจฉริยะ แม่นยำ 99.9%',
-      date: '15 มิถุนายน 2026',
-      category: 'Technology',
-      excerpt: 'ยกระดับเทคโนโลยีคลังสินค้าด้วยระบบ WMS เวอร์ชันล่าสุด ช่วยให้พาร์ทเนอร์สามารถตรวจสอบสต๊อกสินค้าได้แบบ Real-time ตลอด 24 ชั่วโมง',
-      image: 'https://placehold.co/600x400/374151/ffffff?text=WMS+System'
-    },
-    {
-      id: 4,
-      title: 'กิจกรรม CSR ปลูกป่าชายเลน คืนความสมดุลสู่ธรรมชาติ',
-      date: '2 มิถุนายน 2026',
-      category: 'CSR',
-      excerpt: 'ทีมผู้บริหารและพนักงาน THANA GROUP ร่วมแรงร่วมใจปลูกป่าชายเลน ณ จังหวัดสมุทรสงคราม เพื่อตระหนักถึงความสำคัญของสิ่งแวดล้อม',
-      image: 'https://placehold.co/600x400/4CAF50/ffffff?text=CSR+Activity'
-    }
-  ];
+export default function HomePage() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   return (
     <>
       <Navbar />
       
-      <main className="min-h-screen bg-slate-50 pt-42 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="min-h-screen bg-slate-50 font-prompt">
+        
+        {/* =========================================
+            1. HERO SECTION (หน้าปกสุดพรีเมียม)
+        ========================================= */}
+        <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
+          {/* ภาพพื้นหลัง */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-fixed transform scale-105 animate-slow-zoom"
+            style={{ backgroundImage: "url('green-hub.jpeg')" }}
+          ></div>
           
-          {/* Header Section */}
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-            <h4 className="text-thana-red font-black tracking-widest uppercase mb-2 text-sm">Media Center</h4>
-            <h1 className="text-3xl md:text-5xl font-black text-thana-blue mb-6">ข่าวสารและกิจกรรม</h1>
-            <div className="h-1 w-24 bg-thana-red mx-auto rounded-full mb-6"></div>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              อัปเดตทุกความเคลื่อนไหว กิจกรรมองค์กร และเทรนด์ที่น่าสนใจในแวดวงโลจิสติกส์
+          {/* เลเยอร์สีเข้มไล่ระดับ (Gradient Overlay) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a2540]/90 via-[#0a2540]/60 to-[#0a2540]/95"></div>
+
+          {/* เนื้อหา Hero */}
+          <div className={`relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
+            
+            {/* ป้าย Tagline เรืองแสง */}
+            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-bold tracking-widest uppercase mb-8 shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+              <span className="flex gap-2 text-[#00e5ff]">
+                <i className="fas fa-ship"></i>
+                <i className="fas fa-plane"></i>
+                <i className="fas fa-train"></i>
+                <i className="fas fa-truck-fast"></i>
+              </span>
+              <span className="w-px h-4 bg-white/30 mx-1"></span>
+              Global Multimodal Logistics
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-6 drop-shadow-2xl tracking-wide">
+              ยกระดับธุรกิจคุณด้วย <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff0000] to-orange-500">
+                ขนส่งด่วน ไทย-ลาว
+              </span> ระดับสากล
+            </h1>
+            
+            <p className="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+              เชื่อมโยงเครือข่ายโลจิสติกส์อย่างไร้รอยต่อ พร้อมระบบติดตามสถานะแบบ Real-time 
+              และกองทัพรถบรรทุกพลังงานสะอาดที่ใหญ่ที่สุดในภูมิภาค
             </p>
+            
+            {/* ปุ่ม Call to action แบบมีมิติ */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Link href="/services" className="bg-[#ff0000] hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 shadow-[0_10px_25px_-5px_rgba(255,0,0,0.5)] hover:shadow-[0_15px_35px_-5px_rgba(255,0,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3 text-lg">
+                สำรวจบริการ <i className="fas fa-arrow-right"></i>
+              </Link>
+              <Link href="/contact" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3 text-lg">
+                <i className="fas fa-headset text-[#00e5ff]"></i> ติดต่อที่ปรึกษา
+              </Link>
+            </div>
           </div>
 
-          {/* News Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newsList.map((news) => (
-              <article key={news.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col">
-                
-                {/* รูปภาพ Thumbnail */}
-                <div className="relative aspect-video overflow-hidden bg-gray-200">
-                  <img 
-                    src={news.image} 
-                    alt={news.title} 
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  />
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-md text-xs font-bold text-thana-blue shadow-sm uppercase tracking-wider">
-                    {news.category}
-                  </div>
-                </div>
-
-                {/* เนื้อหาข่าว */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-2 text-xs font-medium text-gray-400 mb-3">
-                    <i className="far fa-calendar-alt"></i>
-                    <time>{news.date}</time>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 leading-snug group-hover:text-thana-red transition-colors line-clamp-2">
-                    {news.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                    {news.excerpt}
-                  </p>
-                  
-                  <div className="mt-auto pt-4 border-t border-gray-100">
-                    <Link href="#" className="inline-flex items-center gap-2 text-thana-blue font-bold text-sm group/btn">
-                      อ่านเพิ่มเติม <i className="fas fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
-                    </Link>
-                  </div>
-                </div>
-                
-              </article>
-            ))}
+          {/* สถิติแบบ Glassmorphism ลอยอยู่ด้านล่างจอ */}
+          <div className="absolute bottom-10 left-0 w-full z-20 px-4 hidden md:block">
+            <div className="max-w-5xl mx-auto bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-2xl grid grid-cols-4 gap-4 divide-x divide-white/20">
+              <div className="text-center px-4">
+                <div className="text-3xl font-black text-white mb-1">20<span className="text-[#ff0000]">+</span></div>
+                <div className="text-gray-300 text-xs font-bold uppercase tracking-wider">Years Experience</div>
+              </div>
+              <div className="text-center px-4">
+                <div className="text-3xl font-black text-white mb-1">10k<span className="text-[#ff0000]">+</span></div>
+                <div className="text-gray-300 text-xs font-bold uppercase tracking-wider">Trips Annually</div>
+              </div>
+              <div className="text-center px-4">
+                <div className="text-3xl font-black text-white mb-1">99<span className="text-[#ff0000]">%</span></div>
+                <div className="text-gray-300 text-xs font-bold uppercase tracking-wider">On-Time Delivery</div>
+              </div>
+              <div className="text-center px-4">
+                <div className="text-3xl font-black text-[#00c300] mb-1">100<span className="text-white">%</span></div>
+                <div className="text-gray-300 text-xs font-bold uppercase tracking-wider">EV Fleet Ready</div>
+              </div>
+            </div>
           </div>
+        </section>
 
-          {/* Pagination (ดีไซน์ไว้เผื่ออนาคต) */}
-          <div className="mt-16 flex justify-center items-center gap-2">
-            <button className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-thana-blue hover:text-white hover:border-thana-blue transition-colors disabled:opacity-50" disabled>
-              <i className="fas fa-chevron-left"></i>
-            </button>
-            <button className="w-10 h-10 rounded-lg bg-thana-blue text-white font-bold flex items-center justify-center shadow-md">
-              1
-            </button>
-            <button className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-thana-blue hover:text-white hover:border-thana-blue transition-colors font-bold">
-              2
-            </button>
-            <button className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-thana-blue hover:text-white hover:border-thana-blue transition-colors font-bold">
-              3
-            </button>
-            <button className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-thana-blue hover:text-white hover:border-thana-blue transition-colors">
-              <i className="fas fa-chevron-right"></i>
-            </button>
+        {/* =========================================
+            2. CORE SERVICES (บริการหลัก ดีไซน์การ์ดลอยตัว)
+        ========================================= */}
+        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30 -mt-10">
+          <div className="text-center mb-16">
+            <h4 className="text-[#ff0000] font-bold tracking-widest uppercase mb-2 text-sm">Our Expertise</h4>
+            <h2 className="text-3xl md:text-5xl font-black text-[#0a2540] mb-6">บริการโลจิสติกส์แบบครบวงจร</h2>
+            <div className="h-1.5 w-24 bg-[#ff0000] mx-auto rounded-full"></div>
           </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Service 1 */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 group">
+              <div className="w-16 h-16 rounded-2xl bg-[#0a2540]/5 text-[#0a2540] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-[#0a2540] group-hover:text-white transition-all duration-500">
+                <i className="fas fa-truck-fast"></i>
+              </div>
+              <h3 className="text-xl font-black text-gray-900 mb-3 group-hover:text-[#ff0000] transition-colors">Cross-Border Trucking</h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                ขนส่งทางบกข้ามแดน ไทย-ลาว ด้วยกองทัพรถบรรทุกและ EV Truck ตรวจสอบพิกัด GPS ได้ 24 ชม.
+              </p>
+            </div>
+            {/* Service 2 */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 group">
+              <div className="w-16 h-16 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-cyan-600 group-hover:text-white transition-all duration-500">
+                <i className="fas fa-ship"></i>
+              </div>
+              <h3 className="text-xl font-black text-gray-900 mb-3 group-hover:text-cyan-600 transition-colors">Ocean Freight</h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                ขนส่งทางทะเลระหว่างประเทศ ทั้งแบบ FCL และ LCL ครอบคลุมท่าเรือพาณิชย์หลักทั่วโลก
+              </p>
+            </div>
+            {/* Service 3 */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 group">
+              <div className="w-16 h-16 rounded-2xl bg-red-50 text-[#ff0000] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-[#ff0000] group-hover:text-white transition-all duration-500">
+                <i className="fas fa-plane"></i>
+              </div>
+              <h3 className="text-xl font-black text-gray-900 mb-3 group-hover:text-[#ff0000] transition-colors">Air Freight</h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                บริการขนส่งทางอากาศสำหรับสินค้าเร่งด่วน ประหยัดเวลา จัดการเอกสารและพิธีการครบวงจร
+              </p>
+            </div>
+            {/* Service 4 */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 group">
+              <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-500">
+                <i className="fas fa-train"></i>
+              </div>
+              <h3 className="text-xl font-black text-gray-900 mb-3 group-hover:text-amber-500 transition-colors">Rail Freight</h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                บริการขนส่งทางราง (รถไฟความเร็วสูง จีน-ลาว-ไทย) ประหยัดต้นทุน ขนส่งสินค้าปริมาณมหาศาล
+              </p>
+            </div>
+          </div>
+        </section>
 
-        </div>
       </main>
 
       <Footer />

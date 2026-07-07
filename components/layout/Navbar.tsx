@@ -128,15 +128,18 @@ export default function Navbar() {
                   className="h-10 md:h-12 lg:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   priority 
                 />
-                <div className="hidden sm:flex items-center">
-                  <div className="h-10 w-px bg-gray-200 mr-4"></div>
+           {/* ข้อความข้างโลโก้ (ปรับให้ใหญ่และพรีเมียมขึ้น) */}
+                <div className="hidden sm:flex items-center ml-2">
+                  <div className="h-12 w-[2px] bg-gray-300 mr-4 rounded-full"></div>
                   <div className="flex flex-col justify-center select-none">
-                    <span className="text-thana-blue font-black text-sm md:text-base leading-none tracking-wide mb-1.5 drop-shadow-sm">ขนส่งด่วน</span>
-                    <span className="bg-thana-red text-white font-bold text-[9px] md:text-[10px] leading-none tracking-[0.2em] px-1.5 py-0.5 rounded-sm uppercase text-center shadow-sm w-max">ไทย-ลาว</span>
+                    <span className="text-[#0a2540] font-black text-lg md:text-xl leading-none tracking-wide mb-1.5 drop-shadow-sm">
+                      ขนส่งด่วน
+                    </span>
+                    <span className="bg-[#ff0000] text-white font-bold text-xs md:text-sm leading-none tracking-[0.15em] px-3 py-1 rounded-md uppercase text-center shadow-md w-max">
+                      ไทย - ลาว
+                    </span>
                   </div>
                 </div>
-              </Link>
-            </div>
 
             {/* Menu Links (Desktop with Dropdowns) */}
             <div className="hidden lg:flex space-x-6 xl:space-x-8 items-center h-full">
