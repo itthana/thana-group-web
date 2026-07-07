@@ -103,7 +103,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navbar - เปลี่ยนจาก max-w-7xl เป็นแบบกว้างเต็มจอ (w-full) */}
+      {/* Main Navbar - กว้างเต็มจอ */}
       <nav className={`bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'shadow-sm py-3'}`}>
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 transition-all duration-300">
           <div className="flex justify-between items-center h-16">
@@ -113,16 +113,15 @@ export default function Navbar() {
               <Link href="/" className="flex items-center gap-4">
                 <Image 
                   src="/LOGO-TLT.png" 
-                  alt="/LOGO-TLT.png" 
+                  alt="THANA GROUP Logo" 
                   width={240} 
                   height={60} 
                   className="h-10 md:h-12 lg:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   priority 
                 />
-              {/* ข้อความข้างโลโก้ */}
                 <div className="hidden sm:flex items-center ml-2">
                   <div className="h-12 w-[2px] bg-gray-300 mr-4 rounded-full"></div>
-                  {/* เพิ่ม items-center เพื่อจัดกึ่งกลางแนวตั้ง */}
+                  {/* แก้ไขให้ข้อความอยู่กึ่งกลางด้วย items-center */}
                   <div className="flex flex-col justify-center items-center select-none">
                     <span className="text-[#0a2540] font-black text-lg md:text-xl leading-none tracking-wide mb-1.5 drop-shadow-sm text-center">
                       ขนส่งด่วน
@@ -132,6 +131,8 @@ export default function Navbar() {
                     </span>
                   </div>
                 </div>
+              </Link>
+            </div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex space-x-6 xl:space-x-8 items-center h-full">
