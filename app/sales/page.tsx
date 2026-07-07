@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 // ============================================================================
-// 📊 Data Structure: แยกข้อมูลออกมาเพื่อความสะอาดของโค้ด และรองรับ API ในอนาคต
+// 📊 Data Structure: ข้อมูลรายชื่อพนักงานแยกตามเขตการขาย (Actionable Links Ready)
 // ============================================================================
 const salesZones = [
   {
@@ -16,7 +16,7 @@ const salesZones = [
     title: 'เขต 1: อุบลราชธานี - ปากเซ',
     description: 'ศูนย์กลางโลจิสติกส์เชื่อมต่อภาคอีสานตอนล่างและลาวใต้',
     members: [
-      { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่าขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', email: 'somchai@thanagroup.com', image: 'แอมมี่' },
+      { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่ายขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', email: 'somchai@thanagroup.com', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop' }, // แอมมี่ (ใส่รูปจำลองไว้ให้ก่อนเพื่อไม่ให้พัง สามารถเปลี่ยน url รูปจริงได้ตรงนี้)
       { id: 2, name: 'คุณณัฐฐา จรรยากรณณ์', role: 'ฝ่ายขาย Telesales', tel: '0812345671', lineId: 'wipawee.sales', email: 'wipawee@thanagroup.com', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop' },
       { id: 3, name: 'คุณอุไรรักษ์ ปะพรม', role: 'เจ้าหน้าที่การขาย', tel: '0812345672', lineId: 'natthapon.t', email: 'natthapon@thanagroup.com', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop' },
       { id: 4, name: 'คุณสุวิมล  แต้มทา', role: 'เจ้าหน้าที่การขาย', tel: '0812345673', lineId: 'pornpan.sale', email: 'pornpan@thanagroup.com', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop' },
@@ -61,7 +61,7 @@ export default function SalesTeamPage() {
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=2000&auto=format&fit=crop')" }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a2540]/95 to-[#0a2540]/80"></div>
-          <div className="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in">
+          <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-wide drop-shadow-md">
               ทีมที่ปรึกษาด้านการขาย
             </h1>
@@ -79,8 +79,8 @@ export default function SalesTeamPage() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
           <div className="space-y-16">
             
-            {salesZones.map((zone, index) => (
-              <div key={zone.id} className="animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+            {salesZones.map((zone) => (
+              <div key={zone.id} className="transition-all duration-500">
                 
                 {/* หัวข้อเขตการขาย */}
                 <div className="bg-white rounded-2xl shadow-md p-6 md:p-8 mb-8 border-l-8 border-[#ff0000] flex flex-col md:flex-row md:items-center justify-between">
