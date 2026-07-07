@@ -72,8 +72,8 @@ export default function Navbar() {
         }
       `}} />
 
-      {/* Top Bar (Ticker & Login) */}
-      <div className="hidden lg:flex bg-gray-900 text-gray-300 text-xs py-2 px-4 sm:px-6 lg:px-8 justify-between items-center border-b border-gray-800 shadow-inner relative">
+      {/* Top Bar (Ticker & Login) - ขยายระยะขอบให้กว้างขึ้น */}
+      <div className="hidden lg:flex bg-gray-900 text-gray-300 text-xs py-2 px-4 sm:px-6 lg:px-12 xl:px-20 justify-between items-center border-b border-gray-800 shadow-inner relative transition-all duration-300">
         <div className="flex items-center gap-4 overflow-hidden w-2/3">
           <span className="text-[#ff0000] font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-2">
             <i className="fas fa-broadcast-tower animate-pulse"></i> Live Updates:
@@ -103,9 +103,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navbar - เปลี่ยนจาก max-w-7xl เป็นแบบกว้างเต็มจอ (w-full) */}
       <nav className={`bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'shadow-sm py-3'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 transition-all duration-300">
           <div className="flex justify-between items-center h-16">
             
             {/* Logo */}
@@ -145,15 +145,11 @@ export default function Navbar() {
                 </div>
                 <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
                   <Link href="/about" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ประวัติบริษัท</Link>
-                  
-                  {/* ====== เพิ่มเมนูสาขาของเราตรงนี้ ====== */}
                   <Link href="/branches" className="px-5 py-2.5 text-sm font-bold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
                   </Link>
-                  {/* ================================== */}
-
-                  <Link href="/executives" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมผู้บริหารระดับสูง (Executives)</Link>
-                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">บริษัทในเครือ (Our Group)</Link>
+                  <Link href="/executives" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมผู้บริหารระดับสูง</Link>
+                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">บริษัทในเครือ</Link>
                   <Link href="/other-ventures" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                     <i className="fas fa-coffee text-amber-500"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
@@ -234,13 +230,9 @@ export default function Navbar() {
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">รู้จักองค์กร</h3>
                 <div className="flex flex-col gap-3 pl-4 border-l-2 border-gray-100">
                   <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ประวัติบริษัท</Link>
-                  
-                  {/* ====== เมนูสาขาของเรา (Mobile) ====== */}
                   <Link href="/branches" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-[#ff0000] flex items-center gap-2 bg-red-50 p-2 rounded-md border-l-4 border-[#ff0000]">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
                   </Link>
-                  {/* ================================== */}
-
                   <Link href="/executives" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมผู้บริหารระดับสูง</Link>
                   <Link href="/group-companies" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">บริษัทในเครือ</Link>
                   <Link href="/other-ventures" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-amber-700 flex items-center gap-2">
