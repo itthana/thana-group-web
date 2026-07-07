@@ -5,6 +5,21 @@ import Link from 'next/link';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
+// ============================================================================
+// 📊 Data Structure: ข้อมูลพันธมิตรทางธุรกิจ (Partners) 
+// แนะนำให้บันทึกรูปโลโก้จริงไว้ในโฟลเดอร์ public/partners/ แล้วมาเปลี่ยนพาทตรงนี้ครับ
+// ============================================================================
+const partnersData = [
+  { id: 1, name: 'SCG Logistics', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=SCG+Logistics' },
+  { id: 2, name: 'Flash Express', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=Flash+Express' },
+  { id: 3, name: 'Kerry Logistics', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=Kerry+Logistics' },
+  { id: 4, name: 'J&T Express', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=J%26T+Express' },
+  { id: 5, name: 'Lao Logistics Group', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=Lao+Logistics' },
+  { id: 6, name: 'Vientiane Logistics Park', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=Vientiane+Logistics' },
+  { id: 7, name: 'HAL Logistics (Laos)', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=HAL+Logistics' },
+  { id: 8, name: 'WHA Group', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=WHA+Group' },
+];
+
 export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -18,9 +33,7 @@ export default function HomePage() {
       
       <main className="min-h-screen bg-slate-50 font-prompt overflow-hidden">
         
-        {/* =========================================
-            CSS Animations สำหรับหน้าแรก
-        ========================================= */}
+        {/* CSS Animations สำหรับหน้าแรก */}
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes slideInRight {
             0% { opacity: 0; transform: translateX(-100px); }
@@ -32,7 +45,7 @@ export default function HomePage() {
           }
           @keyframes scrollLogos {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-100%); }
           }
           .animate-slide-right {
             opacity: 0;
@@ -42,10 +55,11 @@ export default function HomePage() {
             opacity: 0;
             animation: slideInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
           }
+          /* อัปเดตแอนิเมชันของ Marquee ให้เชื่อมต่อกันเนียนขึ้น */
           .animate-logo-scroll {
             display: flex;
-            width: 200%;
-            animation: scrollLogos 25s linear infinite;
+            width: max-content;
+            animation: scrollLogos 30s linear infinite;
           }
           .animate-logo-scroll:hover {
             animation-play-state: paused;
@@ -56,9 +70,7 @@ export default function HomePage() {
           .delay-700 { animation-delay: 0.7s; }
         `}} />
 
-        {/* =========================================
-            1. HERO SECTION (หน้าปก)
-        ========================================= */}
+        {/* 1. HERO SECTION */}
         <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-fixed transform scale-105 transition-transform duration-[20s] ease-out hover:scale-110"
@@ -104,9 +116,7 @@ export default function HomePage() {
           )}
         </section>
 
-        {/* =========================================
-            2. TRACKING WIDGET (กล่องค้นหาสถานะสินค้าลอยตัว)
-        ========================================= */}
+        {/* 2. TRACKING WIDGET */}
         <section className="relative z-30 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 mb-16">
           <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 border border-gray-100 animate-slide-up delay-700">
             <div className="flex-shrink-0 w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-[#ff0000] text-2xl hidden md:flex">
@@ -132,9 +142,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* =========================================
-            3. CORE SERVICES (บริการหลัก)
-        ========================================= */}
+        {/* 3. CORE SERVICES */}
         <section id="business-units" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h4 className="text-[#ff0000] font-bold tracking-widest uppercase mb-2 text-sm">Our Expertise</h4>
@@ -174,9 +182,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* =========================================
-            4. WHY CHOOSE US (ทำไมต้องเลือกเรา)
-        ========================================= */}
+        {/* 4. WHY CHOOSE US */}
         <section className="py-20 bg-[#0a2540] mt-12 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -220,35 +226,36 @@ export default function HomePage() {
         </section>
 
         {/* =========================================
-            5. PARTNERS MARQUEE (พันธมิตรทางธุรกิจ)
+            5. PARTNERS MARQUEE (ดึงข้อมูลบริษัทอัตโนมัติ)
         ========================================= */}
         <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
-          <div className="text-center mb-8">
-            <h4 className="text-gray-400 font-bold tracking-widest uppercase text-xs">Trusted By Leading Companies</h4>
+          <div className="text-center mb-10">
+            <h4 className="text-gray-400 font-bold tracking-widest uppercase text-xs">Our Strategic Partners in Thailand & Laos</h4>
           </div>
-          {/* ใช้ CSS animation วิ่งสไลด์อัตโนมัติ */}
-          <div className="relative flex overflow-x-hidden">
-            <div className="animate-logo-scroll flex items-center justify-around whitespace-nowrap opacity-60">
-              {/* รายชื่อโลโก้พันธมิตร (ใช้ Icon แทนโลโก้ชั่วคราว) */}
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                <div key={item} className="mx-12 flex items-center gap-3 text-2xl font-black text-gray-400 grayscale hover:grayscale-0 hover:text-[#0a2540] transition-all cursor-pointer">
-                  <i className="fas fa-building"></i> PARTNER {item}
+          
+          {/* กล่องแอนิเมชันเลื่อนซ้าย */}
+          <div className="relative flex overflow-hidden group">
+            {/* ชุดที่ 1 */}
+            <div className="animate-logo-scroll flex gap-12 pr-12">
+              {partnersData.map((partner) => (
+                <div key={partner.id} className="flex-shrink-0 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer">
+                  {/* แสดงรูปภาพ Placeholder พร้อมชื่อบริษัทจริงตามที่ตั้งไว้ใน Data */}
+                  <img src={partner.logoUrl} alt={partner.name} className="h-14 w-auto object-contain rounded-md" />
                 </div>
               ))}
             </div>
-            <div className="animate-logo-scroll flex items-center justify-around whitespace-nowrap opacity-60 absolute top-0">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                <div key={item + 8} className="mx-12 flex items-center gap-3 text-2xl font-black text-gray-400 grayscale hover:grayscale-0 hover:text-[#0a2540] transition-all cursor-pointer">
-                  <i className="fas fa-building"></i> PARTNER {item}
+            {/* ชุดที่ 2 (Copy เพื่อให้วนลูปแบบไร้รอยต่อ) */}
+            <div className="animate-logo-scroll flex gap-12 pr-12">
+              {partnersData.map((partner) => (
+                <div key={`${partner.id}-clone`} className="flex-shrink-0 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer">
+                  <img src={partner.logoUrl} alt={partner.name} className="h-14 w-auto object-contain rounded-md" />
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* =========================================
-            6. LATEST NEWS (ข่าวสารล่าสุด)
-        ========================================= */}
+        {/* 6. LATEST NEWS */}
         <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
             <div>
@@ -261,7 +268,6 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* ข่าวที่ 1 */}
             <Link href="/news" className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 overflow-hidden group">
               <div className="h-48 overflow-hidden relative">
                 <img src="https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?q=80&w=600&auto=format&fit=crop" alt="News 1" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -272,7 +278,6 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-[#0a2540] group-hover:text-[#ff0000] transition-colors line-clamp-2">THANA GROUP ขยายกองทัพ EV Truck มุ่งหน้าสู่ Green Logistics</h3>
               </div>
             </Link>
-            {/* ข่าวที่ 2 */}
             <Link href="/news" className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 overflow-hidden group">
               <div className="h-48 overflow-hidden relative">
                 <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&auto=format&fit=crop" alt="News 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -283,7 +288,6 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-[#0a2540] group-hover:text-[#ff0000] transition-colors line-clamp-2">เปิดตัวศูนย์กระจายสินค้าแห่งใหม่ ณ นครหลวงเวียงจันทน์</h3>
               </div>
             </Link>
-            {/* ข่าวที่ 3 */}
             <Link href="/news" className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 overflow-hidden group">
               <div className="h-48 overflow-hidden relative">
                 <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=600&auto=format&fit=crop" alt="News 3" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
