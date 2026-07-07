@@ -274,7 +274,7 @@ export default function Navbar() {
                 </div>
                 <div>
                   <div className="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-0.5">Hotline 24 Hrs. <span className="text-gray-500 font-medium">• เปิดบริการทุกวัน</span></div>
-                  <a href="tel:0812345678" className="text-lg font-black text-thana-blue">081-234-5678</a>
+                  <a href="tel:0930237931" className="text-lg font-black text-thana-blue">093-023-7931</a>
                 </div>
               </div>
 
