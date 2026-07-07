@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 export default function TributeModal() {
   const [showTribute, setShowTribute] = useState(false);
 
-  // ตรวจสอบสถานะการเข้าเว็บ (แสดงแค่ครั้งเดียวต่อ 1 Session)
   useEffect(() => {
     const hasEntered = sessionStorage.getItem('hasEnteredTribute');
     if (!hasEntered) {
@@ -24,50 +23,54 @@ export default function TributeModal() {
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-4 overflow-y-auto"
+      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto sm:overflow-hidden p-4 md:p-8"
       style={{
-        // ดึงภาพพื้นหลังลายไทยมาใช้ พร้อมใส่ Gradient สีดำโปร่งแสงทับเพื่อให้อ่านตัวอักษรได้ชัดเจน
-        backgroundImage: 'linear-gradient(rgba(15, 15, 15, 0.7), rgba(10, 10, 10, 0.95)), url("/thai-pattern-bg.jpg")',
+        backgroundImage: 'linear-gradient(rgba(15, 15, 15, 0.75), rgba(10, 10, 10, 0.95)), url("/thai-pattern-bg.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
       }}
     >
-      <div className="max-w-2xl w-full text-center flex flex-col items-center animate-fade-in my-auto py-10 relative z-10">
+      {/* 
+        ระบบ Responsive Layout: 
+        ใช้ flex-col เป็นหลัก แต่ถ้าเป็นแนวนอนบนจอมือถือ/แท็บเล็ต (landscape:max-lg) จะสลับเป็น flex-row (ซ้าย-ขวา) 
+      */}
+      <div className="w-full max-w-6xl mx-auto flex flex-col landscape:max-lg:flex-row lg:flex-col items-center justify-center gap-6 md:gap-8 lg:gap-10 animate-fade-in relative z-10 my-auto py-6">
         
-        {/* พระรูป (แบบพื้นหลังใส .png) */}
-        <div className="mb-10 flex justify-center">
+        {/* ส่วนที่ 1: พระรูป (ปรับขนาดอัตโนมัติตามความสูงหน้าจอ - dvh) */}
+        <div className="flex justify-center landscape:max-lg:w-1/2 landscape:max-lg:justify-end">
           <img 
-            src="/royal-portrait.png" 
+            src="royal-portrait.png" 
             alt="พระรูป" 
-            // ใช้ drop-shadow เพื่อให้รูปดูมีมิติและโดดเด่นขึ้นจากพื้นหลัง
-            className="w-full max-w-[280px] md:max-w-[380px] h-auto object-contain drop-shadow-2xl grayscale"
+            className="h-[35dvh] sm:h-[45dvh] md:h-[55dvh] lg:h-[60dvh] max-h-[600px] w-auto object-contain drop-shadow-2xl grayscale"
           />
         </div>
 
-        {/* ข้อความถวายความอาลัย */}
-        <h1 className="text-[#F2E5C5] text-2xl md:text-3xl font-medium mb-6 tracking-wider leading-relaxed drop-shadow-md">
-          น้อมส่งเสด็จสู่สวรรคาลัย
-        </h1>
-        
-        <p className="text-gray-200 text-sm md:text-base mb-12 leading-loose max-w-xl drop-shadow-sm">
-          สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าพัชรกิติยาภา นเรนทิราเทพยวดี <br />
-          กรมหลวงราชสาริณีสิริพัชร มหาวัชรราชธิดา
-        </p>
+        {/* ส่วนที่ 2: ข้อความถวายความอาลัย (ปรับขนาดฟอนต์ตามอุปกรณ์อัตโนมัติ) */}
+        <div className="flex flex-col items-center landscape:max-lg:items-start text-center landscape:max-lg:text-left landscape:max-lg:w-1/2">
+          
+          <h1 className="text-[#F2E5C5] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 sm:mb-6 tracking-wider leading-relaxed drop-shadow-md">
+            น้อมส่งเสด็จสู่สวรรคาลัย
+          </h1>
+          
+          <p className="text-gray-200 text-xs sm:text-sm md:text-base lg:text-lg mb-6 sm:mb-10 leading-loose max-w-xl drop-shadow-sm">
+            สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าพัชรกิติยาภา นเรนทิราเทพยวดี <br className="hidden sm:block" />
+            กรมหลวงราชสาริณีสิริพัชร มหาวัชรราชธิดา
+          </p>
 
-        <p className="text-gray-400 text-xs md:text-sm mb-16 leading-relaxed">
-          ข้าพระพุทธเจ้า คณะผู้บริหาร และพนักงาน <br />
-          กลุ่มบริษัท THANA GROUP
-        </p>
+          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm lg:text-base mb-8 sm:mb-12 leading-relaxed">
+            ข้าพระพุทธเจ้า คณะผู้บริหาร และพนักงาน <br />
+            กลุ่มบริษัท THANA GROUP
+          </p>
 
-        {/* ปุ่มเข้าสู่เว็บไซต์ */}
-        <button 
-          onClick={handleEnterSite}
-          className="px-10 py-3 bg-transparent border border-gray-500 text-gray-300 text-sm hover:text-[#F2E5C5] hover:border-[#F2E5C5] transition-all duration-500 tracking-widest uppercase rounded-sm backdrop-blur-sm"
-        >
-          เข้าสู่เว็บไซต์หลัก (Enter Site)
-        </button>
+          <button 
+            onClick={handleEnterSite}
+            className="px-6 sm:px-10 py-2.5 sm:py-3 bg-transparent border border-gray-500 text-gray-300 text-xs sm:text-sm hover:text-[#F2E5C5] hover:border-[#F2E5C5] transition-all duration-500 tracking-widest uppercase rounded-sm backdrop-blur-sm"
+          >
+            เข้าสู่เว็บไซต์หลัก (Enter Site)
+          </button>
 
+        </div>
       </div>
     </div>
   );
