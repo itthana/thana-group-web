@@ -172,12 +172,16 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* 3. ข้อมูล Dropdown */}
+              {/* 3. ข้อมูล Dropdown (เพิ่มเมนู Price List ไว้ตรงนี้) */}
               <div className="relative group py-6 cursor-pointer">
                 <div className="whitespace-nowrap text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
                   ข้อมูล <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-56 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
+                  {/* 🆕 เพิ่มปุ่ม Price List ไฮไลต์สีแดงให้เด่นๆ */}
+                  <Link href="/pricelist" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-[#ff0000] hover:text-[#00249c] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
+                    <i className="fas fa-file-invoice-dollar"></i> อัตราค่าบริการ (Price List)
+                  </Link>
                   <Link href="/news" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ข่าวสารและกิจกรรม</Link>
                   <Link href="/knowledge-hub" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">คลังความรู้</Link>
                   <Link href="/customs-documents" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ศูนย์เอกสารศุลกากร</Link>
@@ -258,6 +262,10 @@ export default function Navbar() {
               <div>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">ศูนย์ข้อมูล</h3>
                 <div className="flex flex-col gap-3 pl-4 border-l-2 border-gray-100">
+                  {/* 🆕 เพิ่มปุ่ม Price List สำหรับมือถือ */}
+                  <Link href="/pricelist" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-[#ff0000] flex items-center gap-2 bg-red-50 p-2 rounded-md border-l-4 border-[#ff0000]">
+                    <i className="fas fa-file-invoice-dollar"></i> อัตราค่าบริการ (Price List)
+                  </Link>
                   <Link href="/news" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">ข่าวสาร</Link>
                   <Link href="/knowledge-hub" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">คลังความรู้</Link>
                   <Link href="/customs-documents" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">ศูนย์เอกสารศุลกากร</Link>
