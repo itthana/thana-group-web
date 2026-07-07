@@ -103,11 +103,13 @@ export default function Navbar() {
       {/* Main Navbar */}
       <nav className={`bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'shadow-sm py-3'}`}>
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 transition-all duration-300">
-          <div className="flex justify-between items-center h-16">
+          
+          {/* เพิ่ม gap-8 lg:gap-12 เพื่อบังคับระยะห่างขั้นต่ำ ไม่ให้ข้อความเบียดกัน */}
+          <div className="flex justify-between items-center h-16 gap-8 lg:gap-12">
             
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center cursor-pointer group">
-              <Link href="/" className="flex items-center gap-4">
+              <Link href="/" className="flex items-center gap-2 sm:gap-4">
                 <Image 
                   src="/LOGO-TLT.png" 
                   alt="THANA GROUP Logo" 
@@ -116,8 +118,9 @@ export default function Navbar() {
                   className="h-10 md:h-12 lg:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   priority 
                 />
-                <div className="hidden sm:flex items-center ml-2">
-                  <div className="h-12 w-[2px] bg-gray-300 mr-4 rounded-full"></div>
+                <div className="hidden sm:flex items-center">
+                  {/* เปลี่ยนเป็น mx-4 lg:mx-6 เพื่อเว้นระยะซ้ายขวาของเส้นคั่นให้โปร่งขึ้น */}
+                  <div className="h-12 w-[2px] bg-gray-300 mx-4 lg:mx-6 rounded-full"></div>
                   <div className="flex flex-col justify-center items-center select-none">
                     <span className="text-[#0a2540] font-black text-lg md:text-xl leading-none tracking-wide mb-1.5 drop-shadow-sm text-center">
                       ขนส่งด่วน
@@ -130,8 +133,8 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop Menu - เปลี่ยนสีเป็นน้ำเงินโลโก้ และหนาพอดี (font-semibold) */}
-            <div className="hidden lg:flex space-x-6 xl:space-x-8 items-center h-full">
+            {/* Desktop Menu - เพิ่ม flex-1 และ justify-end เพื่อดันเมนูให้ชิดขวาสุดเสมอ */}
+            <div className="hidden lg:flex flex-1 justify-end space-x-6 xl:space-x-8 items-center h-full">
               
               <Link href="/" className="text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
                 หน้าแรก
