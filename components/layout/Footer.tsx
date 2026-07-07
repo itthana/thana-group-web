@@ -139,7 +139,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-gray-500 uppercase tracking-wider">Hotline 24/7</span>
-                    <a href="tel:0812345678" className="text-xl font-black text-white hover:text-thana-red transition-colors">081-234-5678</a>
+                    <a href="tel:0930237931" className="text-xl font-black text-white hover:text-thana-red transition-colors">093-237-931</a>
                   </div>
                 </div>
                 {/* ป้ายกำกับ เปิดบริการทุกวัน */}
