@@ -72,7 +72,7 @@ export default function Navbar() {
       {/* Top Bar */}
       <div className="hidden lg:flex bg-gray-900 text-gray-300 text-xs py-2 px-4 sm:px-6 lg:px-12 xl:px-20 justify-between items-center border-b border-gray-800 shadow-inner relative transition-all duration-300">
         <div className="flex items-center gap-4 overflow-hidden w-2/3">
-          <span className="text-[#ff0000] font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-2">
+          <span className="whitespace-nowrap text-[#ff0000] font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-2">
             <i className="fas fa-broadcast-tower animate-pulse"></i> Live Updates:
           </span>
           <div className="overflow-hidden flex-grow relative h-4 w-full" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}>
@@ -84,7 +84,7 @@ export default function Navbar() {
         </div>
         
         <div className="flex items-center gap-4 flex-shrink-0">
-          <Link href="#" className="text-[#00e5ff] hover:text-white transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-white/5 px-3 py-1 rounded-sm border border-white/10 hover:bg-[#00e5ff] hover:text-black">
+          <Link href="#" className="whitespace-nowrap text-[#00e5ff] hover:text-white transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-white/5 px-3 py-1 rounded-sm border border-white/10 hover:bg-[#00e5ff] hover:text-black">
             <i className="fas fa-user-circle text-base"></i> <span>e-Services Login</span>
           </Link>
           <div className="h-4 w-px bg-gray-700 mx-1"></div>
@@ -104,7 +104,6 @@ export default function Navbar() {
       <nav className={`bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'shadow-sm py-3'}`}>
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 transition-all duration-300">
           
-          {/* เพิ่ม gap-8 lg:gap-12 เพื่อบังคับระยะห่างขั้นต่ำ ไม่ให้ข้อความเบียดกัน */}
           <div className="flex justify-between items-center h-16 gap-8 lg:gap-12">
             
             {/* Logo */}
@@ -119,13 +118,12 @@ export default function Navbar() {
                   priority 
                 />
                 <div className="hidden sm:flex items-center">
-                  {/* เปลี่ยนเป็น mx-4 lg:mx-6 เพื่อเว้นระยะซ้ายขวาของเส้นคั่นให้โปร่งขึ้น */}
                   <div className="h-12 w-[2px] bg-gray-300 mx-4 lg:mx-6 rounded-full"></div>
                   <div className="flex flex-col justify-center items-center select-none">
-                    <span className="text-[#0a2540] font-black text-lg md:text-xl leading-none tracking-wide mb-1.5 drop-shadow-sm text-center">
+                    <span className="whitespace-nowrap text-[#0a2540] font-black text-lg md:text-xl leading-none tracking-wide mb-1.5 drop-shadow-sm text-center">
                       ขนส่งด่วน
                     </span>
-                    <span className="bg-[#ff0000] text-white font-bold text-xs md:text-sm leading-none tracking-[0.15em] px-3 py-1 rounded-md uppercase text-center shadow-md w-max">
+                    <span className="whitespace-nowrap bg-[#ff0000] text-white font-bold text-xs md:text-sm leading-none tracking-[0.15em] px-3 py-1 rounded-md uppercase text-center shadow-md w-max">
                       ไทย - ลาว
                     </span>
                   </div>
@@ -133,62 +131,62 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop Menu - เพิ่ม flex-1 และ justify-end เพื่อดันเมนูให้ชิดขวาสุดเสมอ */}
+            {/* Desktop Menu - เพิ่ม whitespace-nowrap ทุกปุ่ม */}
             <div className="hidden lg:flex flex-1 justify-end space-x-6 xl:space-x-8 items-center h-full">
               
-              <Link href="/" className="text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
+              <Link href="/" className="whitespace-nowrap text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
                 หน้าแรก
               </Link>
               
               {/* 1. องค์กร Dropdown */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
+                <div className="whitespace-nowrap text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
                   องค์กร <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
-                  <Link href="/about" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ประวัติบริษัท</Link>
-                  <Link href="/branches" className="px-5 py-2.5 text-sm font-semibold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
+                  <Link href="/about" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ประวัติบริษัท</Link>
+                  <Link href="/branches" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
                   </Link>
-                  <Link href="/executives" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ทีมผู้บริหารระดับสูง</Link>
-                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">บริษัทในเครือ</Link>
-                  <Link href="/other-ventures" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
+                  <Link href="/executives" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ทีมผู้บริหารระดับสูง</Link>
+                  <Link href="/group-companies" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">บริษัทในเครือ</Link>
+                  <Link href="/other-ventures" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                     <i className="fas fa-coffee text-amber-500"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
-                  <Link href="/ceo-message" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">สารจากผู้บริหาร</Link>
-                  <Link href="/sales" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ทีมที่ปรึกษาด้านการขาย</Link>
-                  <Link href="/careers" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ร่วมงานกับเรา</Link>
-                  <Link href="/testimonials" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">เสียงตอบรับจากพันธมิตร</Link>
+                  <Link href="/ceo-message" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">สารจากผู้บริหาร</Link>
+                  <Link href="/sales" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ทีมที่ปรึกษาด้านการขาย</Link>
+                  <Link href="/careers" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ร่วมงานกับเรา</Link>
+                  <Link href="/testimonials" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">เสียงตอบรับจากพันธมิตร</Link>
                 </div>
               </div>
 
               {/* 2. บริการ Dropdown */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
+                <div className="whitespace-nowrap text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
                   บริการ <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-48 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
-                  <Link href="/#business-units" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">กลุ่มธุรกิจ</Link>
-                  <Link href="/services" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">บริการโลจิสติกส์</Link>
-                  <Link href="/green-logistics" className="px-5 py-2.5 text-sm font-semibold text-green-600 hover:text-green-700 hover:bg-green-50 flex items-center gap-2"><i className="fas fa-leaf"></i> รักษ์โลก (Green)</Link>
+                  <Link href="/#business-units" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">กลุ่มธุรกิจ</Link>
+                  <Link href="/services" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">บริการโลจิสติกส์</Link>
+                  <Link href="/green-logistics" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-green-600 hover:text-green-700 hover:bg-green-50 flex items-center gap-2"><i className="fas fa-leaf"></i> รักษ์โลก (Green)</Link>
                 </div>
               </div>
 
               {/* 3. ข้อมูล Dropdown */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
+                <div className="whitespace-nowrap text-[#00249c] group-hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider flex items-center gap-1">
                   ข้อมูล <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-56 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
-                  <Link href="/news" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ข่าวสารและกิจกรรม</Link>
-                  <Link href="/knowledge-hub" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">คลังความรู้</Link>
-                  <Link href="/customs-documents" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ศูนย์เอกสารศุลกากร</Link>
-                  <Link href="/faq" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">คำถามที่พบบ่อย (FAQ)</Link>
+                  <Link href="/news" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ข่าวสารและกิจกรรม</Link>
+                  <Link href="/knowledge-hub" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">คลังความรู้</Link>
+                  <Link href="/customs-documents" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ศูนย์เอกสารศุลกากร</Link>
+                  <Link href="/faq" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">คำถามที่พบบ่อย (FAQ)</Link>
                 </div>
               </div>
 
               {/* Gallery */}
-              <Link href="/gallery" className="text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
+              <Link href="/gallery" className="whitespace-nowrap text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
                 บรรยากาศการทำงาน
               </Link>
               
@@ -200,13 +198,14 @@ export default function Navbar() {
                     <i className="fas fa-headset text-lg relative z-10"></i>
                   </div>
                   <div className="flex flex-col justify-center">
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">24/7 Hotline <span className="text-[#ff0000] font-medium">• เปิดบริการทุกวัน</span></span>
-                    <a href="tel:0930237931" className="text-[#0a2540] font-black text-base leading-none hover:text-[#ff0000] transition-colors tracking-wide">
+                    <span className="whitespace-nowrap text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">24/7 Hotline <span className="text-[#ff0000] font-medium">• เปิดบริการทุกวัน</span></span>
+                    <a href="tel:0930237931" className="whitespace-nowrap text-[#0a2540] font-black text-base leading-none hover:text-[#ff0000] transition-colors tracking-wide">
                       093-023-7931
                     </a>
                   </div>
                 </div>
-                <Link href="/contact" className="bg-[#ff0000] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-none transition-colors text-sm uppercase shadow-md square-box btn-shine">
+                {/* เพิ่ม whitespace-nowrap ห้ามปุ่มตัดคำ */}
+                <Link href="/contact" className="whitespace-nowrap bg-[#ff0000] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-none transition-colors text-sm uppercase shadow-md square-box btn-shine">
                   ติดต่อเรา
                 </Link>
               </div>
@@ -272,12 +271,12 @@ export default function Navbar() {
                   <i className="fas fa-headset"></i>
                 </div>
                 <div>
-                  <div className="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-0.5">Hotline 24 Hrs. <span className="text-gray-500 font-medium">• เปิดบริการทุกวัน</span></div>
-                  <a href="tel:0930237931" className="text-lg font-black text-[#0a2540]">093-023-7931</a>
+                  <div className="whitespace-nowrap text-[10px] font-bold text-red-500 uppercase tracking-wider mb-0.5">Hotline 24 Hrs. <span className="text-gray-500 font-medium">• เปิดบริการทุกวัน</span></div>
+                  <a href="tel:0930237931" className="whitespace-nowrap text-lg font-black text-[#0a2540]">093-023-7931</a>
                 </div>
               </div>
 
-              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="bg-[#ff0000] text-center text-white font-bold py-3 px-6 rounded-lg">
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="whitespace-nowrap bg-[#ff0000] text-center text-white font-bold py-3 px-6 rounded-lg">
                 ติดต่อเรา
               </Link>
             </div>
