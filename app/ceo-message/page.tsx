@@ -45,7 +45,7 @@ export default function CeoMessagePage() {
               ========================================= */}
               <div className="md:w-2/5 bg-gray-100 relative">
                 <img 
-                  src="เสี่ย.png" 
+                  src="ประธาน2.png" 
                   alt="CEO THANA GROUP" 
                   className="w-full h-[400px] md:h-full object-cover object-top"
                 />
