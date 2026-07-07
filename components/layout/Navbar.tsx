@@ -131,7 +131,7 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop Menu - เพิ่ม whitespace-nowrap ทุกปุ่ม */}
+            {/* Desktop Menu */}
             <div className="hidden lg:flex flex-1 justify-end space-x-6 xl:space-x-8 items-center h-full">
               
               <Link href="/" className="whitespace-nowrap text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
@@ -144,6 +144,7 @@ export default function Navbar() {
                   องค์กร <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
+                  <Link href="/ceo-message" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50 border-l-4 border-transparent hover:border-[#00249c]">สารจากผู้บริหาร</Link>
                   <Link href="/about" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ประวัติบริษัท</Link>
                   <Link href="/branches" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
@@ -153,7 +154,6 @@ export default function Navbar() {
                   <Link href="/other-ventures" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                     <i className="fas fa-coffee text-amber-500"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
-                  <Link href="/ceo-message" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">สารจากผู้บริหาร</Link>
                   <Link href="/sales" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ทีมที่ปรึกษาด้านการขาย</Link>
                   <Link href="/careers" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ร่วมงานกับเรา</Link>
                   <Link href="/testimonials" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">เสียงตอบรับจากพันธมิตร</Link>
@@ -204,7 +204,6 @@ export default function Navbar() {
                     </a>
                   </div>
                 </div>
-                {/* เพิ่ม whitespace-nowrap ห้ามปุ่มตัดคำ */}
                 <Link href="/contact" className="whitespace-nowrap bg-[#ff0000] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-none transition-colors text-sm uppercase shadow-md square-box btn-shine">
                   ติดต่อเรา
                 </Link>
@@ -232,6 +231,7 @@ export default function Navbar() {
               <div>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">รู้จักองค์กร</h3>
                 <div className="flex flex-col gap-3 pl-4 border-l-2 border-gray-100">
+                  <Link href="/ceo-message" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">สารจากผู้บริหาร</Link>
                   <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">ประวัติบริษัท</Link>
                   <Link href="/branches" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-[#ff0000] flex items-center gap-2 bg-red-50 p-2 rounded-md border-l-4 border-[#ff0000]">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
@@ -241,7 +241,6 @@ export default function Navbar() {
                   <Link href="/other-ventures" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-amber-700 flex items-center gap-2">
                     <i className="fas fa-coffee"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
-                  <Link href="/ceo-message" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">สารจากผู้บริหาร</Link>
                   <Link href="/sales" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">ทีมที่ปรึกษาด้านการขาย</Link>
                   <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">ร่วมงานกับเรา</Link>
                   <Link href="/testimonials" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">เสียงตอบรับจากพันธมิตร</Link>
