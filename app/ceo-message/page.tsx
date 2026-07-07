@@ -45,14 +45,14 @@ export default function CeoMessagePage() {
               ========================================= */}
               <div className="md:w-2/5 bg-gray-100 relative">
                 <img 
-                  src="ประธาน.jpg" 
+                  src="เสี่ย.png" 
                   alt="CEO THANA GROUP" 
                   className="w-full h-[400px] md:h-full object-cover object-top"
                 />
                 {/* แถบชื่อและตำแหน่ง (แสดงทับบนรูปมุมล่าง) */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a2540] to-transparent p-6 pt-16 text-white text-center md:text-left">
-                  <h3 className="text-xl font-bold mb-1">คุณชื่อ นามสกุล</h3>
-                  <p className="text-sm text-[#ff0000] font-medium tracking-wider">ประธานเจ้าหน้าที่บริหาร (CEO)</p>
+                  <h3 className="text-xl font-bold mb-1">คุณธนาธิป กำลังเจริญ</h3>
+                  <p className="text-sm text-[#ff0000] font-medium tracking-wider">ประธานบริหารธนากรุ๊ป (CEO THANA GROUP)</p>
                 </div>
               </div>
 
