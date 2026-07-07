@@ -16,17 +16,16 @@ export default function Navbar() {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     
-    // ฟังก์ชันดึงข้อมูลอัตราแลกเปลี่ยนแบบ Real-time (ฟรี API)
+    // ฟังก์ชันดึงข้อมูลอัตราแลกเปลี่ยนแบบ Real-time
     const fetchExchangeRates = async () => {
       try {
         const res = await fetch('https://open.er-api.com/v6/latest/THB');
         const data = await res.json();
         
         if(data && data.rates) {
-          // คำนวณกลับให้เป็นฐานเงินบาท
           const usd = (1 / data.rates.USD).toFixed(2);
           const cny = (1 / data.rates.CNY).toFixed(2);
-          const lak = (data.rates.LAK).toFixed(2); // 1 บาท = กี่กีบ
+          const lak = (data.rates.LAK).toFixed(2); 
           
           setRates({ USD: usd, CNY: cny, LAK: lak });
         }
@@ -36,7 +35,6 @@ export default function Navbar() {
     };
 
     fetchExchangeRates();
-    // ตั้งเวลาอัปเดตค่าเงินทุกๆ 10 นาที
     const interval = setInterval(fetchExchangeRates, 600000);
 
     return () => {
@@ -45,7 +43,6 @@ export default function Navbar() {
     };
   }, []);
 
-  // ข้อมูลแถบวิ่ง (ทำเป็น Array เพื่อให้วนลูปได้ง่าย)
   const tickerItems = (
     <>
       <span className="flex items-center gap-2"><i className="fas fa-gas-pump text-gray-500"></i> FSC (Fuel Surcharge): <span className="text-red-400 font-bold">24.5% <i className="fas fa-caret-up"></i></span></span>
@@ -60,7 +57,6 @@ export default function Navbar() {
   return (
     <header className={`fixed w-full z-50 transition-all duration-500`}>
       
-      {/* CSS สำหรับ Ticker (ตัวหนังสือวิ่ง) */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -76,14 +72,12 @@ export default function Navbar() {
         }
       `}} />
 
-      {/* Live Logistics Updates (Top Bar) */}
+      {/* Top Bar (Ticker & Login) */}
       <div className="hidden lg:flex bg-gray-900 text-gray-300 text-xs py-2 px-4 sm:px-6 lg:px-8 justify-between items-center border-b border-gray-800 shadow-inner relative">
         <div className="flex items-center gap-4 overflow-hidden w-2/3">
           <span className="text-[#ff0000] font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-2">
             <i className="fas fa-broadcast-tower animate-pulse"></i> Live Updates:
           </span>
-          
-          {/* กล่องตัวหนังสือวิ่ง */}
           <div className="overflow-hidden flex-grow relative h-4 w-full" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}>
             <div className="animate-marquee gap-10 cursor-default">
               <div className="flex gap-10 items-center">{tickerItems}</div>
@@ -92,13 +86,11 @@ export default function Navbar() {
           </div>
         </div>
         
-        {/* E-Services & Language Switcher */}
         <div className="flex items-center gap-4 flex-shrink-0">
           <Link href="#" className="text-[#00e5ff] hover:text-white transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-white/5 px-3 py-1 rounded-sm border border-white/10 hover:bg-[#00e5ff] hover:text-black">
             <i className="fas fa-user-circle text-base"></i> <span>e-Services Login</span>
           </Link>
           <div className="h-4 w-px bg-gray-700 mx-1"></div>
-          
           <div className="flex items-center gap-3 select-none text-xs font-bold">
             <span className="flex items-center gap-1.5 text-white opacity-100 drop-shadow-md cursor-pointer">
               <img src="https://flagcdn.com/w20/th.png" className="w-4 h-auto shadow-sm" alt="Thai" /> TH
@@ -116,7 +108,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             
-            {/* Logo & ขนส่งด่วน ไทย-ลาว (อัปเดตขนาดใหญ่และพรีเมียมขึ้น) */}
+            {/* Logo */}
             <div className="flex-shrink-0 flex items-center cursor-pointer group">
               <Link href="/" className="flex items-center gap-4">
                 <Image 
@@ -127,7 +119,6 @@ export default function Navbar() {
                   className="h-10 md:h-12 lg:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   priority 
                 />
-                {/* ข้อความข้างโลโก้ */}
                 <div className="hidden sm:flex items-center ml-2">
                   <div className="h-12 w-[2px] bg-gray-300 mr-4 rounded-full"></div>
                   <div className="flex flex-col justify-center select-none">
@@ -142,29 +133,30 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Menu Links (Desktop with Dropdowns) */}
+            {/* Desktop Menu */}
             <div className="hidden lg:flex space-x-6 xl:space-x-8 items-center h-full">
               
               <Link href="/" className="text-[#0a2540] hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider py-6">หน้าแรก</Link>
               
-              {/* Dropdown 1: รู้จักองค์กร */}
+              {/* 1. องค์กร Dropdown */}
               <div className="relative group py-6 cursor-pointer">
-                <div className="text-gray-600 group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
+                <div className="text-[#0a2540] group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
                   องค์กร <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                 </div>
                 <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 flex flex-col">
                   <Link href="/about" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ประวัติบริษัท</Link>
-                  <Link href="/branches" className="px-5 py-2.5 text-sm font-bold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2">
+                  
+                  {/* ====== เพิ่มเมนูสาขาของเราตรงนี้ ====== */}
+                  <Link href="/branches" className="px-5 py-2.5 text-sm font-bold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
                   </Link>
-                  <Link href="/executives" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมผู้บริหารระดับสูง</Link>
-                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">บริษัทในเครือ</Link>
-                  
-                  {/* ลิงก์ธุรกิจ CC1971 */}
+                  {/* ================================== */}
+
+                  <Link href="/executives" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมผู้บริหารระดับสูง (Executives)</Link>
+                  <Link href="/group-companies" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">บริษัทในเครือ (Our Group)</Link>
                   <Link href="/other-ventures" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                     <i className="fas fa-coffee text-amber-500"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
-                  
                   <Link href="/ceo-message" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">สารจากผู้บริหาร</Link>
                   <Link href="/sales" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ทีมที่ปรึกษาด้านการขาย</Link>
                   <Link href="/careers" className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-[#0a2540] hover:bg-gray-50">ร่วมงานกับเรา</Link>
@@ -172,7 +164,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Dropdown 2: ธุรกิจและบริการ */}
+              {/* 2. บริการ Dropdown */}
               <div className="relative group py-6 cursor-pointer">
                 <div className="text-gray-600 group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
                   บริการ <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
@@ -184,7 +176,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Dropdown 3: ศูนย์ข้อมูล */}
+              {/* 3. ข้อมูล Dropdown */}
               <div className="relative group py-6 cursor-pointer">
                 <div className="text-gray-600 group-hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-1">
                   ข้อมูล <i className="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
@@ -197,13 +189,11 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* ปุ่ม Gallery */}
-              <Link href="/gallery" className="text-[#0a2540] hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider py-6">บรรยากาศการทำงาน</Link>
+              {/* Gallery */}
+              <Link href="/gallery" className="text-gray-600 hover:text-[#ff0000] font-bold transition-colors text-sm uppercase tracking-wider py-6">บรรยากาศการทำงาน</Link>
               
-              {/* ส่วนติดต่อด่วน (Hotline & Contact Button) */}
+              {/* Hotline & Contact */}
               <div className="flex items-center pl-6 border-l border-gray-200 gap-6">
-                
-                {/* Hotline */}
                 <div className="hidden xl:flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#ff0000] shrink-0 relative">
                     <div className="absolute inset-0 rounded-full bg-[#ff0000] opacity-20 animate-ping"></div>
@@ -216,7 +206,6 @@ export default function Navbar() {
                     </a>
                   </div>
                 </div>
-
                 <Link href="/contact" className="bg-[#ff0000] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-none transition-colors text-sm uppercase shadow-md square-box btn-shine">
                   ติดต่อเรา
                 </Link>
@@ -224,7 +213,7 @@ export default function Navbar() {
 
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Toggle */}
             <div className="lg:hidden flex items-center gap-4">
               <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-[#0a2540] hover:text-[#ff0000] focus:outline-none p-2 cursor-pointer">
                 <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
@@ -233,27 +222,30 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Menu Content */}
         {isMobileMenuOpen && (
           <div className="lg:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full max-h-[80vh] overflow-y-auto">
             <div className="px-6 pt-4 pb-8 flex flex-col gap-6">
               
               <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-[#0a2540]">หน้าแรก</Link>
-              <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-[#0a2540]">บรรยากาศการทำงาน</Link>
+              <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-black text-gray-600">บรรยากาศการทำงาน</Link>
               
               <div>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">รู้จักองค์กร</h3>
                 <div className="flex flex-col gap-3 pl-4 border-l-2 border-gray-100">
                   <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ประวัติบริษัท</Link>
-                  <Link href="/branches" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-[#ff0000]"><i className="fas fa-map-location-dot"></i> สาขาของเรา</Link>
+                  
+                  {/* ====== เมนูสาขาของเรา (Mobile) ====== */}
+                  <Link href="/branches" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-[#ff0000] flex items-center gap-2 bg-red-50 p-2 rounded-md border-l-4 border-[#ff0000]">
+                    <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
+                  </Link>
+                  {/* ================================== */}
+
                   <Link href="/executives" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมผู้บริหารระดับสูง</Link>
                   <Link href="/group-companies" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">บริษัทในเครือ</Link>
-                  
-                  {/* ลิงก์ธุรกิจ CC1971 */}
                   <Link href="/other-ventures" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-amber-700 flex items-center gap-2">
                     <i className="fas fa-coffee"></i> ธุรกิจอื่นๆ (CC1971)
                   </Link>
-
                   <Link href="/ceo-message" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">สารจากผู้บริหาร</Link>
                   <Link href="/sales" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ทีมที่ปรึกษาด้านการขาย</Link>
                   <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-gray-600">ร่วมงานกับเรา</Link>
@@ -279,7 +271,6 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Mobile Hotline Box */}
               <div className="bg-red-50/50 rounded-xl p-4 mt-2 border border-red-100 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#ff0000] shadow-sm shrink-0">
                   <i className="fas fa-headset"></i>
