@@ -74,7 +74,7 @@ export default function HomePage() {
         <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-fixed transform scale-105 transition-transform duration-[20s] ease-out hover:scale-110"
-            style={{ backgroundImage: "url('green-hub.jpeg')" }}
+            style={{ backgroundImage: "url('logo1.webp')" }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a2540]/95 via-[#0a2540]/80 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a2540]/90"></div>
