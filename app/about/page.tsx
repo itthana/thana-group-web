@@ -23,7 +23,7 @@ export default function AboutPage() {
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/2">
                 <img 
-                  src="ลงเวป.png" 
+                  src="ลงเวป.jpg" 
                   alt="Company History" 
                   className="w-full h-full object-cover"
                 />
