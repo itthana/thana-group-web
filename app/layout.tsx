@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import TributeModal from '../components/layout/TributeModal';
 
-// ตั้งค่า SEO (มีได้แค่ชุดเดียวเท่านั้นครับ)
+// Import ตัว AppController ที่เราสร้างไว้ (เช็ค Path ให้ตรง)
+import AppController from '../components/layout/AppController';
+
 export const metadata: Metadata = {
-  title: 'THANA GROUP | Global Multimodal Logistics',
-  description: 'ผู้นำด้านบริการโลจิสติกส์และขนส่งสินค้าระหว่างประเทศ (ไทย-ลาว-อาเซียน) แบบครบวงจร ด้วยประสบการณ์กว่า 20 ปี พร้อมขับเคลื่อนธุรกิจคุณสู่ความสำเร็จ',
+  title: 'THANA GROUP | ขนส่งด่วน ไทย-ลาว',
+  description: 'ผู้นำด้านบริการโลจิสติกส์และขนส่งสินค้าระหว่างประเทศ (ไทย-ลาว-อาเซียน) แบบครบวงจร ด้วยประสบการณ์กว่า 20 ปี',
 };
 
 export default function RootLayout({
@@ -16,23 +17,29 @@ export default function RootLayout({
   return (
     <html lang="th">
       <head>
-        {/* ไอคอน Font Awesome */}
+        {/* ดึงไอคอน FontAwesome มาใช้งานทั่วทั้งเว็บ */}
         <link 
           rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
         />
-        {/* ฟอนต์ Prompt */}
+        {/* ดึงฟอนต์ภาษาไทย Prompt จาก Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" 
+          rel="stylesheet" 
+        />
       </head>
       
-      <body className="font-prompt antialiased">
-        {/* หน้าไว้อาลัย */}
-        <TributeModal />
+      {/* ตั้งค่าให้ทั้งเว็บใช้ฟอนต์ Prompt เป็นหลัก */}
+      <body className="font-prompt bg-slate-50 text-gray-900 antialiased">
         
-        {/* เนื้อหาหลักของเว็บไซต์ */}
+        {/* ฝัง AppController ไว้บรรทัดแรกของ Body เพื่อดักจับการ Refresh ทันที */}
+        <AppController />
+        
+        {/* เนื้อหาของแต่ละหน้าจะมาแทรกตรงนี้ */}
         {children}
+        
       </body>
     </html>
   );

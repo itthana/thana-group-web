@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 // ============================================================================
-// 📊 Data Structure: ข้อมูลสาขาทั้ง 8 สาขา (พร้อมระบบ Action Links จริง)
+// 📊 Data Structure: ข้อมูลสาขา + ข้อมูลเซลล์ประจำเขต (ผสานข้อมูลเข้าด้วยกัน)
 // ============================================================================
 const branchesData = [
   {
@@ -22,7 +22,12 @@ const branchesData = [
         lineId: '@thanagroup',
         mapUrl: 'https://maps.google.com',
         isHQ: true,
-        icon: 'fa-building'
+        icon: 'fa-building',
+        salesTeam: [
+          { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่ายขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&auto=format&fit=crop' },
+          { id: 2, name: 'คุณณัฐฐา จรรยากรณณ์', role: 'ฝ่ายขาย Telesales', tel: '0812345671', lineId: 'wipawee.sales', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop' },
+          { id: 5, name: 'คุณสายพลอย แก้วพรไช', role: 'เจ้าหน้าที่บริการแอดมิน', tel: '0812345674', lineId: 'anon.cs', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop' },
+        ]
       },
       {
         id: 'b-2',
@@ -32,7 +37,8 @@ const branchesData = [
         lineId: '@thanagroup-bkk',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-hubspot'
+        icon: 'fa-hubspot',
+        salesTeam: [] // สาขานี้เน้นติดต่อผ่านเบอร์หลัก หรือส่วนกลาง
       },
       {
         id: 'b-3',
@@ -42,7 +48,11 @@ const branchesData = [
         lineId: '@thanachongmek',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-truck-ramp-box'
+        icon: 'fa-truck-ramp-box',
+        salesTeam: [
+          { id: 3, name: 'คุณอุไรรักษ์ ปะพรม', role: 'เจ้าหน้าที่การขาย', tel: '0812345672', lineId: 'natthapon.t', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop' },
+          { id: 4, name: 'คุณสุวิมล แต้มทา', role: 'เจ้าหน้าที่การขาย', tel: '0812345673', lineId: 'pornpan.sale', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&auto=format&fit=crop' },
+        ]
       },
       {
         id: 'b-4',
@@ -52,7 +62,12 @@ const branchesData = [
         lineId: '@thanamukdahan',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-warehouse'
+        icon: 'fa-warehouse',
+        salesTeam: [
+          { id: 6, name: 'คุณธนวัต นำชัย', role: 'ผู้จัดการเขตการขาย', tel: '0823456780', lineId: 'thanawat.m', image: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=150&auto=format&fit=crop' },
+          { id: 7, name: 'คุณศิริพร ยอดเยี่ยม', role: 'ที่ปรึกษาด้านการขาย', tel: '0823456781', lineId: 'siriporn.y', image: 'https://images.unsplash.com/photo-1598550874175-4d0ef436c909?q=80&w=150&auto=format&fit=crop' },
+          { id: 8, name: 'คุณกฤษฎา ชำนาญ', role: 'เจ้าหน้าที่การขาย', tel: '0823456782', lineId: 'kritsada.c', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop' },
+        ]
       },
       {
         id: 'b-5',
@@ -62,7 +77,11 @@ const branchesData = [
         lineId: '@thananongkhai',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-truck-fast'
+        icon: 'fa-truck-fast',
+        salesTeam: [
+          { id: 9, name: 'คุณเอกราช เก่งกล้า', role: 'ผู้จัดการเขตการขาย', tel: '0834567890', lineId: 'ekkarat.k', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop' },
+          { id: 10, name: 'คุณนภัสสร รุ่งเรือง', role: 'ที่ปรึกษาด้านการขายอาวุโส', tel: '0834567891', lineId: 'napassorn.r', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop' },
+        ]
       }
     ]
   },
@@ -77,7 +96,11 @@ const branchesData = [
         lineId: '@thanapakse',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-warehouse'
+        icon: 'fa-warehouse',
+        salesTeam: [
+          { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่ายขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&auto=format&fit=crop' },
+          { id: 3, name: 'คุณอุไรรักษ์ ปะพรม', role: 'เจ้าหน้าที่การขาย', tel: '0812345672', lineId: 'natthapon.t', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop' },
+        ]
       },
       {
         id: 'b-7',
@@ -87,7 +110,11 @@ const branchesData = [
         lineId: '@thanasavannakhet',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-truck-ramp-box'
+        icon: 'fa-truck-ramp-box',
+        salesTeam: [
+          { id: 6, name: 'คุณธนวัต นำชัย', role: 'ผู้จัดการเขตการขาย', tel: '0823456780', lineId: 'thanawat.m', image: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=150&auto=format&fit=crop' },
+          { id: 8, name: 'คุณกฤษฎา ชำนาญ', role: 'เจ้าหน้าที่การขาย', tel: '0823456782', lineId: 'kritsada.c', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop' },
+        ]
       },
       {
         id: 'b-8',
@@ -97,7 +124,11 @@ const branchesData = [
         lineId: '@thanavientiane',
         mapUrl: 'https://maps.google.com',
         isHQ: false,
-        icon: 'fa-train-subway'
+        icon: 'fa-train-subway',
+        salesTeam: [
+          { id: 11, name: 'คุณทวีศักดิ์ มั่นคง', role: 'ที่ปรึกษาด้านการขาย', tel: '0834567892', lineId: 'taweesak.m', image: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=150&auto=format&fit=crop' },
+          { id: 12, name: 'คุณรัตนา ใจสว่าง', role: 'เจ้าหน้าที่การขาย', tel: '0834567893', lineId: 'rattana.j', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop' },
+        ]
       }
     ]
   }
@@ -128,16 +159,16 @@ export default function BranchesPage() {
             <div className="h-1 w-20 bg-[#ff0000] mx-auto rounded-full mb-6"></div>
             <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed">
               THANA GROUP พร้อมให้บริการกระจายสินค้าผ่าน 8 สาขาหลักบนจุดยุทธศาสตร์สำคัญ <br className="hidden md:block" />
-              เชื่อมโยงโครงข่ายโลจิสติกส์อย่างไร้รอยต่อทั่วไทยและ สปป.ลาว
+              พร้อมทีมที่ปรึกษาด้านการขายประจำพื้นที่ ที่พร้อมดูแลธุรกิจคุณอย่างใกล้ชิด
             </p>
           </div>
         </section>
 
         {/* =========================================
-            2. BRANCHES GRID LAYOUT
+            2. BRANCHES LAYOUT (Horizontal Cards)
         ========================================= */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
-          <div className="space-y-16">
+          <div className="space-y-12">
             
             {branchesData.map((group) => (
               <div key={group.country} className="animate-fade-in">
@@ -150,75 +181,102 @@ export default function BranchesPage() {
                   </span>
                 </div>
 
-                {/* Grid แสดงรายชื่อสาขา */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {/* รายการสาขา (แนวยาว) */}
+                <div className="space-y-8">
                   {group.branches.map((branch) => (
                     <div 
                       key={branch.id} 
-                      className={`bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border overflow-hidden group flex flex-col justify-between ${
+                      className={`bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col lg:flex-row border ${
                         branch.isHQ ? 'border-[#ff0000] ring-1 ring-[#ff0000]/30' : 'border-gray-100'
                       }`}
                     >
-                      {/* ส่วนหัวการ์ด */}
-                      <div className="p-6 md:p-8">
-                        <div className="flex items-start justify-between mb-5">
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner ${
-                            branch.isHQ ? 'bg-red-50 text-[#ff0000]' : 'bg-slate-50 text-[#0a2540]'
-                          }`}>
-                            <i className={`fas ${branch.isHQ ? 'fa-building' : branch.icon}`}></i>
+                      
+                      {/* =========================================
+                          ฝั่งซ้าย: ข้อมูลสาขา และ เบอร์โทรเด่นๆ
+                      ========================================= */}
+                      <div className="lg:w-2/5 p-8 bg-slate-50/50 border-r border-gray-100 flex flex-col relative">
+                        {branch.isHQ && (
+                          <div className="absolute top-0 left-0 bg-[#ff0000] text-white text-[10px] font-bold tracking-widest px-4 py-1.5 rounded-br-2xl uppercase shadow-md">
+                            Headquarters
                           </div>
-                          
-                          {branch.isHQ && (
-                            <span className="bg-[#ff0000] text-white font-bold text-[10px] tracking-widest px-3 py-1 rounded-full uppercase shadow-sm animate-pulse">
-                              Headquarters
-                            </span>
-                          )}
+                        )}
+                        
+                        <div className="flex items-center gap-4 mb-6 mt-4">
+                          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-sm ${
+                            branch.isHQ ? 'bg-[#ff0000] text-white' : 'bg-white border border-gray-200 text-[#0a2540]'
+                          }`}>
+                            <i className={`fas ${branch.icon}`}></i>
+                          </div>
+                          <h3 className="text-xl md:text-2xl font-black text-[#0a2540] leading-tight">
+                            {branch.name}
+                          </h3>
+                        </div>
+                        
+                        <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
+                          <i className="fas fa-location-dot text-gray-400 mr-2"></i> {branch.address}
+                        </p>
+
+                        {/* กล่องเบอร์โทรศัพท์ขนาดใหญ่ (Big Phone) */}
+                        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm mb-6">
+                          <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">
+                            สายด่วนติดต่อสาขา
+                          </div>
+                          <a href={`tel:${branch.tel.replace(/[^0-9+]/g, '')}`} className="text-3xl font-black text-[#ff0000] hover:text-red-700 transition-colors flex items-center gap-3">
+                            <i className="fas fa-phone-volume animate-pulse"></i> {branch.tel}
+                          </a>
                         </div>
 
-                        <h3 className="text-lg md:text-xl font-black text-[#0a2540] mb-3 group-hover:text-[#ff0000] transition-colors leading-tight">
-                          {branch.name}
-                        </h3>
-                        
-                        <p className="text-gray-500 text-sm leading-relaxed mb-6 font-light">
-                          {branch.address}
-                        </p>
+                        {/* ปุ่ม Map & Line ของสาขา */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <a href={branch.mapUrl} target="_blank" rel="noopener noreferrer" className="bg-white border border-gray-200 text-[#0a2540] hover:bg-[#0a2540] hover:text-white font-bold text-sm py-2.5 rounded-xl text-center transition-colors shadow-sm">
+                            <i className="fas fa-map-location-dot mr-1"></i> แผนที่สาขา
+                          </a>
+                          <a href={`https://line.me/ti/p/~${branch.lineId}`} target="_blank" rel="noopener noreferrer" className="bg-[#00c300] text-white hover:bg-green-600 font-bold text-sm py-2.5 rounded-xl text-center transition-colors shadow-sm">
+                            <i className="fab fa-line mr-1 text-base"></i> แอดไลน์สาขา
+                          </a>
+                        </div>
                       </div>
 
-                      {/* ส่วนท้ายการ์ด: ปุ่มช่องทางการติดต่อ (Action Buttons) */}
-                      <div className="p-6 bg-slate-50/50 border-t border-gray-100 mt-auto grid grid-cols-3 gap-2">
-                        {/* 📞 ปุ่มโทรออก */}
-                        <a 
-                          href={`tel:${branch.tel.replace(/[^0-9+]/g, '')}`} 
-                          className="flex flex-col items-center justify-center py-2.5 bg-white border border-gray-200 rounded-2xl text-[#0a2540] hover:bg-[#0a2540] hover:text-white transition-all shadow-sm font-medium text-xs gap-1"
-                          title="โทรติดต่อสาขา"
-                        >
-                          <i className="fas fa-phone text-sm"></i>
-                          <span>โทรสายตรง</span>
-                        </a>
-
-                        {/* 💬 ปุ่ม LINE */}
-                        <a 
-                          href={`https://line.me/ti/p/~${branch.lineId}`} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="flex flex-col items-center justify-center py-2.5 bg-white border border-gray-200 rounded-2xl text-green-600 hover:bg-[#00c300] hover:text-white transition-all shadow-sm font-medium text-xs gap-1"
-                          title="คุยไลน์ผ่านแชท"
-                        >
-                          <i className="fab fa-line text-base"></i>
-                          <span>แอดไลน์</span>
-                        </a>
-
-                        {/* 🗺️ ปุ่มแอปแผนที่ */}
-                        <a 
-                          href={branch.mapUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="flex flex-col items-center justify-center py-2.5 bg-white border border-gray-200 rounded-2xl text-red-500 hover:bg-[#ff0000] hover:text-white transition-all shadow-sm font-medium text-xs gap-1"
-                          title="เปิด Google Maps นำทาง"
-                        >
-                          <i className="fas fa-location-dot text-sm"></i>
-                          <span>ดูแผนที่</span>
-                        </a>
+                      {/* =========================================
+                          ฝั่งขวา: รายชื่อทีมเซลล์ประจำสาขา
+                      ========================================= */}
+                      <div className="lg:w-3/5 p-8">
+                        <h4 className="text-sm font-bold text-[#0a2540] border-b border-gray-100 pb-3 mb-6 flex items-center gap-2">
+                          <i className="fas fa-user-tie text-[#ff0000]"></i> ทีมที่ปรึกษาด้านการขายประจำเขต
+                        </h4>
+                        
+                        {branch.salesTeam.length > 0 ? (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {branch.salesTeam.map((sale) => (
+                              <div key={sale.id} className="flex items-center gap-4 p-3 bg-white border border-gray-100 rounded-2xl hover:shadow-md hover:border-[#ff0000]/30 transition-all group">
+                                {/* รูปเซลล์ */}
+                                <img src={sale.image} alt={sale.name} className="w-14 h-14 rounded-full object-cover shadow-sm border-2 border-transparent group-hover:border-[#ff0000]/20 transition-all" />
+                                
+                                <div className="flex-grow">
+                                  <div className="font-bold text-[#0a2540] text-sm group-hover:text-[#ff0000] transition-colors">{sale.name}</div>
+                                  <div className="text-xs text-gray-500 mb-2">{sale.role}</div>
+                                  
+                                  {/* ปุ่มติดต่อเซลล์ (เล็ก) */}
+                                  <div className="flex gap-2">
+                                    <a href={`tel:${sale.tel}`} className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors text-xs" title="โทรหาเซลล์">
+                                      <i className="fas fa-phone"></i>
+                                    </a>
+                                    <a href={`https://line.me/ti/p/~${sale.lineId}`} target="_blank" rel="noopener noreferrer" className="w-7 h-7 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-[#00c300] hover:text-white transition-colors text-xs" title="แอดไลน์เซลล์">
+                                      <i className="fab fa-line"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          // กรณีไม่มีเซลล์เฉพาะเจาะจง (เช่น สาขาเพชรเกษม)
+                          <div className="h-full flex flex-col items-center justify-center text-center py-10 opacity-60">
+                            <i className="fas fa-headset text-4xl text-gray-300 mb-3"></i>
+                            <p className="text-sm font-medium text-gray-500">ติดต่อศูนย์บริการลูกค้าสัมพันธ์</p>
+                            <p className="text-xs text-gray-400">กรุณาติดต่อผ่านเบอร์โทรศัพท์สายด่วนของสาขาโดยตรง</p>
+                          </div>
+                        )}
                       </div>
 
                     </div>
