@@ -6,9 +6,15 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
 // ============================================================================
-// 📊 Data Structure: ข้อมูลพันธมิตรทางธุรกิจ (Partners) 
-// แนะนำให้บันทึกรูปโลโก้จริงไว้ในโฟลเดอร์ public/partners/ แล้วมาเปลี่ยนพาทตรงนี้ครับ
+// 📊 Data: รูปภาพหน้าปกสำหรับทำ Slider อัตโนมัติ (สามารถเปลี่ยน URL รูปได้ตามต้องการ)
 // ============================================================================
+const heroImages = [
+  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2000&auto=format&fit=crop", // รูปคลังสินค้าและรถบรรทุก
+  "https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2000&auto=format&fit=crop", // รูปรถบรรทุกบนถนน
+  "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=2000&auto=format&fit=crop", // รูปท่าเรือขนส่งสินค้า
+  "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop", // รูปเครื่องบินขนส่ง
+];
+
 const partnersData = [
   { id: 1, name: 'SCG Logistics', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=SCG+Logistics' },
   { id: 2, name: 'Flash Express', logoUrl: 'https://placehold.co/200x80/f8fafc/94a3b8?text=Flash+Express' },
@@ -22,9 +28,19 @@ const partnersData = [
 
 export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
+    // แอนิเมชันตอนโหลดหน้าเว็บ
     setTimeout(() => setIsVisible(true), 100);
+
+    // ระบบเปลี่ยนสไลด์อัตโนมัติ ทุกๆ 5 วินาที
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % heroImages.length);
+    }, 5000);
+
+    // ลบการทำงานเมื่อผู้ใช้ออกจากหน้าเว็บ
+    return () => clearInterval(slideInterval);
   }, []);
 
   return (
@@ -55,7 +71,6 @@ export default function HomePage() {
             opacity: 0;
             animation: slideInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
           }
-          /* อัปเดตแอนิเมชันของ Marquee ให้เชื่อมต่อกันเนียนขึ้น */
           .animate-logo-scroll {
             display: flex;
             width: max-content;
@@ -70,14 +85,25 @@ export default function HomePage() {
           .delay-700 { animation-delay: 0.7s; }
         `}} />
 
-        {/* 1. HERO SECTION */}
-        <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-fixed transform scale-105 transition-transform duration-[20s] ease-out hover:scale-110"
-            style={{ backgroundImage: "url('logo1.webp')" }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a2540]/95 via-[#0a2540]/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a2540]/90"></div>
+        {/* =========================================
+            1. HERO SECTION (หน้าปกแบบ Slider อัตโนมัติ)
+        ========================================= */}
+        <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-[#0a2540]">
+          
+          {/* แสดงรูปภาพทั้งหมด แต่ใช้ Opacity ซ่อน/แสดง ตาม currentSlide */}
+          {heroImages.map((img, index) => (
+            <div 
+              key={index}
+              className={`absolute inset-0 bg-cover bg-center bg-fixed transition-all duration-[2000ms] ease-in-out ${
+                index === currentSlide ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
+              }`}
+              style={{ backgroundImage: `url('${img}')` }}
+            ></div>
+          ))}
+
+          {/* เลเยอร์สีเข้มไล่ระดับ (Gradient Overlay) คงที่ */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a2540]/95 via-[#0a2540]/80 to-transparent z-0"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a2540]/95 z-0"></div>
 
           {isVisible && (
             <div className="relative z-10 text-left px-4 sm:px-6 lg:px-12 xl:px-20 max-w-7xl mx-auto w-full -mt-20">
@@ -111,6 +137,20 @@ export default function HomePage() {
                 <Link href="/contact" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3 text-lg">
                   <i className="fas fa-headset text-[#00e5ff]"></i> ติดต่อที่ปรึกษา
                 </Link>
+              </div>
+
+              {/* จุดไข่ปลาบอกสถานะหน้าสไลด์ */}
+              <div className="absolute -bottom-16 left-4 sm:left-6 lg:left-12 xl:left-20 flex gap-3 animate-slide-up delay-700">
+                {heroImages.map((_, index) => (
+                  <button 
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-500 ${
+                      index === currentSlide ? 'w-10 bg-[#ff0000]' : 'w-2 bg-white/40 hover:bg-white'
+                    }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                  ></button>
+                ))}
               </div>
             </div>
           )}
@@ -225,26 +265,19 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* =========================================
-            5. PARTNERS MARQUEE (ดึงข้อมูลบริษัทอัตโนมัติ)
-        ========================================= */}
+        {/* 5. PARTNERS MARQUEE */}
         <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
           <div className="text-center mb-10">
             <h4 className="text-gray-400 font-bold tracking-widest uppercase text-xs">Our Strategic Partners in Thailand & Laos</h4>
           </div>
-          
-          {/* กล่องแอนิเมชันเลื่อนซ้าย */}
           <div className="relative flex overflow-hidden group">
-            {/* ชุดที่ 1 */}
             <div className="animate-logo-scroll flex gap-12 pr-12">
               {partnersData.map((partner) => (
                 <div key={partner.id} className="flex-shrink-0 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer">
-                  {/* แสดงรูปภาพ Placeholder พร้อมชื่อบริษัทจริงตามที่ตั้งไว้ใน Data */}
                   <img src={partner.logoUrl} alt={partner.name} className="h-14 w-auto object-contain rounded-md" />
                 </div>
               ))}
             </div>
-            {/* ชุดที่ 2 (Copy เพื่อให้วนลูปแบบไร้รอยต่อ) */}
             <div className="animate-logo-scroll flex gap-12 pr-12">
               {partnersData.map((partner) => (
                 <div key={`${partner.id}-clone`} className="flex-shrink-0 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer">
