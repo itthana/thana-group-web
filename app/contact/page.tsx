@@ -28,23 +28,23 @@ export default function ContactPage() {
     setSubmitStatus('idle');
 
     try {
+      // เรียก API ส่งอีเมล
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(companyDataMapper(formData)) // แปลง object ก่อนส่งให้ตรงกับโครงสร้าง API
+        body: JSON.stringify(formData)
       });
       
-      if (res.ok) {
-        setRates({ USD: rates.USD, CNY: rates.CNY, LAK: rates.LAK }); // รักษาค่าเดิมไว้
-        setActiveZone(0); // รีเซ็ต Tab กลับไปอันแรก
-        setIsMobileMenuOpen(false);
+      if (response.ok) {
+        setSubmitStatus('success');
         // เคลียร์ค่าในฟอร์มหลังจากส่งสำเร็จ
-        setFormData({ name: '', phone: '', email: '', message: '' });
+        setFormData({ name: '', phone: '', email: '', department: '', message: '' });
       } else {
-        // จัดการกรณีส่งไม่สำเร็จ
+        setSubmitStatus('error');
       }
     } catch (error) {
       console.error("Failed to submit form:", error);
+      setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
@@ -86,17 +86,17 @@ export default function ContactPage() {
           <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 md:p-10 animate-slide-up">
             
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-black text-[#00249c]">ส่งข้อความถึงเรา</h2>
-              <p className="text-gray-500 text-sm mt-1">กรุณากรอกข้อมูลให้ครบถ้วนเพื่อความรวดเร็วในการติดต่อกลับ</p>
+              <h2 className="text-2xl font-black text-[#00249c]">ฝากข้อความถึงเรา</h2>
+              <p className="text-gray-500 text-sm mt-1">เลือกแผนกที่ต้องการติดต่อ ทีมงานจะรีบตอบกลับโดยเร็วที่สุด</p>
             </div>
 
             {/* ระบบแสดงสถานะหลังจากกดส่งฟอร์ม */}
-            {status.type === 'success' && (
+            {submitStatus === 'success' && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 font-medium rounded-xl flex items-center gap-3">
                 <i className="fas fa-check-circle text-lg"></i> ส่งข้อความสำเร็จ! ทีมงานจะติดต่อกลับโดยเร็วที่สุด
               </div>
             )}
-            {status.type === 'error' && (
+            {submitStatus === 'error' && (
               <div className="mb-6 bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 flex items-center gap-4 font-medium">
                 <i className="fas fa-exclamation-circle text-lg"></i> เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
               </div>
@@ -108,26 +108,28 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* ชื่อ-นามสกุล */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-[#0a2540]">ชื่อ-นามสกุล (Name)</label>
+                  <label className="text-sm font-bold text-[#0a2540]">ชื่อ - นามสกุล <span className="text-red-500">*</span></label>
                   <input 
                     type="text"
+                    name="name"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="เช่น คุณสมชาย ใจดี" 
+                    onChange={handleChange}
+                    placeholder="กรุณากรอกชื่อ" 
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-1 focus:ring-[#00249c] transition-colors"
                   />
                 </div>
 
                 {/* เบอร์โทรศัพท์ */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-[#0a2540]">เบอร์โทรศัพท์ (Phone Number)</label>
+                  <label className="text-sm font-bold text-[#0a2540]">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
                   <input 
                     type="tel"
+                    name="phone"
                     required
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    placeholder="เช่น 081-234-5678" 
+                    onChange={handleChange}
+                    placeholder="08X-XXX-XXXX" 
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-1 focus:ring-[#00249c] transition-colors"
                   />
                 </div>
@@ -136,52 +138,52 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* อีเมล */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-[#0a2540]">อีเมล (Email)</label>
+                  <label className="text-sm font-bold text-[#0a2540]">อีเมล (ถ้ามี)</label>
                   <input 
                     type="email"
-                    required
+                    name="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="เช่น example@company.com" 
+                    onChange={handleChange}
+                    placeholder="email@company.com" 
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-1 focus:ring-[#00249c] transition-colors"
                   />
                 </div>
 
                 {/* เลือกแผนก/สาขาที่ต้องการติดต่อ */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-[#0a2540]">แผนกหรือสาขาที่ต้องการติดต่อ (Department)</label>
+                  <label className="text-sm font-bold text-[#0a2540]">ติดต่อแผนก <span className="text-red-500">*</span></label>
                   <select
+                    name="department"
                     required
                     value={formData.department}
-                    onChange={(e) => setFormData({...formData, department: e.target.value})}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-1 focus:ring-[#00249c] transition-colors cursor-pointer appearance-none"
                     style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em' }}
                   >
-                    <option value="" disabled>เลือกแผนก/สาขา...</option>
+                    <option value="" disabled>เลือกแผนกที่ต้องการติดต่อ...</option>
                     <option value="ฝ่ายขายและการตลาด (Sales)">ฝ่ายขายและการตลาด (Sales)</option>
                     <option value="ฝ่ายบริการลูกค้าสัมพันธ์ (CS)">ฝ่ายบริการลูกค้าสัมพันธ์ (CS)</option>
                     <option value="ฝ่ายพิธีการศุลกากร (Shipping)">ฝ่ายพิธีการศุลกากร (Shipping)</option>
-                    <option value="สาขาอุบลราชธานี (สำนักงานใหญ่)">สาขาอุบลราชธานี (สำนักงานใหญ่)</option>
-                    <option value="สาขาปากเซ สปป.ลาว">สาขาปากเซ สปป.ลาว</option>
-                    <option value="สาขานครหลวงเวียงจันทน์ สปป.ลาว">สาขานครหลวงเวียงจันทน์ สปป.ลาว</option>
+                    <option value="ติดต่อผู้บริหาร / อื่นๆ">ติดต่อผู้บริหาร / อื่นๆ</option>
                   </select>
                 </div>
               </div>
 
               {/* ข้อความ/รายละเอียด */}
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-bold text-[#0a2540]">ข้อความหรือรายละเอียดที่ต้องการสอบถาม (Message)</label>
+                <label className="text-sm font-bold text-[#0a2540]">ข้อความ / สิ่งที่ต้องการสอบถาม <span className="text-red-500">*</span></label>
                 <textarea 
+                  name="message"
                   rows={5}
                   required
                   value={formData.message}
-                  onChange={(handleChange)}
+                  onChange={handleChange}
                   placeholder="พิมพ์ข้อความของคุณที่นี่..."
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#00249c] focus:border-transparent outline-none transition-all resize-none"
                 ></textarea>
               </div>
 
-              {/* ปุ่มส่งข้อความบรรทัดเดียวสีแดงสด */}
+              {/* ปุ่มส่งข้อความ */}
               <button 
                 type="submit" 
                 disabled={isSubmitting}
@@ -211,15 +213,4 @@ export default function ContactPage() {
       <Footer />
     </>
   );
-}
-
-// ฟังก์ชันภายในช่วยเหลือการแปลงโครงสร้าง
-function companyDataMapper(data: any) {
-  return {
-    name: data.name,
-    phone: data.phone,
-    email: data.email,
-    department: data.department,
-    message: data.message
-  };
 }
