@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import TributeModal from '@/components/layout/TributeModal';
 
 export default function TributeModal() {
   const [showTribute, setShowTribute] = useState(false);
