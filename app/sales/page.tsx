@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 
+
+
 export const metadata: Metadata = {
   title: 'ทีมที่ปรึกษาด้านการขาย | THANA GROUP',
   description: 'ทีมที่ปรึกษาด้านการขายและการจัดการโลจิสติกส์ ประจำเขตพื้นที่ชายแดน ไทย-ลาว',
@@ -16,7 +18,7 @@ const salesZones = [
     title: 'เขต 1: อุบลราชธานี - ปากเซ',
     description: 'ศูนย์กลางโลจิสติกส์เชื่อมต่อภาคอีสานตอนล่างและลาวใต้',
     members: [
-      { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่ายขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', email: 'somchai@thanagroup.com', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop' }, // แอมมี่ (ใส่รูปจำลองไว้ให้ก่อนเพื่อไม่ให้พัง สามารถเปลี่ยน url รูปจริงได้ตรงนี้)
+      { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่ายขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', email: 'somchai@thanagroup.com', image: 'แอมมี่.png' }, // แอมมี่ (ใส่รูปจำลองไว้ให้ก่อนเพื่อไม่ให้พัง สามารถเปลี่ยน url รูปจริงได้ตรงนี้)
       { id: 2, name: 'คุณณัฐฐา จรรยากรณณ์', role: 'ฝ่ายขาย Telesales', tel: '0812345671', lineId: 'wipawee.sales', email: 'wipawee@thanagroup.com', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop' },
       { id: 3, name: 'คุณอุไรรักษ์ ปะพรม', role: 'เจ้าหน้าที่การขาย', tel: '0812345672', lineId: 'natthapon.t', email: 'natthapon@thanagroup.com', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop' },
       { id: 4, name: 'คุณสุวิมล  แต้มทา', role: 'เจ้าหน้าที่การขาย', tel: '0812345673', lineId: 'pornpan.sale', email: 'pornpan@thanagroup.com', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop' },
