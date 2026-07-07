@@ -23,7 +23,7 @@ export default function AboutPage() {
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/2">
                 <img 
-                  src="https://placehold.co/800x600/0B308A/ffffff?text=Our+History" 
+                  src="ลงเวป.png" 
                   alt="Company History" 
                   className="w-full h-full object-cover"
                 />
