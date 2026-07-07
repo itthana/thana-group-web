@@ -1,169 +1,116 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-20 pb-10 border-t-4 border-thana-red relative overflow-hidden">
-      {/* ลายน้ำพื้นหลัง */}
-      <div className="absolute top-0 right-0 opacity-5 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
-        <i className="fas fa-globe-asia text-[400px]"></i>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Main Footer Content - 4 Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-[#0f172a] pt-16 pb-8 border-t border-gray-800 font-prompt">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
-          {/* Column 1: Brand & About */}
-          <div className="space-y-6">
-            <div className="bg-white inline-block p-3 rounded-xl shadow-md">
-              {/* ถ้ามี Logo สีขาวสำหรับพื้นหลังเข้ม สามารถเปลี่ยน src ตรงนี้ได้ครับ */}
+          {/* =========================================
+              ส่วนที่ 1: โลโก้ และ โซเชียลมีเดีย (ซ้ายสุด)
+          ========================================= */}
+          <div className="lg:pr-4">
+            {/* กล่องโลโก้พื้นหลังสีขาวแบบในรูป */}
+            <div className="bg-white p-3 rounded-2xl inline-block mb-6 shadow-lg">
               <Image 
-                src="LOGO-TLT.png" 
-                alt="LOGO-TLT.png" 
+                src="/LOGO-TLT.png" 
+                alt="THANA GROUP Logo" 
                 width={180} 
-                height={45} 
-                className="h-10 w-auto object-contain"
+                height={60} 
+                className="object-contain" 
               />
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              ผู้นำด้านบริการโลจิสติกส์และขนส่งสินค้าระหว่างประเทศ (ไทย-ลาว-อาเซียน) แบบครบวงจร ด้วยประสบการณ์กว่า 20 ปี 
-              พร้อมขับเคลื่อนธุรกิจคุณสู่ความสำเร็จ
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+              ผู้นำด้านบริการโลจิสติกส์และขนส่งสินค้าระหว่างประเทศ (ไทย-ลาว-อาเซียน) แบบครบวงจร ด้วยประสบการณ์กว่า 20 ปี พร้อมขับเคลื่อนธุรกิจคุณสู่ความสำเร็จ
             </p>
+            
+            {/* ปุ่ม Social Media แบบกดได้จริง */}
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#1877f2] hover:text-white transition-all duration-300">
+              {/* เปลี่ยนลิงก์ Facebook ตรง href="..." */}
+              <a href="https://www.facebook.com/ThanaLogistics?locale=th_TH" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-300 hover:bg-[#1877F2] hover:text-white transition-all duration-300 shadow-sm text-lg hover:-translate-y-1">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#00c300] hover:text-white transition-all duration-300">
-                <i className="fab fa-line text-lg"></i>
+              {/* เปลี่ยนลิงก์ LINE ตรง href="..." */}
+              <a href="https://line.me/ti/p/~@thanagroup" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-300 hover:bg-[#00c300] hover:text-white transition-all duration-300 shadow-sm text-xl hover:-translate-y-1">
+                <i className="fab fa-line"></i>
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-all duration-300">
+              {/* เปลี่ยนลิงก์ YouTube ตรง href="..." */}
+              <a href="https://www.youtube.com/@Thana6688" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-300 hover:bg-[#FF0000] hover:text-white transition-all duration-300 shadow-sm text-lg hover:-translate-y-1">
                 <i className="fab fa-youtube"></i>
               </a>
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* =========================================
+              ส่วนที่ 2: เมนูลัด (องค์กรของเรา)
+          ========================================= */}
           <div>
-            <h3 className="text-white font-black text-lg mb-6 flex items-center gap-2">
-              <i className="fas fa-link text-thana-red text-sm"></i> ลิงก์ด่วน (Quick Links)
-            </h3>
+            <h3 className="text-white font-bold text-lg mb-6 tracking-wide">องค์กรของเรา</h3>
             <ul className="space-y-4">
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-thana-red transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-thana-red group-hover:translate-x-1 transition-all"></i> รู้จัก THANA GROUP
-                </Link>
-              </li>
-              <li>
-                <Link href="/group-companies" className="text-gray-400 hover:text-thana-red transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-thana-red group-hover:translate-x-1 transition-all"></i> บริษัทในเครือ
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-gray-400 hover:text-thana-red transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-thana-red group-hover:translate-x-1 transition-all"></i> บริการโลจิสติกส์
-                </Link>
-              </li>
-              <li>
-                <Link href="/executives" className="text-gray-400 hover:text-thana-red transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-thana-red group-hover:translate-x-1 transition-all"></i> ทีมผู้บริหารระดับสูง
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="text-gray-400 hover:text-thana-red transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:text-thana-red group-hover:translate-x-1 transition-all"></i> ร่วมงานกับเรา
-                </Link>
-              </li>
+              <li><Link href="/about" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> ประวัติบริษัท</Link></li>
+              <li><Link href="/branches" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> สาขาของเรา</Link></li>
+              <li><Link href="/executives" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> ทีมผู้บริหาร</Link></li>
+              <li><Link href="/gallery" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> บรรยากาศการทำงาน</Link></li>
             </ul>
           </div>
 
-          {/* Column 3: Support & Feedback (ไฮไลท์ปุ่มร้องเรียน/เสนอแนะ) */}
+          {/* =========================================
+              ส่วนที่ 3: เมนูลัด (บริการของเรา)
+          ========================================= */}
           <div>
-            <h3 className="text-white font-black text-lg mb-6 flex items-center gap-2">
-              <i className="fas fa-hands-helping text-thana-red text-sm"></i> ศูนย์ช่วยเหลือลูกค้า
-            </h3>
+            <h3 className="text-white font-bold text-lg mb-6 tracking-wide">บริการโลจิสติกส์</h3>
             <ul className="space-y-4">
-              <li>
-                <Link href="/tracking" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-search-location text-gray-500 group-hover:text-thana-blue"></i> ติดตามสถานะสินค้า (Track & Trace)
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-question-circle text-gray-500 group-hover:text-thana-blue"></i> คำถามที่พบบ่อย (FAQ)
-                </Link>
-              </li>
-              <li>
-                <Link href="/customs-documents" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm group">
-                  <i className="fas fa-file-alt text-gray-500 group-hover:text-thana-blue"></i> ดาวน์โหลดแบบฟอร์มศุลกากร
-                </Link>
-              </li>
-              
-              <li className="pt-4 mt-2 border-t border-gray-800">
-                {/* ปุ่ม Voice of Customer (แจ้งปัญหา/เสนอแนะ) */}
-                <Link 
-                  href="/contact?topic=feedback" 
-                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-thana-red text-white text-sm py-2 px-4 rounded-lg transition-all duration-300 w-full group"
-                >
-                  <div className="w-6 h-6 rounded-full bg-thana-red/20 text-thana-red flex items-center justify-center shrink-0 group-hover:bg-thana-red group-hover:text-white transition-colors">
-                    <i className="fas fa-comment-dots text-xs"></i>
-                  </div>
-                  <span className="font-bold">แจ้งปัญหา / เสนอแนะบริการ</span>
-                </Link>
-              </li>
+              <li><Link href="/services" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> ขนส่งทางบกข้ามแดน</Link></li>
+              <li><Link href="/services" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> พิธีการศุลกากร</Link></li>
+              <li><Link href="/services" className="text-gray-400 hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-angle-right text-[#ff0000]"></i> คลังสินค้าและการกระจาย</Link></li>
+              <li><Link href="/green-logistics" className="text-[#00c300] hover:text-white hover:pl-2 transition-all text-sm flex items-center gap-2"><i className="fas fa-leaf"></i> รักษ์โลก (Green Logistics)</Link></li>
             </ul>
           </div>
 
-          {/* Column 4: Contact Info */}
+          {/* =========================================
+              ส่วนที่ 4: ช่องทางการติดต่อ (คลิกได้จริง)
+          ========================================= */}
           <div>
-            <h3 className="text-white font-black text-lg mb-6 flex items-center gap-2">
-              <i className="fas fa-map-marker-alt text-thana-red text-sm"></i> ติดต่อสำนักงานใหญ่
-            </h3>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li className="flex items-start gap-3">
-                <i className="fas fa-building mt-1 text-gray-500 shrink-0"></i>
-                <span className="leading-relaxed">123/45 ถนนโลจิสติกส์ แขวงขนส่ง เขตคลังสินค้า กรุงเทพมหานคร 10900</span>
+            <h3 className="text-white font-bold text-lg mb-6 tracking-wide">ติดต่อด่วน</h3>
+            <ul className="space-y-5">
+              <li className="flex items-start gap-3 text-sm">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#ff0000] shrink-0 mt-0.5"><i className="fas fa-map-marker-alt"></i></div>
+                <span className="text-gray-400 leading-relaxed">186 ม.5 ต.หนองกินเพล อ.วารินชำราบ<br />จ.อุบลราชธานี 34190</span>
               </li>
-              <li className="flex items-center gap-3">
-                <i className="fas fa-envelope text-gray-500 shrink-0"></i>
-                <a href="mailto:info@thanagroup.com" className="hover:text-thana-red transition-colors">info@thanagroup.com</a>
+              <li>
+                <a href="tel:0930237931" className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#ff0000] shrink-0 group-hover:bg-[#ff0000] group-hover:text-white transition-colors"><i className="fas fa-phone"></i></div>
+                  093-023-7931
+                </a>
               </li>
-              
-              {/* กล่องเบอร์ Hotline */}
-              <li className="bg-gray-800/50 p-4 rounded-xl border border-gray-700 mt-4">
-                <div className="flex items-center gap-3 mb-1">
-                  <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center text-thana-red shrink-0">
-                    <i className="fas fa-phone-alt animate-pulse"></i>
-                  </div>
-                  <div>
-                    <span className="block text-xs font-bold text-gray-500 uppercase tracking-wider">Hotline 24/7</span>
-                    <a href="tel:0930237931" className="text-xl font-black text-white hover:text-thana-red transition-colors">093-237-931</a>
-                  </div>
-                </div>
-                {/* ป้ายกำกับ เปิดบริการทุกวัน */}
-                <div className="mt-2 text-xs font-bold text-green-400 flex items-center gap-1.5 ml-11">
-                  <i className="fas fa-check-circle"></i> เปิดบริการทุกวัน ไม่มีวันหยุด
-                </div>
+              <li>
+                <a href="https://line.me/ti/p/~@thanagroup" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#00c300] shrink-0 group-hover:bg-[#00c300] group-hover:text-white transition-colors"><i className="fab fa-line text-lg"></i></div>
+                  @thanagroup
+                </a>
+              </li>
+              <li>
+                <a href="mailto:contact@thanagroup.com" className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#00e5ff] shrink-0 group-hover:bg-[#00e5ff] group-hover:text-[#0f172a] transition-colors"><i className="fas fa-envelope"></i></div>
+                  contact@thanagroup.com
+                </a>
               </li>
             </ul>
           </div>
 
         </div>
 
-        {/* Bottom Bar: Copyright & Legal */}
-        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-xs">
-            &copy; {new Date().getFullYear()} THANA GROUP LOGISTICS. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4 text-xs font-medium text-gray-500">
-            <Link href="/privacy-policy" className="hover:text-white transition-colors">นโยบายความเป็นส่วนตัว (Privacy Policy)</Link>
-            <span className="w-1 h-1 rounded-full bg-gray-700"></span>
-            <Link href="/terms" className="hover:text-white transition-colors">ข้อกำหนดและเงื่อนไข (Terms of Service)</Link>
+        {/* =========================================
+            ส่วนล่างสุด: ลิขสิทธิ์
+        ========================================= */}
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500">
+          <p>&copy; {new Date().getFullYear()} THANA LOGISTICS CO., LTD. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
-
       </div>
     </footer>
   );
