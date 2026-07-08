@@ -10,12 +10,12 @@ export default function AdminDashboard() {
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-const handleUpdate = async (e: React.FormEvent) => {
+  // ฟังก์ชันนี้เชื่อมต่อ API ฐานข้อมูลเรียบร้อยแล้ว
+  const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
     try {
-      // ส่งข้อมูลไปหา API ที่เราเพิ่งสร้าง
       const res = await fetch('/api/tracking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,7 +29,6 @@ const handleUpdate = async (e: React.FormEvent) => {
 
       if (res.ok) {
         alert(`✅ บันทึกสถานะพัสดุ ${trackingNumber} ลงฐานข้อมูลสำเร็จ!`);
-        // เคลียร์ฟอร์ม
         setTrackingNumber('');
         setLocation('');
         setDescription('');
@@ -42,16 +41,6 @@ const handleUpdate = async (e: React.FormEvent) => {
     } finally {
       setIsLoading(false);
     }
-  };
-    
-    // จำลองการบันทึกข้อมูล (เดี๋ยวเราจะมาต่อฐานข้อมูลจริงกัน)
-    setTimeout(() => {
-      alert(`✅ อัปเดตสถานะพัสดุ ${trackingNumber} เรียบร้อยแล้ว!`);
-      setIsLoading(false);
-      setTrackingNumber('');
-      setLocation('');
-      setDescription('');
-    }, 1000);
   };
 
   return (
