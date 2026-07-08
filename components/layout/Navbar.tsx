@@ -84,9 +84,16 @@ export default function Navbar() {
         </div>
         
         <div className="flex items-center gap-4 flex-shrink-0">
+          
+          {/* 🚨 ปุ่มสำหรับ Admin เข้าสู่ระบบ (วาร์ปไปหน้า /admin) */}
+          <Link href="/admin" className="whitespace-nowrap text-[#facc15] hover:text-black transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-[#facc15]/10 px-3 py-1 rounded-sm border border-[#facc15]/20 hover:bg-[#facc15]">
+            <i className="fas fa-user-shield text-base"></i> <span>Staff Only</span>
+          </Link>
+
           <Link href="#" className="whitespace-nowrap text-[#00e5ff] hover:text-white transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-white/5 px-3 py-1 rounded-sm border border-white/10 hover:bg-[#00e5ff] hover:text-black">
             <i className="fas fa-user-circle text-base"></i> <span>e-Services Login</span>
           </Link>
+          
           <div className="h-4 w-px bg-gray-700 mx-1"></div>
           <div className="flex items-center gap-3 select-none text-xs font-bold">
             <span className="flex items-center gap-1.5 text-white opacity-100 drop-shadow-md cursor-pointer">
@@ -301,6 +308,12 @@ export default function Navbar() {
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="whitespace-nowrap bg-[#ff0000] text-center text-white font-bold py-3 px-6 rounded-lg">
                 ติดต่อเรา
               </Link>
+
+              {/* 🚨 ปุ่ม Admin สำหรับมือถือ */}
+              <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="whitespace-nowrap bg-gray-800 text-center text-white font-bold py-3 px-6 rounded-lg border border-gray-700 flex items-center justify-center gap-2 hover:bg-gray-900 shadow-inner">
+                <i className="fas fa-user-shield text-[#facc15]"></i> ระบบจัดการพัสดุ (Admin)
+              </Link>
+
             </div>
           </div>
         )}
