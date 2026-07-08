@@ -16,7 +16,17 @@ export async function POST(request: Request) {
     const parcel = await prisma.tracking.upsert({
       where: { trackingNumber: trackingNumber },
       update: {}, // ไม่ต้องอัปเดตข้อมูลพัสดุหลัก
-      create: { trackingNumber: trackingNumber },
+    create: { 
+          trackingNumber: trackingNumber,
+          origin: "รอระบุ",
+          destination: "รอระบุ",
+          sender: "รอระบุ",
+          receiver: "รอระบุ",
+          estimatedDelivery: "รอระบุ",
+          serviceType: "Standard",
+          pieces: 1,
+          weight: "0"
+        },
     });
 
     // 3. บันทึก "ประวัติสถานะใหม่" ลงไปในพัสดุชิ้นนี้
