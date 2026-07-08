@@ -113,7 +113,7 @@ export default function TrackPackagePage() {
                         )}
                       </div>
                       <div className="text-sm font-medium text-gray-400 shrink-0">
-                        {new Date(history.timestamp).toLocaleString('th-TH', { 
+                        {new Date(history.createdAt).toLocaleString('th-TH', { 
                           day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
                         })} น.
                       </div>
