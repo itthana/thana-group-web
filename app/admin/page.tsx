@@ -1,204 +1,156 @@
 'use client';
 
 import { useState } from 'react';
+import { signOut } from 'next-auth/react';
 
-export default function AdminTrackingPage() {
-  const [searchId, setSearchId] = useState('');
-  const [trackingData, setTrackingData] = useState<any>(null);
-  const [message, setMessage] = useState({ type: '', text: '' });
-  const [isSearching, setIsSearching] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+export default function AdminDashboard() {
+  const [trackingNumber, setTrackingNumber] = useState('');
+  const [status, setStatus] = useState('PENDING');
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  // ข้อมูล Form สำหรับอัปเดต
-  const [updateForm, setUpdateForm] = useState({
-    status: '',
-    location: '',
-    description: ''
-  });
-
-  // ค้นหาข้อมูลเดิมมาโชว์ก่อน
-  const handleSearch = async (e: React.FormEvent) => {
+  // ฟังก์ชันจำลองการบันทึกข้อมูล (เดี๋ยวเราจะมาต่อ API ฐานข้อมูลจริงกันในขั้นตอนถัดไป)
+  const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSearching(true);
-    setMessage({ type: '', text: '' });
+    setIsLoading(true);
     
-    try {
-      const res = await fetch(`/api/tracking?id=${searchId}`);
-      const data = await res.json();
-      
-      if (res.ok) {
-        setTrackingData(data);
-        setUpdateForm({ ...updateForm, status: data.currentStatus });
-      } else {
-        setTrackingData(null);
-        setMessage({ type: 'error', text: data.error });
-      }
-    } catch (err) {
-      setMessage({ type: 'error', text: 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้' });
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
-  // กดยืนยันอัปเดตสถานะใหม่
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsUpdating(true);
-    setMessage({ type: '', text: '' });
-
-    try {
-      const res = await fetch('/api/tracking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          trackingNumber: trackingData.trackingNumber,
-          status: updateForm.status,
-          location: updateForm.location,
-          description: updateForm.description
-        })
-      });
-
-      const result = await res.json();
-
-      if (res.ok) {
-        setMessage({ type: 'success', text: 'บันทึกสถานะใหม่เข้าสู่ระบบเรียบร้อยแล้ว!' });
-        setTrackingData(result.data); // อัปเดตข้อมูลหน้าจอแอดมินทันที
-        setUpdateForm({ status: result.data.currentStatus, location: '', description: '' }); // เคลียร์ฟอร์ม
-      } else {
-        setMessage({ type: 'error', text: result.error });
-      }
-    } catch (err) {
-      setMessage({ type: 'error', text: 'เกิดข้อผิดพลาดในการบันทึก' });
-    } finally {
-      setIsUpdating(false);
-    }
+    setTimeout(() => {
+      alert(`อัปเดตสถานะ ${trackingNumber} สำเร็จ!`);
+      setIsLoading(false);
+      // เคลียร์ฟอร์ม
+      setTrackingNumber('');
+      setLocation('');
+      setDescription('');
+    }, 1000);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 font-prompt p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        
-        {/* Header แอดมิน */}
-        <div className="flex items-center gap-4 mb-8 bg-[#0a2540] p-6 rounded-2xl text-white shadow-lg">
-          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl backdrop-blur-md">
-            <i className="fas fa-user-shield"></i>
+    <div className="min-h-screen bg-slate-50 font-prompt pb-20">
+      
+      {/* 1. Admin Navbar */}
+      <nav className="bg-[#0a2540] text-white px-6 py-4 shadow-md sticky top-0 z-50 flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-[#00249c] rounded-lg flex items-center justify-center text-xl shadow-inner">
+            <i className="fas fa-truck-fast"></i>
           </div>
           <div>
-            <h1 className="text-2xl font-black">THANA GROUP - Admin Portal</h1>
-            <p className="text-gray-300 text-sm">ระบบอัปเดตสถานะการขนส่ง (Tracking Management)</p>
+            <h1 className="font-black text-lg leading-tight uppercase tracking-wide">THANA GROUP</h1>
+            <p className="text-[10px] text-gray-300">Admin Control Panel</p>
           </div>
         </div>
+        
+        <button 
+          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          className="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/30 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2"
+        >
+          <i className="fas fa-power-off"></i> <span className="hidden sm:inline">ออกจากระบบ</span>
+        </button>
+      </nav>
 
-        {/* ส่วนค้นหาออเดอร์ */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-6">
-          <h2 className="font-bold text-gray-800 mb-4 text-lg">1. ค้นหาหมายเลขพัสดุ / ใบงาน</h2>
-          <form onSubmit={handleSearch} className="flex gap-4">
-            <input 
-              type="text" 
-              value={searchId}
-              onChange={(e) => setSearchId(e.target.value)}
-              placeholder="เช่น THN-12345" 
-              className="flex-1 px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 font-bold uppercase"
-              required
-            />
-            <button type="submit" disabled={isSearching} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl transition-colors">
-              {isSearching ? 'กำลังค้นหา...' : 'ค้นหา'}
+      {/* 2. Main Content */}
+      <main className="max-w-3xl mx-auto mt-8 px-4">
+        
+        <div className="bg-white rounded-3xl shadow-[0_10px_30px_rgba(0,36,156,0.05)] border border-gray-100 overflow-hidden animate-slide-up">
+          <div className="bg-[#00249c] p-6 text-white text-center">
+            <h2 className="text-2xl font-black mb-1">อัปเดตสถานะพัสดุ</h2>
+            <p className="text-blue-200 text-sm">เพิ่มประวัติการเดินทางใหม่ให้ลูกค้าตรวจสอบแบบ Real-time</p>
+          </div>
+
+          <form onSubmit={handleUpdate} className="p-6 sm:p-8 space-y-6">
+            
+            {/* Tracking Number */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">หมายเลข Tracking <span className="text-red-500">*</span></label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                  <i className="fas fa-barcode"></i>
+                </div>
+                <input 
+                  type="text" 
+                  required
+                  value={trackingNumber}
+                  onChange={(e) => setTrackingNumber(e.target.value.toUpperCase())}
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 uppercase font-bold text-gray-800"
+                  placeholder="เช่น THN-12345"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Status Select */}
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">สถานะปัจจุบัน <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                    <i className="fas fa-clipboard-check"></i>
+                  </div>
+                  <select 
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 font-medium text-gray-800 appearance-none"
+                  >
+                    <option value="PENDING">📦 รับฝาก (Pending)</option>
+                    <option value="PICKED_UP">🚚 เข้าระบบ (Picked Up)</option>
+                    <option value="IN_TRANSIT">💨 ระหว่างขนส่ง (In Transit)</option>
+                    <option value="CUSTOMS">🛂 ศุลกากร (Customs)</option>
+                    <option value="OUT_FOR_DELIVERY">🛵 กำลังนำจ่าย (Out for Delivery)</option>
+                    <option value="DELIVERED">✅ จัดส่งสำเร็จ (Delivered)</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                    <i className="fas fa-chevron-down text-sm"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">สถานที่ (Location) <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                    <i className="fas fa-map-marker-alt"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    required
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 text-gray-800"
+                    placeholder="เช่น ด่านศุลกากรหนองคาย"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">รายละเอียดเพิ่มเติม <span className="text-gray-400 font-normal">(ถ้ามี)</span></label>
+              <textarea 
+                rows={3}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 text-gray-800"
+                placeholder="เช่น สินค้ากำลังรอตรวจสอบเอกสารผ่านแดน..."
+              ></textarea>
+            </div>
+
+            {/* Submit Button */}
+            <button 
+              type="submit" 
+              disabled={isLoading}
+              className="w-full bg-[#10b981] hover:bg-[#059669] text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-green-500/30 flex justify-center items-center gap-2 text-lg"
+            >
+              {isLoading ? (
+                <><i className="fas fa-spinner fa-spin"></i> กำลังบันทึกข้อมูล...</>
+              ) : (
+                <><i className="fas fa-save"></i> อัปเดตเข้าสู่ระบบ (Update Tracking)</>
+              )}
             </button>
+            
           </form>
         </div>
 
-        {/* Message Alert */}
-        {message.text && (
-          <div className={`p-4 rounded-xl mb-6 font-bold flex items-center gap-2 ${message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-            <i className={`fas ${message.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
-            {message.text}
-          </div>
-        )}
-
-        {/* ส่วนอัปเดตข้อมูล (โชว์เมื่อค้นหาเจอ) */}
-        {trackingData && (
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 animate-fade-in">
-            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-              <h2 className="font-bold text-gray-800 text-lg">2. อัปเดตสถานะ: <span className="text-blue-600">{trackingData.trackingNumber}</span></h2>
-              <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold">
-                สถานะปัจจุบัน: {trackingData.currentStatus}
-              </span>
-            </div>
-
-            <form onSubmit={handleUpdate} className="space-y-6">
-              
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">เลือกสถานะใหม่ (New Status) <span className="text-red-500">*</span></label>
-                <select 
-                  required
-                  value={updateForm.status}
-                  onChange={(e) => setUpdateForm({...updateForm, status: e.target.value})}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
-                >
-                  <option value="PENDING">รับฝาก (Pending)</option>
-                  <option value="PICKED_UP">เข้าระบบแล้ว (Picked Up)</option>
-                  <option value="IN_TRANSIT">ระหว่างขนส่ง (In Transit)</option>
-                  <option value="CUSTOMS">ศุลกากร/ติดด่าน (Customs)</option>
-                  <option value="OUT_FOR_DELIVERY">กำลังนำจ่าย (Out for Delivery)</option>
-                  <option value="DELIVERED">จัดส่งสำเร็จ (Delivered)</option>
-                </select>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">สถานที่ปัจจุบัน (Location) <span className="text-red-500">*</span></label>
-                  <input 
-                    type="text" 
-                    required
-                    value={updateForm.location}
-                    onChange={(e) => setUpdateForm({...updateForm, location: e.target.value})}
-                    placeholder="เช่น ด่านหนองคาย (TH)" 
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">คำอธิบายเพิ่มเติม (Description) <span className="text-red-500">*</span></label>
-                  <input 
-                    type="text" 
-                    required
-                    value={updateForm.description}
-                    onChange={(e) => setUpdateForm({...updateForm, description: e.target.value})}
-                    placeholder="เช่น กำลังดำเนินการตรวจเอกสารนำออก" 
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-
-              <button 
-                type="submit" 
-                disabled={isUpdating}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-all flex justify-center items-center gap-2 shadow-md"
-              >
-                {isUpdating ? <i className="fas fa-circle-notch fa-spin"></i> : <i className="fas fa-save"></i>}
-                อัปเดตเข้าสู่ระบบ (Update Tracking)
-              </button>
-
-            </form>
-
-            {/* โชว์ประวัติคร่าวๆ ด้านล่าง เพื่อให้แอดมินดูความถูกต้อง */}
-            <div className="mt-10">
-              <h3 className="font-bold text-gray-500 text-sm mb-3">ประวัติล่าสุดบนหน้าเว็บลูกค้า:</h3>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
-                {trackingData.events.slice(0, 3).map((ev: any) => (
-                  <div key={ev.id} className="flex justify-between text-sm">
-                    <div>
-                      <span className="font-bold text-gray-700">{ev.status}</span> - {ev.description}
-                    </div>
-                    <div className="text-gray-400 whitespace-nowrap">{ev.date} {ev.time}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        )}
-
-      </div>
+      </main>
     </div>
   );
 }
