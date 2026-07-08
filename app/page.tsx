@@ -171,15 +171,14 @@ const handleTrackSubmit = (e: React.FormEvent) => {
                 <p className="text-gray-500 text-sm font-medium md:pl-13">Track & Trace Your Shipment</p>
               </div>
               
-              <form onSubmit={handleTrackSubmit} className="flex-1 w-full">
+            <form action="/track" method="GET" className="flex-1 w-full">
                 <div className="relative flex items-center w-full bg-white border-2 border-gray-100 rounded-2xl overflow-hidden focus-within:border-[#00249c] focus-within:shadow-[0_0_0_4px_rgba(0,36,156,0.1)] transition-all duration-300">
                   <div className="pl-6 text-gray-400">
                     <i className="fas fa-barcode text-lg"></i>
                   </div>
                   <input 
                     type="text" 
-                    value={trackingNumber}
-                    onChange={(e) => setTrackingNumber(e.target.value)}
+                    name="id" 
                     placeholder="กรอกหมายเลข Tracking Number..." 
                     className="flex-1 px-4 py-4 md:py-5 bg-transparent outline-none text-gray-700 w-full font-medium"
                     required
@@ -189,7 +188,6 @@ const handleTrackSubmit = (e: React.FormEvent) => {
                   </button>
                 </div>
               </form>
-            </div>
 
             {/* ⛽ ส่วนที่ 2: Expandable Fuel Price Widget */}
             <div className="lg:col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white overflow-hidden transition-all duration-500">
