@@ -1,6 +1,9 @@
-export { default } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
 
+// สร้างและส่งออกฟังก์ชัน middleware ชัดเจน 100%
+export default withAuth();
+
+// กำหนดหน้าจอที่ต้องการล็อกกุญแจ
 export const config = {
-  // ล็อกกุญแจทุกหน้าจอที่ขึ้นต้นด้วย /admin (ยกเว้นหน้า login)
   matcher: ["/admin", "/admin/((?!login).*)"],
 };
