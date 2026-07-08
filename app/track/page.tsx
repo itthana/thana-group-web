@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function TrackPackagePage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -8,18 +8,14 @@ export default function TrackPackagePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // ฟังก์ชันดึงข้อมูลจาก API
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-
+  // 1. แยกฟังก์ชันดึงข้อมูลออกมา เพื่อให้เรียกใช้ได้จากหลายที่
+  const fetchTrackingData = async (trackingId: string) => {
     setIsLoading(true);
     setError('');
     setTrackingData(null);
 
     try {
-      // เรียก API ไปดึงข้อมูลพัสดุ (เดี๋ยวเราจะสร้าง API ตัวนี้กันในสเต็ปหน้าครับ)
-      const res = await fetch(`/api/tracking?trackingNumber=${searchQuery}`);
+      const res = await fetch(`/api/tracking?trackingNumber=${trackingId}`);
       const data = await res.json();
 
       if (res.ok) {
@@ -32,6 +28,27 @@ export default function TrackPackagePage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // 2. ดักจับ URL ว่ามีรหัสพัสดุพ่วงมาด้วยไหมตอนเปิดหน้าเว็บครั้งแรก
+  useEffect(() => {
+    // ดึงค่า ?id= ออกมาจาก URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const idFromUrl = urlParams.get('id');
+
+    // ถ้าเจอว่าส่งรหัสมาด้วย ให้เอาไปใส่ช่องค้นหา และสั่งค้นหาอัตโนมัติเลย
+    if (idFromUrl) {
+      const formattedId = idFromUrl.toUpperCase();
+      setSearchQuery(formattedId);
+      fetchTrackingData(formattedId);
+    }
+  }, []);
+
+  // 3. ฟังก์ชันสำหรับตอนที่ลูกค้าพิมพ์เองแล้วกดปุ่ม "ค้นหา"
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    fetchTrackingData(searchQuery.trim().toUpperCase());
   };
 
   return (
