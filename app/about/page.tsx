@@ -2,7 +2,6 @@
 
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function AboutPage() {
@@ -17,12 +16,11 @@ export default function AboutPage() {
         ============================================================================ */}
         <section className="relative bg-[#0a2540] py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
-            <Image 
+            {/* เปลี่ยนมาใช้แท็ก img มาตรฐาน */}
+            <img 
               src="ลงเวป.jpg" 
               alt="THANA GROUP Background" 
-              fill
-              className="object-cover"
-              priority
+              className="w-full h-full object-cover"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540] via-[#0a2540]/80 to-transparent z-0"></div>
@@ -46,12 +44,12 @@ export default function AboutPage() {
         <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="order-2 lg:order-1 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] border-4 border-white">
-                <Image 
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] border-4 border-white bg-gray-100">
+                {/* เปลี่ยนมาใช้แท็ก img มาตรฐาน */}
+                <img 
                   src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1000&auto=format&fit=crop" 
                   alt="Logistics Fleet" 
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
               <div className="absolute -bottom-8 -right-8 bg-white p-6 rounded-3xl shadow-xl border border-gray-100 hidden md:block animate-fade-in-up">
@@ -89,7 +87,7 @@ export default function AboutPage() {
         </section>
 
         {/* ============================================================================
-            🎯 3. VISION & MISSION (วิสัยทัศน์ และ พันธกิจ - แก้ไขสีตัวหนังสือแล้ว)
+            🎯 3. VISION & MISSION (วิสัยทัศน์ และ พันธกิจ)
         ============================================================================ */}
         <section className="bg-gray-100 py-20 md:py-28 px-4 sm:px-6 lg:px-8 border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
@@ -100,7 +98,6 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
-              {/* 👁️ การ์ดวิสัยทัศน์ (Vision) */}
               <div className="bg-white rounded-3xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
                 <div className="relative z-10">
@@ -118,7 +115,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* 🎯 การ์ดพันธกิจ (Mission) */}
               <div className="bg-white rounded-3xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
                 <div className="relative z-10">
