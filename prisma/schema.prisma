@@ -59,3 +59,32 @@ model TrackingEvent {
   // เชื่อมความสัมพันธ์กลับไปที่ตาราง Tracking
   tracking       Tracking @relation(fields: [trackingId], references: [id], onDelete: Cascade)
 }
+// ==========================================
+// 📦 ตารางข้อมูลพัสดุหลัก (Parcel)
+// ==========================================
+model Parcel {
+  id             String           @id @default(cuid())
+  trackingNumber String           @unique // รหัสพัสดุ ต้องไม่ซ้ำกัน
+  senderName     String?          // ชื่อผู้ส่ง (เผื่ออนาคต)
+  receiverName   String?          // ชื่อผู้รับ (เผื่ออนาคต)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  // ความสัมพันธ์ 1 ต่อ N: พัสดุ 1 ชิ้น มีประวัติสถานะได้หลายรายการ
+  trackingHistories TrackingHistory[]
+}
+
+// ==========================================
+// 📍 ตารางประวัติการอัปเดตสถานะ (Tracking History)
+// ==========================================
+model TrackingHistory {
+  id          String   @id @default(cuid())
+  status      String   // เช่น PENDING, IN_TRANSIT, DELIVERED
+  location    String   // สถานที่ เช่น ด่านศุลกากรหนองคาย
+  description String?  // รายละเอียดเพิ่มเติม
+  timestamp   DateTime @default(now()) // เวลาที่อัปเดต
+
+  // เชื่อมโยงกลับไปยังพัสดุหลัก
+  parcelId    String
+  parcel      Parcel   @relation(fields: [parcelId], references: [id], onDelete: Cascade)
+}
