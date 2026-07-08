@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     // 2. เช็คว่าพัสดุรหัสนี้เคยมีในระบบไหม? 
     // ถ้าไม่มีให้สร้างใหม่ (Create) ถ้ามีอยู่แล้วให้ใช้ของเดิม (Update)
-    const parcel = await prisma.parcel.upsert({
+    const parcel = await prisma.tracking.upsert({
       where: { trackingNumber: trackingNumber },
       update: {}, // ไม่ต้องอัปเดตข้อมูลพัสดุหลัก
       create: { trackingNumber: trackingNumber },
@@ -51,7 +51,7 @@ export async function GET(request: Request) {
     }
 
     // 2. ค้นหาข้อมูลพัสดุจากฐานข้อมูล พร้อมประวัติการเดินทาง
-    const parcel = await prisma.parcel.findUnique({
+    const parcel = await prisma.tracking.findUnique({
       where: { trackingNumber: trackingNumber.toUpperCase() },
       include: {
         // ดึงประวัติมาด้วย และจัดเรียงจากเวลา "ล่าสุด" ขึ้นก่อน (desc)
