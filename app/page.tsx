@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // 👈 นำเข้าระบบ Router
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
@@ -40,7 +39,7 @@ const heroSlides = [
 ];
 
 // ============================================================================
-// ⛽ ข้อมูลตารางราคาน้ำมัน (อ้างอิงดีไซน์จากตาราง ปตท.)
+// ⛽ ข้อมูลตารางราคาน้ำมัน
 // ============================================================================
 const pttFuelData = [
   { id: 'b20', name: 'Diesel B20', bg: 'bg-red-700 text-white', today: 32.50, tomorrow: 29.94, diff: -2.56 },
@@ -54,11 +53,7 @@ const pttFuelData = [
 ];
 
 export default function HomePage() {
-  const router = useRouter(); // 👈 เรียกใช้งาน Router
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [trackingNumber, setTrackingNumber] = useState('');
-  
-  // State สำหรับควบคุมการยืด/หด ของตารางน้ำมัน
   const [isFuelExpanded, setIsFuelExpanded] = useState(false);
 
   // 🔄 ระบบเล่นสไลด์อัตโนมัติ ทุกๆ 6 วินาที
@@ -71,14 +66,6 @@ export default function HomePage() {
 
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
   const nextSlide = () => setCurrentSlide((prev) => (prev === heroSlides.length - 1 ? 0 : prev + 1));
-
-const handleTrackSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if(trackingNumber) {
-      // 👈 เพิ่ม ?id= เข้าไป เพื่อแนบรหัสพัสดุไปกับ URL ครับ
-      router.push(`/track?id=${trackingNumber}`);
-    }
-  };
 
   return (
     <>
@@ -171,7 +158,8 @@ const handleTrackSubmit = (e: React.FormEvent) => {
                 <p className="text-gray-500 text-sm font-medium md:pl-13">Track & Trace Your Shipment</p>
               </div>
               
-            <form action="/track" method="GET" className="flex-1 w-full">
+              {/* เปลี่ยนมาใช้ฟอร์มพื้นฐานแบบ Native HTML ชัวร์ 100% */}
+              <form action="/track" method="GET" className="flex-1 w-full">
                 <div className="relative flex items-center w-full bg-white border-2 border-gray-100 rounded-2xl overflow-hidden focus-within:border-[#00249c] focus-within:shadow-[0_0_0_4px_rgba(0,36,156,0.1)] transition-all duration-300">
                   <div className="pl-6 text-gray-400">
                     <i className="fas fa-barcode text-lg"></i>
@@ -188,6 +176,7 @@ const handleTrackSubmit = (e: React.FormEvent) => {
                   </button>
                 </div>
               </form>
+            </div>
 
             {/* ⛽ ส่วนที่ 2: Expandable Fuel Price Widget */}
             <div className="lg:col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white overflow-hidden transition-all duration-500">
