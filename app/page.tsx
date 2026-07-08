@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'; // 👈 นำเข้าระบบ Router
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
@@ -53,6 +54,7 @@ const pttFuelData = [
 ];
 
 export default function HomePage() {
+  const router = useRouter(); // 👈 เรียกใช้งาน Router
   const [currentSlide, setCurrentSlide] = useState(0);
   const [trackingNumber, setTrackingNumber] = useState('');
   
@@ -73,7 +75,8 @@ export default function HomePage() {
   const handleTrackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(trackingNumber) {
-      alert(`กำลังพัฒนาระบบเช็คสถานะสำหรับหมายเลข: ${trackingNumber}`);
+      // 👈 สั่งเปิดประตูวาร์ปไปหน้า /track ทันทีที่กดค้นหา
+      router.push('/track');
     }
   };
 
@@ -153,7 +156,6 @@ export default function HomePage() {
         {/* ============================================================================
             📦⛽ 2. TRACK & TRACE + EXPANDABLE FUEL WIDGET 
         ============================================================================ */}
-        {/* ใช้ items-start เพื่อให้ตอนกดขยายตารางน้ำมัน กล่อง Track & Trace ไม่ยืดตาม */}
         <section className="relative z-40 -mt-24 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
@@ -192,7 +194,6 @@ export default function HomePage() {
             {/* ⛽ ส่วนที่ 2: Expandable Fuel Price Widget */}
             <div className="lg:col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white overflow-hidden transition-all duration-500">
               
-              {/* Header: ส่วนที่คลิกเพื่อขยาย/หดได้ */}
               <button 
                 onClick={() => setIsFuelExpanded(!isFuelExpanded)}
                 className="w-full p-6 flex justify-between items-center hover:bg-blue-50/50 transition-colors"
@@ -211,7 +212,6 @@ export default function HomePage() {
                 </div>
               </button>
 
-              {/* Body: ตารางที่ซ่อน/แสดง (จำลองดีไซน์ตาราง ปตท.) */}
               <div 
                 className={`transition-all duration-500 ease-in-out overflow-hidden ${
                   isFuelExpanded ? 'max-h-[600px] opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0'
@@ -220,7 +220,6 @@ export default function HomePage() {
                 <div className="p-4">
                   <div className="rounded-xl overflow-hidden shadow-sm border border-[#5fa4e6]">
                     
-                    {/* Table Header (สไตล์ ปตท.) */}
                     <div className="grid grid-cols-4 bg-gradient-to-b from-[#7cbcf4] to-[#4590db] text-white text-xs md:text-sm font-bold py-2 text-center drop-shadow-sm">
                       <div className="col-span-1">ชนิด</div>
                       <div className="col-span-1">วันนี้</div>
@@ -228,27 +227,22 @@ export default function HomePage() {
                       <div className="col-span-1">ส่วนต่าง</div>
                     </div>
 
-                    {/* Table Rows */}
                     <div className="bg-white">
                       {pttFuelData.map((fuel, index) => (
                         <div key={fuel.id} className={`grid grid-cols-4 text-center border-b border-gray-100 ${index % 2 === 0 ? 'bg-white' : 'bg-blue-50/30'} hover:bg-gray-50 transition-colors`}>
                           
-                          {/* ชื่อน้ำมัน */}
                           <div className={`col-span-1 flex items-center justify-center py-2 px-1 text-[10px] md:text-xs font-bold leading-tight ${fuel.bg}`}>
                             {fuel.name}
                           </div>
                           
-                          {/* ราคาวันนี้ */}
                           <div className="col-span-1 flex items-center justify-center font-bold text-[#0a2540] text-sm">
                             {fuel.today.toFixed(2)}
                           </div>
                           
-                          {/* ราคาพรุ่งนี้ */}
                           <div className="col-span-1 flex items-center justify-center font-bold text-[#16a34a] text-sm">
                             {fuel.tomorrow.toFixed(2)}
                           </div>
                           
-                          {/* ส่วนต่าง (เขียวลง แดงขึ้น แดชเท่าเดิม) */}
                           <div className="col-span-1 flex items-center justify-center text-sm font-bold">
                             {fuel.diff < 0 ? (
                               <span className="text-[#16a34a]">{fuel.diff.toFixed(2)}</span>
@@ -320,7 +314,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Service Cards (คงเดิม) */}
+              {/* Service Cards */}
               <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 group cursor-pointer border border-gray-100">
                 <div className="h-48 overflow-hidden relative">
                   <div className="absolute inset-0 bg-[#0a2540]/20 group-hover:bg-transparent transition-colors z-10"></div>
