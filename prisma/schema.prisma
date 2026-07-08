@@ -45,8 +45,10 @@ model Tracking {
 // ==========================================
 model TrackingHistory {
   id             String   @id @default(cuid())
-  trackingNumber String
+  trackingNumber String?
   status         String
   location       String?
+  description    String?  // เพิ่มช่องรายละเอียด
+  parcelId       String?  // เพิ่มช่องผูก ID 
   createdAt      DateTime @default(now())
 }
