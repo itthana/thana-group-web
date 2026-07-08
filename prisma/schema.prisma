@@ -1,0 +1,61 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ตั้งค่าให้ใช้ SQLite สำหรับการทดสอบเบื้องต้น (เปลี่ยนเป็น postgresql ได้ทันทีเมื่อขึ้น Production)
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}npx prisma db push
+// ==========================================
+// 1. ตารางแอดมิน (Admin Users)
+// ==========================================
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // เก็บแบบเข้ารหัส (Hashed)
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+// ==========================================
+// 2. ตารางข้อมูลพัสดุ (Tracking Data)
+// ==========================================
+model Tracking {
+  id                String          @id @default(cuid())
+  trackingNumber    String          @unique
+  currentStatus     String          @default("PENDING")
+  origin            String
+  destination       String
+  sender            String
+  receiver          String
+  estimatedDelivery String
+  serviceType       String
+  pieces            Int
+  weight            String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  // เชื่อมโยงกับประวัติการเดินทาง (1 พัสดุ มีหลายประวัติ)
+  events            TrackingEvent[] 
+}
+
+// ==========================================
+// 3. ตารางประวัติการเดินทาง (Tracking Events)
+// ==========================================
+model TrackingEvent {
+  id             String   @id @default(cuid())
+  trackingId     String
+  date           String
+  time           String
+  status         String
+  location       String
+  description    String
+  isCompleted    Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  // เชื่อมความสัมพันธ์กลับไปที่ตาราง Tracking
+  tracking       Tracking @relation(fields: [trackingId], references: [id], onDelete: Cascade)
+}

@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect, FormEvent } from 'react';
-import Link from 'next/link';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 
 // ============================================================================
-// 📦 1. Interfaces & Types (กำหนดโครงสร้างข้อมูลตามมาตรฐาน TypeScript)
+// 📦 1. Interfaces & Types (โครงสร้างข้อมูล)
 // ============================================================================
 interface TrackingEvent {
   id: string;
@@ -32,44 +31,13 @@ interface TrackingData {
   events: TrackingEvent[];
 }
 
-// 📌 ฟังก์ชันจำลองการดึงข้อมูล API (ในของจริงจะใช้ fetch ไปที่ Backend)
-const fetchTrackingData = async (trackingNo: string): Promise<TrackingData> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // จำลองว่าถ้ารหัสขึ้นต้นด้วย THN ให้เจอข้อมูล
-      if (trackingNo.toUpperCase().startsWith('THN')) {
-        resolve({
-          trackingNumber: trackingNo.toUpperCase(),
-          currentStatus: 'CUSTOMS',
-          origin: 'ชลบุรี, ประเทศไทย (TH)',
-          destination: 'เวียงจันทน์, สปป.ลาว (LA)',
-          sender: 'บริษัท ตัวอย่างส่งออก จำกัด',
-          receiver: 'Vientiane Trading Co., Ltd.',
-          estimatedDelivery: '10 ก.ค. 2026',
-          serviceType: 'Cross-Border Express (FTL)',
-          pieces: 120,
-          weight: '2,500 kg',
-          events: [
-            { id: '4', date: '08 ก.ค. 2026', time: '08:43', status: 'CUSTOMS', location: 'ด่านศุลกากรหนองคาย (TH)', description: 'สินค้ากำลังอยู่ในขั้นตอนการผ่านพิธีการศุลกากรขาออก', isCompleted: true },
-            { id: '3', date: '07 ก.ค. 2026', time: '22:15', status: 'IN_TRANSIT', location: 'นครราชสีมา (TH)', description: 'รถบรรทุกกำลังเดินทางมุ่งหน้าสู่ด่านพรมแดน', isCompleted: true },
-            { id: '2', date: '07 ก.ค. 2026', time: '14:30', status: 'PICKED_UP', location: 'ศูนย์กระจายสินค้า ชลบุรี (TH)', description: 'รับสินค้าเข้าสู่ระบบและจัดเตรียมขึ้นรถบรรทุก', isCompleted: true },
-            { id: '1', date: '07 ก.ค. 2026', time: '09:00', status: 'PENDING', location: 'ระบบออนไลน์', description: 'ได้รับคำสั่งซื้อและยืนยันการจองรถขนส่ง (Booking Confirmed)', isCompleted: true },
-          ]
-        });
-      } else {
-        reject(new Error('ไม่พบข้อมูลการจัดส่ง กรุณาตรวจสอบหมายเลข Tracking อีกครั้ง'));
-      }
-    }, 1500); // หน่วงเวลา 1.5 วิ ให้เห็น Loading สวยๆ
-  });
-};
-
 export default function TrackingPage() {
   const [searchInput, setSearchInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [trackingResult, setTrackingResult] = useState<TrackingData | null>(null);
 
-  // ดึงหมายเลขจาก URL (ถ้ามีการส่งมาจากหน้าแรก)
+  // 🔄 ดึงหมายเลขจาก URL (ถ้าลูกค้าคลิกมาจากหน้าแรก)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const trackId = urlParams.get('id');
@@ -84,6 +52,7 @@ export default function TrackingPage() {
     handleSearch(searchInput);
   };
 
+  // 📡 ฟังก์ชันค้นหาข้อมูลจาก API หลังบ้าน
   const handleSearch = async (trackingNo: string) => {
     if (!trackingNo.trim()) {
       setErrorMsg('กรุณากรอกหมายเลข Tracking Number');
@@ -95,10 +64,18 @@ export default function TrackingPage() {
     setTrackingResult(null);
 
     try {
-      const data = await fetchTrackingData(trackingNo);
-      setTrackingResult(data);
+      // ยิง Request ไปที่ API ของเรา
+      const res = await fetch(`/api/tracking?id=${trackingNo}`);
+      const data = await res.json();
+
+      if (res.ok) {
+        setTrackingResult(data);
+      } else {
+        // กรณีหาไม่เจอ (เช่น 404)
+        setErrorMsg(data.error || 'ไม่พบข้อมูลการจัดส่ง กรุณาตรวจสอบหมายเลข Tracking อีกครั้ง');
+      }
     } catch (err: any) {
-      setErrorMsg(err.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อระบบ');
+      setErrorMsg('เกิดข้อผิดพลาดในการเชื่อมต่อระบบอินเทอร์เน็ต');
     } finally {
       setIsLoading(false);
     }
