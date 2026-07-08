@@ -34,15 +34,19 @@ function TrackForm() {
     }
   };
 
-  // ทันทีที่เจอ URL มีรหัสพัสดุ ให้จับใส่กล่องแล้วกดค้นหาให้เลย!
+ // สูตรดักจับ URL แบบบังคับทำงาน 100%
   useEffect(() => {
-    if (idFromUrl) {
-      const formattedId = idFromUrl.toUpperCase();
-      setSearchQuery(formattedId);
-      fetchTrackingData(formattedId);
+    // อ่านค่าจาก URL
+    const id = searchParams.get('id');
+    
+    // ถ้ามีรหัสส่งมา และยังไม่ได้กำลังโหลดข้อมูล ให้สั่งค้นหาเลยทันที!
+    if (id && !isLoading && !trackingData) {
+      const formattedId = id.toUpperCase();
+      setSearchQuery(formattedId); // เติมเลขใส่ช่อง
+      fetchTrackingData(formattedId); // สั่งดึงข้อมูล
     }
-  }, [idFromUrl]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]); // บังคับให้เช็คทุกครั้งที่ URL ขยับ
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;

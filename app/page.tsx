@@ -72,11 +72,11 @@ export default function HomePage() {
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
   const nextSlide = () => setCurrentSlide((prev) => (prev === heroSlides.length - 1 ? 0 : prev + 1));
 
-  const handleTrackSubmit = (e: React.FormEvent) => {
+const handleTrackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(trackingNumber) {
-      // 👈 สั่งเปิดประตูวาร์ปไปหน้า /track ทันทีที่กดค้นหา
-      router.push('/track');
+      // 👈 เพิ่ม ?id= เข้าไป เพื่อแนบรหัสพัสดุไปกับ URL ครับ
+      router.push(`/track?id=${trackingNumber}`);
     }
   };
 
