@@ -39,7 +39,11 @@ model Tracking {
   weight            String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+
+  // บรรทัดนี้เพิ่มมาเพื่อผูกกับตารางประวัติ
+  trackingHistories TrackingHistory[] 
 }
+
 // ==========================================
 // 3. ตารางประวัติสถานะ (Tracking History)
 // ==========================================
@@ -48,7 +52,10 @@ model TrackingHistory {
   trackingNumber String?
   status         String
   location       String?
-  description    String?  // เพิ่มช่องรายละเอียด
-  parcelId       String?  // เพิ่มช่องผูก ID 
+  description    String?
+  parcelId       String?
   createdAt      DateTime @default(now())
+
+  // บรรทัดนี้เพิ่มมาเพื่อผูกกลับไปหาตารางหลัก
+  parcel         Tracking? @relation(fields: [parcelId], references: [id])
 }

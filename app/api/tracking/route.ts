@@ -66,7 +66,7 @@ export async function GET(request: Request) {
       include: {
         // ดึงประวัติมาด้วย และจัดเรียงจากเวลา "ล่าสุด" ขึ้นก่อน (desc)
         trackingHistories: {
-          orderBy: { timestamp: 'desc' },
+          orderBy: { createdAt: 'desc' },
         },
       },
     });
