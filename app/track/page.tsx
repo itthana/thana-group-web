@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation'; // 👈 นำเข้าตัวดักจับ URL ของ Next.js
+import { useSearchParams } from 'next/navigation';
 
-// 1. สร้าง Component ย่อยเพื่อทำงานกับระบบค้นหา
 function TrackForm() {
   const searchParams = useSearchParams();
-  const idFromUrl = searchParams.get('id'); // 👈 ดึงรหัสพัสดุจาก URL อย่างแม่นยำ
+  const idFromUrl = searchParams.get('id');
 
   const [searchQuery, setSearchQuery] = useState('');
   const [trackingData, setTrackingData] = useState<any>(null);
@@ -34,19 +33,25 @@ function TrackForm() {
     }
   };
 
- // ทันทีที่เจอ URL มีรหัสพัสดุ ให้จับใส่กล่องแล้วกดค้นหาให้เลย!
+  // ดักจับ URL ถ้ามีรหัสมา ให้หน่วงเวลา 0.1 วิ แล้วค้นหาให้เลย
   useEffect(() => {
     if (idFromUrl) {
       const formattedId = idFromUrl.toUpperCase();
       setSearchQuery(formattedId);
       
-      // หน่วงเวลา 0.1 วินาที ให้หน้าเว็บตั้งตัวทัน แล้วค่อยดึงข้อมูล
       setTimeout(() => {
         fetchTrackingData(formattedId);
       }, 100);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idFromUrl]);
+
+  // ฟังก์ชันนี้แหละครับที่เมื่อกี้มันหายไป!
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    fetchTrackingData(searchQuery.trim().toUpperCase());
+  };
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
@@ -141,7 +146,6 @@ function TrackForm() {
   );
 }
 
-// 2. หน้าหลัก นำฟอร์มมาใส่และหุ้มด้วย Suspense กันบั๊ก
 export default function TrackPackagePage() {
   return (
     <div className="min-h-screen bg-slate-50 font-prompt py-12 px-4 sm:px-6 lg:px-8">
