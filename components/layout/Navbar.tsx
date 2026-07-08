@@ -206,10 +206,9 @@ export default function Navbar() {
               </div>
 
               {/* Gallery */}
-              <Link href="/gallery" className="whitespace-nowrap text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
-                บรรยากาศการทำงาน
-              </Link>
-              
+              <Link href="/departments" className="whitespace-nowrap text-[#00249c] hover:text-[#ff0000] font-semibold transition-colors text-[15px] uppercase tracking-wider py-6">
+  แผนกการทำงาน
+</Link>
               {/* Hotline & Contact */}
               <div className="flex items-center pl-6 border-l border-gray-200 gap-6">
                 <div className="hidden xl:flex items-center gap-3">
@@ -246,7 +245,7 @@ export default function Navbar() {
             <div className="px-6 pt-4 pb-8 flex flex-col gap-6">
               
               <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-[#00249c]">หน้าแรก</Link>
-              <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-[#00249c]">บรรยากาศการทำงาน</Link>
+              <Link href="/departments" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-[#00249c]">แผนกการทำงาน</Link>
               
               <div>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">รู้จักองค์กร</h3>
