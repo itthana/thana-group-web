@@ -6,9 +6,7 @@ export default function WelcomeScreen() {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   // ==========================================
-  // 🔥 เปิดโหมดทดสอบ (Developer Mode) 
-  // เปลี่ยนเป็น true = หน้าสวัสดีจะขึ้นทุกครั้งที่กดรีเฟรชหน้าเว็บ (เอาไว้เล็งความสวยงาม)
-  // เปลี่ยนเป็น false = ระบบจริง ลูกค้าเห็นแค่ครั้งเดียวต่อการเปิดเว็บหนึ่งรอบ
+  // 🔥 เปิดโหมดทดสอบ (เปลี่ยนเป็น false เมื่อพร้อมใช้งานจริง)
   // ==========================================
   const FORCE_SHOW_FOR_TESTING = true; 
 
@@ -37,7 +35,7 @@ export default function WelcomeScreen() {
   return (
     <div className={`fixed inset-0 z-[99999] flex items-center justify-center bg-[#0a2540] transition-opacity duration-1000 ${isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
       
-      {/* 📸 ภาพพนักงาน หรือภาพบรรยากาศการต้อนรับพรีเมียม */}
+      {/* 📸 ภาพพื้นหลัง */}
       <div className="absolute inset-0 opacity-40">
         <img 
           src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2000&auto=format&fit=crop" 
@@ -46,31 +44,33 @@ export default function WelcomeScreen() {
         />
       </div>
       
-      {/* แผ่นสีน้ำเงินไล่ระดับฉาบทับหน้าจอให้ดูหรูหรา */}
+      {/* แผ่นสีน้ำเงินไล่ระดับฉาบทับหน้าจอ */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540] via-[#0a2540]/85 to-[#0a2540]/40"></div>
 
-      {/* 📦 กล่องข้อความต้อนรับ Glassmorphism (สวยหรูโปร่งแสง) */}
-      <div className="relative z-10 bg-white/10 backdrop-blur-xl border border-white/20 p-8 md:p-14 rounded-3xl text-center max-w-lg mx-4 shadow-2xl transition-all duration-500">
+      {/* 📦 คอนเทนเนอร์หลัก (เอากรอบออกแล้ว เหลือแค่จัดระเบียบตรงกลาง) */}
+      <div className="relative z-10 text-center max-w-lg mx-auto w-full px-6 transition-all duration-500">
         
-        {/* โลโก้บริษัทตรงกลางแบบวงกลมมีรัศมี */}
-        <div className="w-24 h-24 bg-white rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl border-4 border-blue-500/20">
-          <img src="/LOGO-TLT.png" alt="Thana Group Logo" className="w-16 object-contain" />
+        {/* 🎯 จุดเปลี่ยนโลโก้: 
+          เปลี่ยนชื่อไฟล์ตรง src="/LOGO-TLT.png" เป็นชื่อรูปของพี่ได้เลยครับ 
+        */}
+        <div className="w-28 h-28 bg-white rounded-full mx-auto mb-8 flex items-center justify-center shadow-2xl border-4 border-white/10">
+          <img src="/LOGO-TLT.png" alt="Thana Group Logo" className="w-20 object-contain" />
         </div>
         
-        <h1 className="text-2xl md:text-4xl font-black text-white mb-3 tracking-wide leading-tight">
+        <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-wide leading-tight drop-shadow-lg">
           ยินดีต้อนรับสู่ <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400 drop-shadow-md">THANA GROUP</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400 drop-shadow-xl">THANA GROUP</span>
         </h1>
         
-        <p className="text-gray-200 mb-8 text-sm md:text-base font-medium leading-relaxed">
+        <p className="text-gray-200 mb-10 text-base md:text-lg font-medium leading-relaxed drop-shadow-md">
           ผู้ให้บริการโลจิสติกส์ ไทย - ลาว ครบวงจร <br/>
           ยินดีต้อนรับพันธมิตรและลูกค้าทุกท่านด้วยความยินดียิ่ง
         </p>
 
-        {/* ปุ่มกดเข้าเว็บแบบเอฟเฟกต์สะท้อนแสง */}
+        {/* ปุ่มกดเข้าเว็บ */}
         <button 
           onClick={handleEnterSite}
-          className="bg-gradient-to-r from-[#00249c] to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg w-full md:w-auto tracking-wider"
+          className="bg-gradient-to-r from-[#00249c] to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-10 rounded-full transition-all shadow-[0_0_20px_rgba(0,36,156,0.6)] hover:shadow-[0_0_30px_rgba(0,36,156,0.9)] hover:-translate-y-1 text-lg w-full sm:w-auto tracking-wider"
         >
           เข้าสู่เว็บไซต์ <i className="fas fa-arrow-right ml-2 animate-bounce-horizontal"></i>
         </button>
