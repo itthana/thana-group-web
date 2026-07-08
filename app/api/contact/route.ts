@@ -1,56 +1,78 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 
+// ============================================================================
+// 🗄️ Fake Database (ฐานข้อมูลจำลองชั่วคราว)
+// ============================================================================
+let trackingDB = [
+  {
+    trackingNumber: 'THN-12345',
+    currentStatus: 'IN_TRANSIT',
+    origin: 'ชลบุรี, ประเทศไทย (TH)',
+    destination: 'เวียงจันทน์, สปป.ลาว (LA)',
+    sender: 'บริษัท ตัวอย่างส่งออก จำกัด',
+    receiver: 'Vientiane Trading Co., Ltd.',
+    estimatedDelivery: '10 ก.ค. 2026',
+    serviceType: 'Cross-Border Express (FTL)',
+    pieces: 120,
+    weight: '2,500 kg',
+    events: [
+      { id: '2', date: '07 ก.ค. 2026', time: '14:30', status: 'IN_TRANSIT', location: 'นครราชสีมา (TH)', description: 'รถบรรทุกกำลังเดินทางมุ่งหน้าสู่ด่านพรมแดน', isCompleted: true },
+      { id: '1', date: '07 ก.ค. 2026', time: '09:00', status: 'PENDING', location: 'ระบบออนไลน์', description: 'ได้รับคำสั่งซื้อและยืนยันการจองรถขนส่ง (Booking Confirmed)', isCompleted: true },
+    ]
+  }
+];
+
+// 📤 1. GET Method: ดึงข้อมูล (สำหรับหน้าลูกค้าและหน้าแอดมินตอนค้นหา)
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+
+  if (!id) return NextResponse.json({ error: 'Missing tracking ID' }, { status: 400 });
+
+  const data = trackingDB.find(item => item.trackingNumber.toUpperCase() === id.toUpperCase());
+  
+  if (data) {
+    return NextResponse.json(data, { status: 200 });
+  } else {
+    return NextResponse.json({ error: 'ไม่พบข้อมูลการจัดส่ง' }, { status: 404 });
+  }
+}
+
+// 📥 2. POST Method: อัปเดตข้อมูล (สำหรับหน้าแอดมินกดบันทึกสถานะใหม่)
 export async function POST(request: Request) {
   try {
-    // 1. รับข้อมูลจากฟอร์มหน้าบ้าน
     const body = await request.json();
-    const { name, phone, email, department, message } = body;
+    const { trackingNumber, status, location, description } = body;
 
-    // 2. ตรวจสอบข้อมูลเบื้องต้น
-    if (!name || !phone || !department || !message) {
-      return NextResponse.json({ error: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน' }, { status: 400 });
+    const index = trackingDB.findIndex(item => item.trackingNumber.toUpperCase() === trackingNumber.toUpperCase());
+
+    if (index === -1) {
+      return NextResponse.json({ error: 'ไม่พบหมายเลข Tracking นี้ในระบบ' }, { status: 404 });
     }
 
-    // 3. ตั้งค่าระบบส่งอีเมล (Nodemailer)
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER, // ใส่อีเมลของคุณในไฟล์ .env
-        pass: process.env.EMAIL_PASS, // ใส่ App Password ในไฟล์ .env
-      },
-    });
+    // สร้างวันที่และเวลาปัจจุบัน (อิงตามเวลาไทย)
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: 'numeric' });
+    const timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
 
-    // 4. จัดรูปแบบอีเมลที่จะส่งเข้า Inbox ของคุณ
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // ส่งเข้าอีเมลตัวเอง (หรืออีเมลแผนก)
-      replyTo: email || process.env.EMAIL_USER, // ให้กด Reply กลับหาลูกค้าได้เลยถ้าเขากรอกอีเมลมา
-      subject: `[Website Contact] ติดต่อแผนก: ${department} จากคุณ ${name}`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #00249c; color: white; padding: 20px; text-align: center;">
-            <h2 style="margin: 0;">ข้อความใหม่จากหน้าเว็บไซต์</h2>
-          </div>
-          <div style="padding: 20px; background-color: #f9fafb;">
-            <p><strong>ชื่อ-นามสกุล:</strong> ${name}</p>
-            <p><strong>เบอร์โทรศัพท์:</strong> <a href="tel:${phone}">${phone}</a></p>
-            <p><strong>อีเมล:</strong> ${email || 'ไม่ได้ระบุ'}</p>
-            <p><strong>แผนกที่ต้องการติดต่อ:</strong> ${department}</p>
-            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
-            <p><strong>ข้อความ/รายละเอียด:</strong></p>
-            <p style="background-color: white; padding: 15px; border-radius: 6px; border: 1px solid #e5e7eb; white-space: pre-wrap;">${message}</p>
-          </div>
-        </div>
-      `,
+    // สร้าง Log Event ใหม่
+    const newEvent = {
+      id: Date.now().toString(),
+      date: dateStr,
+      time: timeStr,
+      status: status,
+      location: location,
+      description: description,
+      isCompleted: true
     };
 
-    // 5. สั่งส่งอีเมล
-    await transporter.sendMail(mailOptions);
+    // อัปเดตข้อมูลในระบบ
+    trackingDB[index].currentStatus = status;
+    trackingDB[index].events.unshift(newEvent); // เอาสถานะใหม่ไว้บนสุด
 
-    return NextResponse.json({ success: true, message: 'ส่งข้อความสำเร็จ' }, { status: 200 });
+    return NextResponse.json({ success: true, message: 'อัปเดตสถานะเรียบร้อยแล้ว', data: trackingDB[index] }, { status: 200 });
+
   } catch (error) {
-    console.error('Email sending error:', error);
-    return NextResponse.json({ error: 'เกิดข้อผิดพลาดในการส่งข้อความ' }, { status: 500 });
+    return NextResponse.json({ error: 'เกิดข้อผิดพลาดในการประมวลผล' }, { status: 500 });
   }
 }
