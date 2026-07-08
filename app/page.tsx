@@ -39,43 +39,25 @@ const heroSlides = [
 ];
 
 // ============================================================================
-// ⛽ ข้อมูลจำลองราคาน้ำมันแยกตามปั๊ม (ในอนาคตใช้ API ดึงมาแทนที่ตรงนี้ได้)
+// ⛽ ข้อมูลตารางราคาน้ำมัน (อ้างอิงดีไซน์จากตาราง ปตท.)
 // ============================================================================
-const fuelData = {
-  ptt: {
-    name: 'PTT',
-    logoUrl: 'https://placehold.co/100x40/0056b3/ffffff?text=PTT+Station',
-    activeColor: 'bg-blue-50 border-blue-200 text-blue-700',
-    prices: [
-      { type: 'Diesel B7', price: 32.94, change: 0 },
-      { type: 'Diesel', price: 32.94, change: -0.50 },
-    ]
-  },
-  bcp: {
-    name: 'Bangchak',
-    logoUrl: 'https://placehold.co/100x40/10b981/ffffff?text=Bangchak',
-    activeColor: 'bg-green-50 border-green-200 text-green-700',
-    prices: [
-      { type: 'Hi Premium Diesel S', price: 37.14, change: 0.40 },
-      { type: 'Diesel S B7', price: 32.94, change: 0 },
-    ]
-  },
-  shell: {
-    name: 'Shell',
-    logoUrl: 'https://placehold.co/100x40/eab308/da251c?text=Shell',
-    activeColor: 'bg-yellow-50 border-yellow-200 text-yellow-700',
-    prices: [
-      { type: 'V-Power Diesel', price: 34.94, change: 0.50 },
-      { type: 'FuelSave Diesel', price: 33.24, change: 0.50 },
-    ]
-  }
-};
-type StationKey = keyof typeof fuelData;
+const pttFuelData = [
+  { id: 'b20', name: 'Diesel B20', bg: 'bg-red-700 text-white', today: 32.50, tomorrow: 29.94, diff: -2.56 },
+  { id: 'diesel', name: 'ดีเซล Diesel', bg: 'bg-[#1e3a8a] text-white', today: 37.50, tomorrow: 34.94, diff: -2.56 },
+  { id: 'e20', name: 'Gasohol E20', bg: 'bg-[#84cc16] text-white', today: 32.45, tomorrow: 29.94, diff: -2.51 },
+  { id: 'g91', name: 'Gasohol 91', bg: 'bg-[#16a34a] text-white', today: 37.08, tomorrow: 34.57, diff: -2.51 },
+  { id: 'g95', name: 'Gasohol 95', bg: 'bg-[#ea580c] text-white', today: 37.45, tomorrow: 34.94, diff: -2.51 },
+  { id: 'benzine', name: 'เบนซิน', bg: 'bg-[#eab308] text-black', today: 46.44, tomorrow: 43.93, diff: -2.51 },
+  { id: 'super95', name: 'SuperPower Gasohol95', bg: 'bg-gradient-to-r from-yellow-600 to-amber-400 text-black', today: 47.79, tomorrow: 47.79, diff: 0 },
+  { id: 'superD', name: 'SuperPower ดีเซล', bg: 'bg-gray-900 text-white border border-gray-700', today: 50.05, tomorrow: 50.05, diff: 0 },
+];
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [trackingNumber, setTrackingNumber] = useState('');
-  const [activeStation, setActiveStation] = useState<StationKey>('ptt');
+  
+  // State สำหรับควบคุมการยืด/หด ของตารางน้ำมัน
+  const [isFuelExpanded, setIsFuelExpanded] = useState(false);
 
   // 🔄 ระบบเล่นสไลด์อัตโนมัติ ทุกๆ 6 วินาที
   useEffect(() => {
@@ -121,7 +103,6 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/50 via-transparent to-transparent"></div>
               <div className="absolute inset-0 bg-black/20"></div>
 
-              {/* pb-48 เว้นพื้นที่ด้านล่างเยอะขึ้น เพื่อรองรับ Widget ที่ใหญ่ขึ้น */}
               <div className="relative z-20 w-full px-6 sm:px-12 lg:px-20 pt-32 md:pt-40 pb-48 animate-fade-in mx-auto max-w-screen-2xl flex flex-col justify-center h-full">
                 <div className="max-w-3xl">
                   
@@ -170,13 +151,14 @@ export default function HomePage() {
         </section>
 
         {/* ============================================================================
-            📦⛽ 2. TRACK & TRACE + FUEL PRICE WIDGET (แบ่งหน้าจอ 2/3 และ 1/3)
+            📦⛽ 2. TRACK & TRACE + EXPANDABLE FUEL WIDGET 
         ============================================================================ */}
+        {/* ใช้ items-start เพื่อให้ตอนกดขยายตารางน้ำมัน กล่อง Track & Trace ไม่ยืดตาม */}
         <section className="relative z-40 -mt-24 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
-            {/* 🎯 ส่วนที่ 1: ติดตามสถานะสินค้า (กินพื้นที่ 2 ส่วน) */}
-            <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white p-6 md:p-8 lg:p-10 flex flex-col md:flex-row items-center gap-6 h-full">
+            {/* 🎯 ส่วนที่ 1: ติดตามสถานะสินค้า */}
+            <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white p-6 md:p-8 lg:p-10 flex flex-col md:flex-row items-center gap-6">
               <div className="shrink-0 text-center md:text-left">
                 <h3 className="text-xl md:text-2xl font-black text-[#0a2540] flex items-center justify-center md:justify-start gap-3 mb-1">
                   <span className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#ff0000] shadow-inner">
@@ -207,51 +189,85 @@ export default function HomePage() {
               </form>
             </div>
 
-            {/* ⛽ ส่วนที่ 2: Widget ราคาน้ำมันเรียลไทม์ (กินพื้นที่ 1 ส่วน) */}
-            <div className="lg:col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white p-6 flex flex-col h-full">
+            {/* ⛽ ส่วนที่ 2: Expandable Fuel Price Widget */}
+            <div className="lg:col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white overflow-hidden transition-all duration-500">
               
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-[#0a2540] flex items-center gap-2">
-                  <i className="fas fa-gas-pump text-orange-500"></i> ราคาน้ำมันวันนี้ <span className="text-[10px] text-gray-400 font-normal">(BKK)</span>
-                </h3>
-                <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded-md font-medium">อัปเดต 05:00 น.</span>
-              </div>
-
-              {/* Tabs เลือกปั๊ม */}
-              <div className="flex gap-2 mb-4 p-1 bg-gray-50 rounded-xl border border-gray-100 overflow-x-auto hide-scrollbar">
-                {(Object.keys(fuelData) as StationKey[]).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => setActiveStation(key)}
-                    className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all border ${
-                      activeStation === key 
-                        ? fuelData[key].activeColor + ' shadow-sm' 
-                        : 'border-transparent text-gray-400 hover:bg-gray-200/50'
-                    }`}
-                  >
-                    {fuelData[key].name}
-                  </button>
-                ))}
-              </div>
-
-              {/* ตารางแสดงราคา */}
-              <div className="flex-1 flex flex-col justify-center space-y-3 animate-fade-in">
-                {fuelData[activeStation].prices.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl border border-gray-100">
-                    <span className="text-sm font-semibold text-gray-700">{item.type}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-base font-black text-[#0a2540]">{item.price.toFixed(2)}</span>
-                      {/* ไอคอนแสดงการเปลี่ยนแปลงราคา */}
-                      <span className={`w-16 text-right text-xs font-bold flex items-center justify-end gap-1 ${
-                        item.change > 0 ? 'text-red-500' : item.change < 0 ? 'text-green-500' : 'text-gray-400'
-                      }`}>
-                        {item.change > 0 ? <><i className="fas fa-arrow-up"></i> +{item.change.toFixed(2)}</> 
-                         : item.change < 0 ? <><i className="fas fa-arrow-down"></i> {item.change.toFixed(2)}</> 
-                         : <><i className="fas fa-minus"></i> 0.00</>}
-                      </span>
-                    </div>
+              {/* Header: ส่วนที่คลิกเพื่อขยาย/หดได้ */}
+              <button 
+                onClick={() => setIsFuelExpanded(!isFuelExpanded)}
+                className="w-full p-6 flex justify-between items-center hover:bg-blue-50/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#0056b3] flex items-center justify-center text-white shadow-inner">
+                    <i className="fas fa-gas-pump"></i>
                   </div>
-                ))}
+                  <div className="text-left">
+                    <h3 className="font-bold text-[#0a2540] leading-none mb-1">ราคาน้ำมัน PTT</h3>
+                    <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium">อัปเดตวันนี้ 05:00 น.</span>
+                  </div>
+                </div>
+                <div className={`w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 transition-transform duration-300 ${isFuelExpanded ? 'rotate-180' : ''}`}>
+                  <i className="fas fa-chevron-down"></i>
+                </div>
+              </button>
+
+              {/* Body: ตารางที่ซ่อน/แสดง (จำลองดีไซน์ตาราง ปตท.) */}
+              <div 
+                className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                  isFuelExpanded ? 'max-h-[600px] opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="p-4">
+                  <div className="rounded-xl overflow-hidden shadow-sm border border-[#5fa4e6]">
+                    
+                    {/* Table Header (สไตล์ ปตท.) */}
+                    <div className="grid grid-cols-4 bg-gradient-to-b from-[#7cbcf4] to-[#4590db] text-white text-xs md:text-sm font-bold py-2 text-center drop-shadow-sm">
+                      <div className="col-span-1">ชนิด</div>
+                      <div className="col-span-1">วันนี้</div>
+                      <div className="col-span-1">พรุ่งนี้</div>
+                      <div className="col-span-1">ส่วนต่าง</div>
+                    </div>
+
+                    {/* Table Rows */}
+                    <div className="bg-white">
+                      {pttFuelData.map((fuel, index) => (
+                        <div key={fuel.id} className={`grid grid-cols-4 text-center border-b border-gray-100 ${index % 2 === 0 ? 'bg-white' : 'bg-blue-50/30'} hover:bg-gray-50 transition-colors`}>
+                          
+                          {/* ชื่อน้ำมัน */}
+                          <div className={`col-span-1 flex items-center justify-center py-2 px-1 text-[10px] md:text-xs font-bold leading-tight ${fuel.bg}`}>
+                            {fuel.name}
+                          </div>
+                          
+                          {/* ราคาวันนี้ */}
+                          <div className="col-span-1 flex items-center justify-center font-bold text-[#0a2540] text-sm">
+                            {fuel.today.toFixed(2)}
+                          </div>
+                          
+                          {/* ราคาพรุ่งนี้ */}
+                          <div className="col-span-1 flex items-center justify-center font-bold text-[#16a34a] text-sm">
+                            {fuel.tomorrow.toFixed(2)}
+                          </div>
+                          
+                          {/* ส่วนต่าง (เขียวลง แดงขึ้น แดชเท่าเดิม) */}
+                          <div className="col-span-1 flex items-center justify-center text-sm font-bold">
+                            {fuel.diff < 0 ? (
+                              <span className="text-[#16a34a]">{fuel.diff.toFixed(2)}</span>
+                            ) : fuel.diff > 0 ? (
+                              <span className="text-red-500">+{fuel.diff.toFixed(2)}</span>
+                            ) : (
+                              <span className="text-gray-400">-</span>
+                            )}
+                          </div>
+
+                        </div>
+                      ))}
+                    </div>
+
+                  </div>
+                  <p className="text-[10px] text-gray-400 text-center mt-3">
+                    อ้างอิงข้อมูลจาก บริษัท ปตท. น้ำมันและการค้าปลีก จำกัด (มหาชน)
+                  </p>
+                </div>
               </div>
 
             </div>
@@ -293,7 +309,6 @@ export default function HomePage() {
         ============================================================================ */}
         <section className="bg-gray-100 py-24 px-4 sm:px-6 lg:px-8 border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
-            
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
               <div>
                 <h2 className="text-sm font-bold text-[#ff0000] tracking-widest uppercase mb-2">Our Core Services</h2>
@@ -305,7 +320,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              
+              {/* Service Cards (คงเดิม) */}
               <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 group cursor-pointer border border-gray-100">
                 <div className="h-48 overflow-hidden relative">
                   <div className="absolute inset-0 bg-[#0a2540]/20 group-hover:bg-transparent transition-colors z-10"></div>
@@ -350,7 +365,6 @@ export default function HomePage() {
                   <span className="text-[#00249c] font-bold text-sm group-hover:text-[#ff0000] transition-colors">รายละเอียด <i className="fas fa-angle-right ml-1"></i></span>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
