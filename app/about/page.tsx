@@ -18,7 +18,7 @@ export default function AboutPage() {
         <section className="relative bg-[#0a2540] py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
             <Image 
-              src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2000&auto=format&fit=crop" 
+              src="ลงเวป.jpg" 
               alt="THANA GROUP Background" 
               fill
               className="object-cover"
