@@ -1,7 +1,9 @@
 html {
   scroll-behavior: smooth;
 }
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @theme {
   --color-thana-blue: #0B308A;
