@@ -38,9 +38,44 @@ const heroSlides = [
   }
 ];
 
+// ============================================================================
+// ⛽ ข้อมูลจำลองราคาน้ำมันแยกตามปั๊ม (ในอนาคตใช้ API ดึงมาแทนที่ตรงนี้ได้)
+// ============================================================================
+const fuelData = {
+  ptt: {
+    name: 'PTT',
+    logoUrl: 'https://placehold.co/100x40/0056b3/ffffff?text=PTT+Station',
+    activeColor: 'bg-blue-50 border-blue-200 text-blue-700',
+    prices: [
+      { type: 'Diesel B7', price: 32.94, change: 0 },
+      { type: 'Diesel', price: 32.94, change: -0.50 },
+    ]
+  },
+  bcp: {
+    name: 'Bangchak',
+    logoUrl: 'https://placehold.co/100x40/10b981/ffffff?text=Bangchak',
+    activeColor: 'bg-green-50 border-green-200 text-green-700',
+    prices: [
+      { type: 'Hi Premium Diesel S', price: 37.14, change: 0.40 },
+      { type: 'Diesel S B7', price: 32.94, change: 0 },
+    ]
+  },
+  shell: {
+    name: 'Shell',
+    logoUrl: 'https://placehold.co/100x40/eab308/da251c?text=Shell',
+    activeColor: 'bg-yellow-50 border-yellow-200 text-yellow-700',
+    prices: [
+      { type: 'V-Power Diesel', price: 34.94, change: 0.50 },
+      { type: 'FuelSave Diesel', price: 33.24, change: 0.50 },
+    ]
+  }
+};
+type StationKey = keyof typeof fuelData;
+
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [trackingNumber, setTrackingNumber] = useState('');
+  const [activeStation, setActiveStation] = useState<StationKey>('ptt');
 
   // 🔄 ระบบเล่นสไลด์อัตโนมัติ ทุกๆ 6 วินาที
   useEffect(() => {
@@ -86,8 +121,8 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/50 via-transparent to-transparent"></div>
               <div className="absolute inset-0 bg-black/20"></div>
 
-              {/* pb-32 ช่วยเว้นพื้นที่ด้านล่างไม่ให้ข้อความไปชนกับกล่อง Track & Trace */}
-              <div className="relative z-20 w-full px-6 sm:px-12 lg:px-20 pt-32 md:pt-40 pb-32 animate-fade-in mx-auto max-w-screen-2xl flex flex-col justify-center h-full">
+              {/* pb-48 เว้นพื้นที่ด้านล่างเยอะขึ้น เพื่อรองรับ Widget ที่ใหญ่ขึ้น */}
+              <div className="relative z-20 w-full px-6 sm:px-12 lg:px-20 pt-32 md:pt-40 pb-48 animate-fade-in mx-auto max-w-screen-2xl flex flex-col justify-center h-full">
                 <div className="max-w-3xl">
                   
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#00e5ff] text-xs md:text-sm font-bold tracking-widest uppercase mb-6 shadow-lg">
@@ -120,7 +155,6 @@ export default function HomePage() {
             </div>
           ))}
 
-          {/* Navigation Buttons */}
           <button onClick={prevSlide} className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-black/20 hover:bg-[#ff0000] text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-30 shadow-xl border border-white/10">
             <i className="fas fa-chevron-left text-xl"></i>
           </button>
@@ -128,8 +162,7 @@ export default function HomePage() {
             <i className="fas fa-chevron-right text-xl"></i>
           </button>
 
-          {/* Indicators */}
-          <div className="absolute bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+          <div className="absolute bottom-40 md:bottom-28 left-1/2 -translate-x-1/2 z-30 flex gap-3">
             {heroSlides.map((_, index) => (
               <button key={index} onClick={() => setCurrentSlide(index)} className={`h-2.5 rounded-full transition-all duration-300 shadow-md ${index === currentSlide ? 'w-10 bg-[#ff0000]' : 'w-3 bg-white/50 hover:bg-white'}`}></button>
             ))}
@@ -137,51 +170,97 @@ export default function HomePage() {
         </section>
 
         {/* ============================================================================
-            📦 2. TRACK & TRACE SECTION (ดีไซน์ใหม่ รวมปุ่มค้นหาเข้ากับช่องกรอก)
+            📦⛽ 2. TRACK & TRACE + FUEL PRICE WIDGET (แบ่งหน้าจอ 2/3 และ 1/3)
         ============================================================================ */}
-        <section className="relative z-40 -mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10">
+        <section className="relative z-40 -mt-24 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
-            {/* ส่วนข้อความ (ซ้าย) */}
-            <div className="shrink-0 text-center md:text-left">
-              <h3 className="text-xl md:text-2xl font-black text-[#0a2540] flex items-center justify-center md:justify-start gap-3 mb-1">
-                <span className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#ff0000] shadow-inner">
-                  <i className="fas fa-box-open"></i>
-                </span>
-                ติดตามสถานะสินค้า
-              </h3>
-              <p className="text-gray-500 text-sm font-medium md:pl-13">Track & Trace Your Shipment</p>
-            </div>
-            
-            {/* ส่วนฟอร์ม (ขวา) - ดีไซน์แบบ Input Group ไร้รอยต่อ */}
-            <form onSubmit={handleTrackSubmit} className="flex-1 w-full">
-              <div className="relative flex items-center w-full bg-white border-2 border-gray-100 rounded-2xl overflow-hidden focus-within:border-[#00249c] focus-within:shadow-[0_0_0_4px_rgba(0,36,156,0.1)] transition-all duration-300">
-                
-                <div className="pl-6 text-gray-400">
-                  <i className="fas fa-barcode text-lg"></i>
-                </div>
-                
-                <input 
-                  type="text" 
-                  value={trackingNumber}
-                  onChange={(e) => setTrackingNumber(e.target.value)}
-                  placeholder="กรอกหมายเลข Tracking Number..." 
-                  className="flex-1 px-4 py-4 md:py-5 bg-transparent outline-none text-gray-700 w-full font-medium"
-                  required
-                />
-                
-                <button type="submit" className="bg-[#0a2540] hover:bg-[#ff0000] text-white font-bold h-full px-8 py-4 md:py-5 transition-colors flex items-center gap-2">
-                  <i className="fas fa-search"></i> <span className="hidden sm:inline">ค้นหา</span>
-                </button>
-
+            {/* 🎯 ส่วนที่ 1: ติดตามสถานะสินค้า (กินพื้นที่ 2 ส่วน) */}
+            <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white p-6 md:p-8 lg:p-10 flex flex-col md:flex-row items-center gap-6 h-full">
+              <div className="shrink-0 text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-black text-[#0a2540] flex items-center justify-center md:justify-start gap-3 mb-1">
+                  <span className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#ff0000] shadow-inner">
+                    <i className="fas fa-box-open"></i>
+                  </span>
+                  ติดตามสถานะสินค้า
+                </h3>
+                <p className="text-gray-500 text-sm font-medium md:pl-13">Track & Trace Your Shipment</p>
               </div>
-            </form>
+              
+              <form onSubmit={handleTrackSubmit} className="flex-1 w-full">
+                <div className="relative flex items-center w-full bg-white border-2 border-gray-100 rounded-2xl overflow-hidden focus-within:border-[#00249c] focus-within:shadow-[0_0_0_4px_rgba(0,36,156,0.1)] transition-all duration-300">
+                  <div className="pl-6 text-gray-400">
+                    <i className="fas fa-barcode text-lg"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    value={trackingNumber}
+                    onChange={(e) => setTrackingNumber(e.target.value)}
+                    placeholder="กรอกหมายเลข Tracking Number..." 
+                    className="flex-1 px-4 py-4 md:py-5 bg-transparent outline-none text-gray-700 w-full font-medium"
+                    required
+                  />
+                  <button type="submit" className="bg-[#0a2540] hover:bg-[#ff0000] text-white font-bold h-full px-8 py-4 md:py-5 transition-colors flex items-center gap-2">
+                    <i className="fas fa-search"></i> <span className="hidden sm:inline">ค้นหา</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* ⛽ ส่วนที่ 2: Widget ราคาน้ำมันเรียลไทม์ (กินพื้นที่ 1 ส่วน) */}
+            <div className="lg:col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.15)] border border-white p-6 flex flex-col h-full">
+              
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-bold text-[#0a2540] flex items-center gap-2">
+                  <i className="fas fa-gas-pump text-orange-500"></i> ราคาน้ำมันวันนี้ <span className="text-[10px] text-gray-400 font-normal">(BKK)</span>
+                </h3>
+                <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded-md font-medium">อัปเดต 05:00 น.</span>
+              </div>
+
+              {/* Tabs เลือกปั๊ม */}
+              <div className="flex gap-2 mb-4 p-1 bg-gray-50 rounded-xl border border-gray-100 overflow-x-auto hide-scrollbar">
+                {(Object.keys(fuelData) as StationKey[]).map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => setActiveStation(key)}
+                    className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all border ${
+                      activeStation === key 
+                        ? fuelData[key].activeColor + ' shadow-sm' 
+                        : 'border-transparent text-gray-400 hover:bg-gray-200/50'
+                    }`}
+                  >
+                    {fuelData[key].name}
+                  </button>
+                ))}
+              </div>
+
+              {/* ตารางแสดงราคา */}
+              <div className="flex-1 flex flex-col justify-center space-y-3 animate-fade-in">
+                {fuelData[activeStation].prices.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl border border-gray-100">
+                    <span className="text-sm font-semibold text-gray-700">{item.type}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-base font-black text-[#0a2540]">{item.price.toFixed(2)}</span>
+                      {/* ไอคอนแสดงการเปลี่ยนแปลงราคา */}
+                      <span className={`w-16 text-right text-xs font-bold flex items-center justify-end gap-1 ${
+                        item.change > 0 ? 'text-red-500' : item.change < 0 ? 'text-green-500' : 'text-gray-400'
+                      }`}>
+                        {item.change > 0 ? <><i className="fas fa-arrow-up"></i> +{item.change.toFixed(2)}</> 
+                         : item.change < 0 ? <><i className="fas fa-arrow-down"></i> {item.change.toFixed(2)}</> 
+                         : <><i className="fas fa-minus"></i> 0.00</>}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
 
           </div>
         </section>
 
         {/* ============================================================================
-            🏢 3. CORPORATE STATS (ความน่าเชื่อถือ)
+            🏢 3. CORPORATE STATS
         ============================================================================ */}
         <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -210,7 +289,7 @@ export default function HomePage() {
         </section>
 
         {/* ============================================================================
-            🚛 4. CORE SERVICES (กล่องบริการหลัก)
+            🚛 4. CORE SERVICES
         ============================================================================ */}
         <section className="bg-gray-100 py-24 px-4 sm:px-6 lg:px-8 border-t border-gray-200">
           <div className="max-w-7xl mx-auto">
