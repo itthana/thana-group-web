@@ -37,3 +37,46 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'ระบบขัดข้อง ไม่สามารถบันทึกข้อมูลได้' }, { status: 500 });
   }
 }
+// ==========================================
+// 🔍 ระบบค้นหาพัสดุสำหรับลูกค้า (GET)
+// ==========================================
+export async function GET(request: Request) {
+  try {
+    // 1. ดึงหมายเลขพัสดุจาก URL (เช่น ?trackingNumber=THN-12345)
+    const { searchParams } = new URL(request.url);
+    const trackingNumber = searchParams.get('trackingNumber');
+
+    if (!trackingNumber) {
+      return NextResponse.json({ error: 'กรุณาระบุหมายเลขพัสดุ' }, { status: 400 });
+    }
+
+    // 2. ค้นหาข้อมูลพัสดุจากฐานข้อมูล พร้อมประวัติการเดินทาง
+    const parcel = await prisma.parcel.findUnique({
+      where: { trackingNumber: trackingNumber.toUpperCase() },
+      include: {
+        // ดึงประวัติมาด้วย และจัดเรียงจากเวลา "ล่าสุด" ขึ้นก่อน (desc)
+        trackingHistories: {
+          orderBy: { timestamp: 'desc' },
+        },
+      },
+    });
+
+    // 3. ถ้าหาพัสดุชิ้นนี้ไม่เจอในระบบ
+    if (!parcel) {
+      return NextResponse.json({ error: 'ไม่พบข้อมูลพัสดุรหัสนี้ในระบบ กรุณาตรวจสอบอีกครั้ง' }, { status: 404 });
+    }
+
+    // 4. ถ้าเจอ ส่งข้อมูลกลับไปให้หน้าเว็บแสดงผลบนไทม์ไลน์
+    return NextResponse.json({ 
+      success: true, 
+      data: {
+        trackingNumber: parcel.trackingNumber,
+        histories: parcel.trackingHistories
+      }
+    }, { status: 200 });
+
+  } catch (error) {
+    console.error('API GET Error:', error);
+    return NextResponse.json({ error: 'ระบบขัดข้อง ไม่สามารถดึงข้อมูลได้ในขณะนี้' }, { status: 500 });
+  }
+}
