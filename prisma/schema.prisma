@@ -4,11 +4,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// ตั้งค่าให้ใช้ SQLite สำหรับการทดสอบเบื้องต้น (เปลี่ยนเป็น postgresql ได้ทันทีเมื่อขึ้น Production)
+// ตั้งค่าให้ใช้ PostgreSQL บน Cloud (Neon / Vercel)
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
+
 // ==========================================
 // 1. ตารางแอดมิน (Admin Users)
 // ==========================================
@@ -24,9 +26,9 @@ model User {
 // 2. ตารางข้อมูลพัสดุ (Tracking Data)
 // ==========================================
 model Tracking {
-  id                String          @id @default(cuid())
-  trackingNumber    String          @unique
-  currentStatus     String          @default("PENDING")
+  id                String   @id @default(cuid())
+  trackingNumber    String   @unique
+  currentStatus     String   @default("PENDING")
   origin            String
   destination       String
   sender            String
@@ -35,56 +37,6 @@ model Tracking {
   serviceType       String
   pieces            Int
   weight            String
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  
-  // เชื่อมโยงกับประวัติการเดินทาง (1 พัสดุ มีหลายประวัติ)
-  events            TrackingEvent[] 
-}
-
-// ==========================================
-// 3. ตารางประวัติการเดินทาง (Tracking Events)
-// ==========================================
-model TrackingEvent {
-  id             String   @id @default(cuid())
-  trackingId     String
-  date           String
-  time           String
-  status         String
-  location       String
-  description    String
-  isCompleted    Boolean  @default(true)
-  createdAt      DateTime @default(now())
-
-  // เชื่อมความสัมพันธ์กลับไปที่ตาราง Tracking
-  tracking       Tracking @relation(fields: [trackingId], references: [id], onDelete: Cascade)
-}
-// ==========================================
-// 📦 ตารางข้อมูลพัสดุหลัก (Parcel)
-// ==========================================
-model Parcel {
-  id             String           @id @default(cuid())
-  trackingNumber String           @unique // รหัสพัสดุ ต้องไม่ซ้ำกัน
-  senderName     String?          // ชื่อผู้ส่ง (เผื่ออนาคต)
-  receiverName   String?          // ชื่อผู้รับ (เผื่ออนาคต)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-
-  // ความสัมพันธ์ 1 ต่อ N: พัสดุ 1 ชิ้น มีประวัติสถานะได้หลายรายการ
-  trackingHistories TrackingHistory[]
-}
-
-// ==========================================
-// 📍 ตารางประวัติการอัปเดตสถานะ (Tracking History)
-// ==========================================
-model TrackingHistory {
-  id          String   @id @default(cuid())
-  status      String   // เช่น PENDING, IN_TRANSIT, DELIVERED
-  location    String   // สถานที่ เช่น ด่านศุลกากรหนองคาย
-  description String?  // รายละเอียดเพิ่มเติม
-  timestamp   DateTime @default(now()) // เวลาที่อัปเดต
-
-  // เชื่อมโยงกลับไปยังพัสดุหลัก
-  parcelId    String
-  parcel      Parcel   @relation(fields: [parcelId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
