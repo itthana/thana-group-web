@@ -38,7 +38,7 @@ export default function WelcomeScreen() {
       {/* 📸 ภาพพื้นหลัง */}
       <div className="absolute inset-0 opacity-40">
         <img 
-          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2000&auto=format&fit=crop" 
+          src="สวัสดี.JPG" 
           alt="Welcome to THANA GROUP" 
           className="w-full h-full object-cover"
         />
@@ -54,7 +54,7 @@ export default function WelcomeScreen() {
           เปลี่ยนชื่อไฟล์ตรง src="/LOGO-TLT.png" เป็นชื่อรูปของพี่ได้เลยครับ 
         */}
         <div className="w-28 h-28 bg-white rounded-full mx-auto mb-8 flex items-center justify-center shadow-2xl border-4 border-white/10">
-          <img src="/LOGO-TLT.png" alt="Thana Group Logo" className="w-20 object-contain" />
+          <img src="/tng.png" alt="Thana Group Logo" className="w-20 object-contain" />
         </div>
         
        {/* ======================= แทนที่ h1 ตัวเดิมด้วยโค้ดนี้ ======================= */}
