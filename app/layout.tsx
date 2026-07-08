@@ -1,43 +1,46 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import { Prompt } from 'next/font/google';
+import './globals.css'; // 🌟 บรรทัดพระเอกที่ดึงสี Tailwind กลับมา!
 
-// Import ตัว AppController ที่เราสร้างไว้ (เช็ค Path ให้ตรง)
-import AppController from '../components/layout/AppController';
+// ==========================================
+// 1. ตั้งค่าฟอนต์ Prompt (รองรับภาษาไทยสวยงาม)
+// ==========================================
+const prompt = Prompt({ 
+  subsets: ['latin', 'thai'],
+  weight: ['300', '400', '500', '600', '700', '900'],
+  variable: '--font-prompt', // สร้างตัวแปรไว้เรียกใช้ใน Tailwind
+  display: 'swap',
+});
 
+// ==========================================
+// 2. ตั้งค่า SEO (ข้อมูลที่โชว์บน Google และ Tab เบราว์เซอร์)
+// ==========================================
 export const metadata: Metadata = {
-  title: 'THANA GROUP | ขนส่งด่วน ไทย-ลาว',
-  description: 'ผู้นำด้านบริการโลจิสติกส์และขนส่งสินค้าระหว่างประเทศ (ไทย-ลาว-อาเซียน) แบบครบวงจร ด้วยประสบการณ์กว่า 20 ปี',
+  title: 'THANA GROUP | Logistics Solutions',
+  description: 'บริการขนส่งด่วน ไทย-ลาว พร้อมระบบติดตามสถานะแบบ Real-time โดยทีมงานมืออาชีพ',
 };
 
+// ==========================================
+// 3. โครงสร้างหลักของเว็บไซต์ (Root Layout)
+// ==========================================
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th">
+    <html lang="th" className={`${prompt.variable}`}>
       <head>
-        {/* ดึงไอคอน FontAwesome มาใช้งานทั่วทั้งเว็บ */}
+        {/* ดึง Font Awesome มาใช้สำหรับไอคอนต่างๆ ทั่วเว็บ */}
         <link 
           rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
         />
-        {/* ดึงฟอนต์ภาษาไทย Prompt จาก Google Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" 
-          rel="stylesheet" 
-        />
       </head>
-      
-      {/* ตั้งค่าให้ทั้งเว็บใช้ฟอนต์ Prompt เป็นหลัก */}
-      <body className="font-prompt bg-slate-50 text-gray-900 antialiased">
+      {/* ใส่คลาส font-prompt เข้าไปที่ body เพื่อให้ครอบคลุมทั้งโปรเจกต์ */}
+      <body className="font-prompt bg-slate-50 text-gray-900 antialiased selection:bg-[#00249c] selection:text-white">
         
-        {/* ฝัง AppController ไว้บรรทัดแรกของ Body เพื่อดักจับการ Refresh ทันที */}
-        <AppController />
-        
-        {/* เนื้อหาของแต่ละหน้าจะมาแทรกตรงนี้ */}
+        {/* เนื้อหาของแต่ละหน้าจะมาแสดงตรงนี้ */}
         {children}
         
       </body>
