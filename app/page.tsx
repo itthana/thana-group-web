@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'; // เพิ่ม useRouter สำหรับเปลี่ยนหน้า
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
@@ -53,6 +54,7 @@ const pttFuelData = [
 ];
 
 export default function HomePage() {
+  const router = useRouter(); // เรียกใช้งาน useRouter
   const [currentSlide, setCurrentSlide] = useState(0);
   const [trackingNumber, setTrackingNumber] = useState('');
   
@@ -70,10 +72,12 @@ export default function HomePage() {
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
   const nextSlide = () => setCurrentSlide((prev) => (prev === heroSlides.length - 1 ? 0 : prev + 1));
 
+  // 📦 ฟังก์ชันเมื่อกดค้นหาสถานะสินค้า
   const handleTrackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if(trackingNumber) {
-      alert(`กำลังพัฒนาระบบเช็คสถานะสำหรับหมายเลข: ${trackingNumber}`);
+    if (trackingNumber.trim()) {
+      // ส่งค่า Tracking Number ไปที่หน้า /tracking ผ่าน URL Parameter
+      router.push(`/tracking?id=${encodeURIComponent(trackingNumber.trim())}`);
     }
   };
 
@@ -153,7 +157,6 @@ export default function HomePage() {
         {/* ============================================================================
             📦⛽ 2. TRACK & TRACE + EXPANDABLE FUEL WIDGET 
         ============================================================================ */}
-        {/* ใช้ items-start เพื่อให้ตอนกดขยายตารางน้ำมัน กล่อง Track & Trace ไม่ยืดตาม */}
         <section className="relative z-40 -mt-24 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
@@ -320,7 +323,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Service Cards (คงเดิม) */}
+              {/* Service Cards */}
               <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 group cursor-pointer border border-gray-100">
                 <div className="h-48 overflow-hidden relative">
                   <div className="absolute inset-0 bg-[#0a2540]/20 group-hover:bg-transparent transition-colors z-10"></div>
