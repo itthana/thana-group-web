@@ -18,7 +18,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 z-0 opacity-20">
             {/* เปลี่ยนมาใช้แท็ก img มาตรฐาน */}
             <img 
-              src="ลงเวป.jpg" 
+              src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2000&auto=format&fit=crop" 
               alt="THANA GROUP Background" 
               className="w-full h-full object-cover"
             />
@@ -47,7 +47,7 @@ export default function AboutPage() {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] border-4 border-white bg-gray-100">
                 {/* เปลี่ยนมาใช้แท็ก img มาตรฐาน */}
                 <img 
-                  src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1000&auto=format&fit=crop" 
+                  src="ลงเวป.jpg" 
                   alt="Logistics Fleet" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
