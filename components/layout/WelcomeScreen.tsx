@@ -50,11 +50,16 @@ export default function WelcomeScreen() {
       {/* 📦 คอนเทนเนอร์หลัก (เอากรอบออกแล้ว เหลือแค่จัดระเบียบตรงกลาง) */}
       <div className="relative z-10 text-center max-w-lg mx-auto w-full px-6 transition-all duration-500">
         
-        {/* 🎯 จุดเปลี่ยนโลโก้: 
-          เปลี่ยนชื่อไฟล์ตรง src="/LOGO-TLT.png" เป็นชื่อรูปของพี่ได้เลยครับ 
-        */}
-        <div className="w-28 h-28 bg-white rounded-full mx-auto mb-8 flex items-center justify-center shadow-2xl border-4 border-white/10">
-          <img src="/tng.png" alt="Thana Group Logo" className="w-20 object-contain" />
+       {/* ========================================================= */}
+        {/* 🎯 จุดที่ 2: เปลี่ยนรูปโลโก้ตรงนี้ (ปรับให้เต็มกรอบวงกลม) */}
+        {/* ========================================================= */}
+        <div className="w-32 h-32 bg-white rounded-full mx-auto mb-8 flex items-center justify-center shadow-2xl border-4 border-white/10 overflow-hidden">
+          <img 
+            src="/tng.png" 
+            alt="Thana Group Logo" 
+            // ใช้ w-full h-full และ scale ขยายรูปให้พอดีขอบ ตัดขอบขาวส่วนเกินออก
+            className="w-full h-full object-cover scale-[1.15]" 
+          />
         </div>
         
        {/* ======================= แทนที่ h1 ตัวเดิมด้วยโค้ดนี้ ======================= */}
