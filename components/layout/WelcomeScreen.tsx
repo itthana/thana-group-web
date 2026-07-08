@@ -57,11 +57,12 @@ export default function WelcomeScreen() {
           <img src="/LOGO-TLT.png" alt="Thana Group Logo" className="w-20 object-contain" />
         </div>
         
-        <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-wide leading-tight drop-shadow-lg">
-          ยินดีต้อนรับสู่ <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400 drop-shadow-xl">THANA GROUP</span>
+       {/* ======================= แทนที่ h1 ตัวเดิมด้วยโค้ดนี้ ======================= */}
+        <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-wide drop-shadow-lg">
+          <span className="block mb-3 md:mb-4">ยินดีต้อนรับสู่</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400 drop-shadow-xl text-4xl md:text-6xl">THANA GROUP</span>
         </h1>
-        
+        {/* ===================================================================== */}
         <p className="text-gray-200 mb-10 text-base md:text-lg font-medium leading-relaxed drop-shadow-md">
           ผู้ให้บริการโลจิสติกส์ ไทย - ลาว ครบวงจร <br/>
           ยินดีต้อนรับพันธมิตรและลูกค้าทุกท่านด้วยความยินดียิ่ง
