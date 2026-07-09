@@ -14,7 +14,7 @@ const groupCompaniesData = [
   {
     id: 'tks',
     name: 'บริษัท ธนาอิมพอร์ต เอ็กพอร์ต จำกัด',
-    //abbr: 'TKS',
+    abbr: '',
     description: 'ให้บริการด้านนำเข้าและส่งออกสินค้าระหว่างประเทศแบบครบวงจร บริหารจัดการซัพพลายเชนให้ธุรกิจของคุณดำเนินไปอย่างราบรื่น',
     logo: 'LOGO-TKS.png',
     contact: {
@@ -27,7 +27,7 @@ const groupCompaniesData = [
   {
     id: 'tlt',
     name: 'บริษัท ธนาโลจิสติกส์ จำกัด',
-    //abbr: '',
+    abbr: '',
     description: 'ให้บริการขนส่งระหว่างประเทศ (Cross-border Transport) ครอบคลุมไทย-ลาว-อาเซียน ด้วยกองทัพรถบรรทุกมาตรฐานสากล',
     logo: 'LOGO-TLT.png',
     contact: {
@@ -40,7 +40,7 @@ const groupCompaniesData = [
   {
     id: 'tt',
     name: 'บริษัท ทีที อินเตอร์เทรดดิ้ง จำกัด',
-    //abbr: 'TT',
+    abbr: '',
     description: 'ให้บริการนำเข้า-ส่งออกสินค้าอุปโภค บริโภค และเป็นตัวแทนจัดจำหน่าย (Distributor) กระจายสินค้าครอบคลุมทุกพื้นที่',
     logo: 'LOGO-TT.png',
     contact: {
@@ -52,8 +52,7 @@ const groupCompaniesData = [
   },
   {
     id: 'tsp',
-    name: 'บริษัท ทีเอสพี จำกัด',
-   // abbr: 'TSP',
+     abbr: '',
     description: 'ให้บริการด้านพิธีการศุลกากร ตรวจปล่อยสินค้า และชิปปิ้ง (Customs Clearance) ดำเนินการเอกสารรวดเร็ว ถูกต้องตามกฎหมาย',
     logo: 'LOGO TSP.png',
     contact: {
@@ -66,7 +65,7 @@ const groupCompaniesData = [
   {
     id: 'tex',
     name: 'บริษัท ธนาเอ็กเพรส จำกัด',
-    //abbr: 'TEX',
+    abbr: '',
     description: 'ให้บริการเกี่ยวกับการขนส่งสินค้าภายในประเทศ (Domestic Express) จัดส่งรวดเร็ว ปลอดภัย ถึงมือผู้รับตรงเวลา',
     logo: 'LOGO TLK.png',
     contact: {
@@ -79,7 +78,7 @@ const groupCompaniesData = [
   {
     id: 'winwin',
     name: 'บริษัท วินวิน2025 อิมพอร์ต เอ็กพอร์ต',
-   // abbr: 'WinWin2025',
+   abbr: '',
     description: 'ให้บริการนำเข้าส่งออกสินค้าทั่วไป ตอบสนองความต้องการของธุรกิจยุคใหม่ด้วยบริการที่ยืดหยุ่นและรวดเร็ว',
     logo: 'winwin.png',
     contact: {
@@ -92,7 +91,7 @@ const groupCompaniesData = [
   {
     id: 'thanalao',
     name: 'บริษัท ธนาโลจิสติกส์ ลาว',
-    //abbr: 'Thana Logistics Lao',
+    abbr: '',
     description: 'ให้บริการขนส่งภายในประเทศลาว (Lao PDR Domestic Transport) เครือข่ายครอบคลุม เชื่อมต่อการค้าอย่างไร้รอยต่อ',
     logo: 'LOGO=TLT L.png',
     contact: {
