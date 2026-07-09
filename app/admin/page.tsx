@@ -73,7 +73,7 @@ export default function AdminDashboard() {
             <i className="fas fa-chart-pie w-6 text-center text-lg"></i>
             {isSidebarOpen && <span className="font-bold">ภาพรวมระบบ</span>}
           </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
+          <Link href="/admin/manage" className="flex items-center gap-3 px-3 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
             <i className="fas fa-boxes-packing w-6 text-center text-lg group-hover:text-amber-400"></i>
             {isSidebarOpen && <span className="font-medium">จัดการพัสดุ</span>}
           </Link>
