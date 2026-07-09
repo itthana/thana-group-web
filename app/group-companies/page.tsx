@@ -93,7 +93,7 @@ const groupCompaniesData = [
     name: 'บริษัท ธนาโลจิสติกส์ ลาว',
     abbr: '',
     description: 'ให้บริการขนส่งภายในประเทศลาว (Lao PDR Domestic Transport) เครือข่ายครอบคลุม เชื่อมต่อการค้าอย่างไร้รอยต่อ',
-    logo: 'LOGO=TLTL.png',
+    logo: 'LOGO-TLTL.png',
     contact: {
       tel: '+856-20-777-7777',
       line: '@thanalao',
