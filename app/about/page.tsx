@@ -72,7 +72,7 @@ export default function AboutPage() {
             <div className="lg:w-1/2 relative">
               <div className="absolute inset-0 bg-[#0a2540] rounded-[2rem] transform rotate-3 scale-105 opacity-10"></div>
               <img 
-                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop" 
+                src="ประชุม.JPG" 
                 alt="THANA Group History" 
                 className="relative rounded-[2rem] shadow-2xl object-cover h-[500px] w-full"
               />
@@ -221,18 +221,73 @@ export default function AboutPage() {
         </section>
 
         {/* ==========================================
-            6. AWARDS (โซนรางวัล - รอข้อมูลจากพี่ครับ)
+            6. AWARDS & EXECUTIVE ACHIEVEMENTS 
         ========================================== */}
-        <section className="py-24 bg-white text-center">
-          <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-[#e62e2d] font-bold tracking-widest text-sm uppercase mb-3"><i className="fas fa-trophy"></i> Awards & Recognition</h2>
-            <h3 className="text-3xl md:text-4xl font-black text-[#0a2540] mb-8">รางวัลแห่งความภาคภูมิใจ</h3>
-            
-            {/* โซนที่รอใส่ข้อมูลรางวัล */}
-            <div className="bg-slate-50 border-2 border-dashed border-gray-300 rounded-3xl p-16 max-w-3xl mx-auto flex flex-col items-center justify-center text-gray-400">
-              <i className="fas fa-medal text-6xl mb-4 text-amber-300"></i>
-              <p className="font-bold text-lg">พื้นที่สำหรับแสดงรางวัลและการเชิดชูเกียรติ</p>
-              <p className="text-sm">(กำลังรออัปเดตข้อมูลจากผู้บริหาร...)</p>
+        <section className="py-24 bg-white relative overflow-hidden">
+          {/* BG Decoration */}
+          <div className="absolute right-0 top-0 w-1/3 h-full bg-slate-50/50 -skew-x-12 transform translate-x-10 z-0"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 relative z-10 text-center mb-16">
+            <h2 className="text-[#e62e2d] font-bold tracking-widest text-sm uppercase mb-3 flex items-center justify-center gap-2">
+              <i className="fas fa-award"></i> Executive Achievements & Awards
+            </h2>
+            <h3 className="text-3xl md:text-4xl font-black text-[#0a2540]">เกียรติประวัติและรางวัลผู้บริหาร</h3>
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto font-medium">
+              เครื่องการันตีวิสัยทัศน์และความมุ่งมั่นในการบริหารงานระดับสากล นำพาองค์กรก้าวสู่ความสำเร็จที่ได้รับการยอมรับในระดับภูมิภาค
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto px-4 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* Award 1 */}
+              <div className="bg-white border border-amber-100 shadow-[0_10px_30px_rgba(251,191,36,0.15)] rounded-2xl p-8 flex items-start gap-6 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(251,191,36,0.25)] transition-all group">
+                <div className="w-16 h-16 shrink-0 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg group-hover:scale-110 transition-transform">
+                  <i className="fas fa-trophy"></i>
+                </div>
+                <div>
+                  <h4 className="text-xl font-black text-[#0a2540] mb-2 leading-tight">รางวัลผู้นำองค์กรดีเด่น</h4>
+                  <p className="text-amber-600 font-bold text-sm mb-3">CEO Leader Award 2019</p>
+                  <p className="text-gray-500 text-sm font-medium">รางวัลยกย่องผู้บริหารที่มีวิสัยทัศน์ยอดเยี่ยม และสามารถนำพาองค์กรฝ่าฟันอุปสรรคจนประสบความสำเร็จ</p>
+                </div>
+              </div>
+
+              {/* Award 2 */}
+              <div className="bg-white border border-amber-100 shadow-[0_10px_30px_rgba(251,191,36,0.15)] rounded-2xl p-8 flex items-start gap-6 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(251,191,36,0.25)] transition-all group">
+                <div className="w-16 h-16 shrink-0 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg group-hover:scale-110 transition-transform">
+                  <i className="fas fa-medal"></i>
+                </div>
+                <div>
+                  <h4 className="text-xl font-black text-[#0a2540] mb-2 leading-tight">รางวัลนักธุรกิจหนุ่มดีเด่น</h4>
+                  <p className="text-amber-600 font-bold text-sm mb-3">ประจำประเทศลาว ปี 2019</p>
+                  <p className="text-gray-500 text-sm font-medium">รางวัลเกียรติยศสำหรับนักธุรกิจรุ่นใหม่ที่มีผลงานโดดเด่นในการขับเคลื่อนเศรษฐกิจใน สปป.ลาว</p>
+                </div>
+              </div>
+
+              {/* Achievement 3 */}
+              <div className="bg-white border border-blue-100 shadow-[0_10px_30px_rgba(0,36,156,0.08)] rounded-2xl p-8 flex items-start gap-6 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,36,156,0.12)] transition-all group">
+                <div className="w-16 h-16 shrink-0 bg-gradient-to-br from-[#00249c] to-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg group-hover:scale-110 transition-transform">
+                  <i className="fas fa-user-tie"></i>
+                </div>
+                <div>
+                  <div className="inline-block px-3 py-1 bg-blue-50 text-[#00249c] text-xs font-bold rounded-lg mb-3 uppercase tracking-wider">Position Appointed</div>
+                  <h4 className="text-xl font-black text-[#0a2540] mb-2 leading-tight">รองประธานสมาคมนักธุรกิจหนุ่ม</h4>
+                  <p className="text-gray-600 font-bold text-sm">นครปากเซ สปป. ลาว</p>
+                </div>
+              </div>
+
+              {/* Achievement 4 */}
+              <div className="bg-white border border-red-100 shadow-[0_10px_30px_rgba(230,46,45,0.08)] rounded-2xl p-8 flex items-start gap-6 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(230,46,45,0.12)] transition-all group">
+                <div className="w-16 h-16 shrink-0 bg-gradient-to-br from-[#e62e2d] to-red-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg group-hover:scale-110 transition-transform">
+                  <i className="fas fa-building-user"></i>
+                </div>
+                <div>
+                  <div className="inline-block px-3 py-1 bg-red-50 text-[#e62e2d] text-xs font-bold rounded-lg mb-3 uppercase tracking-wider">Position Appointed</div>
+                  <h4 className="text-xl font-black text-[#0a2540] mb-2 leading-tight">ประธานบริหาร (CEO)</h4>
+                  <p className="text-gray-600 font-bold text-sm">บริษัท CC1971 GROUP สปป. ลาว</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
@@ -241,7 +296,7 @@ export default function AboutPage() {
             7. FOOTER SLOGAN
         ========================================== */}
         <section className="py-16 bg-[#e62e2d] text-center border-t-4 border-[#0a2540]">
-          <h2 className="text-2xl md:text-4xl font-black text-white tracking-widest uppercase">
+          <h2 className="text-2xl md:text-4xl font-black text-white tracking-widest uppercase px-4">
             "One Group • One Standard • One Future"
           </h2>
         </section>
