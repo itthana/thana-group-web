@@ -100,18 +100,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen flex bg-slate-100 font-prompt">
       
-      {/* Sidebar */}
-      <aside className={`${isSidebarOpen ? 'w-64' : 'w-20'} bg-[#0a2540] text-white transition-all duration-300 flex flex-col fixed h-full z-20 shadow-2xl`}>
-        <div className="h-16 md:h-20 flex items-center justify-between px-4 border-b border-white/10">
-          {isSidebarOpen ? <div className="font-black text-xl text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-blue-400">THANA ADMIN</div> : <div className="font-black text-xl text-[#00e5ff] mx-auto">TA</div>}
-          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="text-gray-400 hover:text-white"><i className={`fas ${isSidebarOpen ? 'fa-angle-left' : 'fa-bars'} text-xl`}></i></button>
-        </div>
-        <nav className="flex-1 py-6 space-y-2 px-3">
-          <Link href="/admin" className="flex items-center gap-3 px-3 py-3 bg-blue-600/20 text-[#00e5ff] rounded-xl border border-blue-500/30"><i className="fas fa-chart-pie w-6 text-center text-lg"></i>{isSidebarOpen && <span className="font-bold">ภาพรวมระบบ</span>}</Link>
-          <Link href="/admin/manage" className="flex items-center gap-3 px-3 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all"><i className="fas fa-boxes-packing w-6 text-center text-lg"></i>{isSidebarOpen && <span className="font-medium">จัดการพัสดุ</span>}</Link>
-        </nav>
-      </aside>
-
+      
       {/* Main Content */}
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
         <header className="h-16 md:h-20 bg-white border-b border-gray-200 flex items-center justify-between px-6 md:px-10 sticky top-0 z-10 shadow-sm">
