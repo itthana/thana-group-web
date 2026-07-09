@@ -172,7 +172,8 @@ export default function TrackAndTracePage() {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                     </div>
-                    <span className="font-bold">สถานะปัจจุบัน: {result.history[0]?.status || result.histories[0].status}</span>
+                    {/* 👇 แก้ไขตรงนี้แล้ว เปลี่ยนเป็น histories เติม s 👇 */}
+                    <span className="font-bold">สถานะปัจจุบัน: {result.histories[0]?.status}</span>
                   </div>
                 )}
               </div>
