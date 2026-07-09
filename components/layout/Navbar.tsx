@@ -178,7 +178,7 @@ export default function Navbar() {
                     <Link href="/services" className="text-sm font-bold text-[#ff0000] hover:underline">ดูหน้ารวมบริการ <i className="fas fa-arrow-right text-xs"></i></Link>
                   </div>
                   <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                    <Link href="/services" className="flex items-center gap-3 p-3 hover:bg-blue-50 rounded-xl transition-colors group/item">
+                    <Link href="/services/international" className="flex items-center gap-3 p-3 hover:bg-blue-50 rounded-xl transition-colors group/item">
                       <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors"><i className="fas fa-globe-asia"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-blue-700">1. ขนส่งระหว่างประเทศ</span>
                     </Link>
@@ -194,7 +194,7 @@ export default function Navbar() {
                       <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-purple-600 group-hover/item:text-white transition-colors"><i className="fas fa-cart-shopping"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-purple-700">4. รับสั่งสินค้าออนไลน์</span>
                     </Link>
-                    <Link href="/services" className="flex items-center gap-3 p-3 hover:bg-sky-50 rounded-xl transition-colors group/item">
+                    <Link href="/services/customs" className="flex items-center gap-3 p-3 hover:bg-sky-50 rounded-xl transition-colors group/item">
                       <div className="w-10 h-10 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-sky-600 group-hover/item:text-white transition-colors"><i className="fas fa-file-signature"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-sky-700">5. ชิปปิ้งครบวงจร ตรวจปล่อย</span>
                     </Link>
