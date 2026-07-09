@@ -4,34 +4,28 @@ import { useState } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 
-// ==========================================
-// 📦 Mock Data (ข้อมูลจำลองสำหรับการค้นหา)
-// ==========================================
-const mockTrackingData = {
-  trackingNumber: '',
-  status: 'in_transit', // pending, picked_up, in_transit, out_for_delivery, delivered
-  statusText: 'กำลังเดินทางข้ามพรมแดน (In Transit)',
-  estimatedDelivery: '10 กรกฎาคม 2026, 14:00 น.',
-  origin: 'กรุงเทพมหานคร, ประเทศไทย',
-  destination: 'นครหลวงเวียงจันทน์, สปป.ลาว',
-  weight: '450 kg',
-  serviceType: 'THANA Premium Express (ส่งด่วน 1 วัน)',
-  history: [
-    { id: 1, date: '09 ก.ค. 2026', time: '08:30 น.', status: 'อยู่ระหว่างดำเนินการข้ามแดน ณ ด่านศุลกากรหนองคาย', icon: 'fa-truck-fast', color: 'text-blue-500', bg: 'bg-blue-100' },
-    { id: 2, date: '08 ก.ค. 2026', time: '22:15 น.', status: 'รถบรรทุกเดินทางถึงศูนย์กระจายสินค้า หนองคาย', icon: 'fa-building', color: 'text-gray-500', bg: 'bg-gray-100' },
-    { id: 3, date: '08 ก.ค. 2026', time: '16:45 น.', status: 'พัสดุออกจากศูนย์กระจายสินค้า กรุงเทพมหานคร', icon: 'fa-truck-arrow-right', color: 'text-gray-500', bg: 'bg-gray-100' },
-    { id: 4, date: '08 ก.ค. 2026', time: '10:20 น.', status: 'พัสดุเข้าระบบรับเข้าระบบ (Picked Up)', icon: 'fa-box-check', color: 'text-gray-500', bg: 'bg-gray-100' },
-  ]
-};
+// นิยามประเภทข้อมูลให้ตรงตามโครงสร้าง Prisma API ของพี่
+interface TrackingHistoryItem {
+  id: string;
+  status: string;
+  location: string;
+  description?: string;
+  createdAt: string;
+}
+
+interface TrackingResultData {
+  trackingNumber: string;
+  histories: TrackingHistoryItem[];
+}
 
 export default function TrackAndTracePage() {
   const [searchInput, setSearchInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<typeof mockTrackingData | null>(null);
+  const [result, setResult] = useState<TrackingResultData | null>(null);
   const [error, setError] = useState('');
 
-  // ฟังก์ชันจำลองการค้นหาข้อมูล
-  const handleSearch = (e: React.FormEvent) => {
+  // ฟังก์ชันยิงเข้า API จริงที่พี่เตรียมไว้ (GET /api/tracking?trackingNumber=...)
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchInput.trim()) {
       setError('กรุณาระบุหมายเลขติดตามพัสดุ (Tracking Number)');
@@ -43,12 +37,62 @@ export default function TrackAndTracePage() {
     setIsLoading(true);
     setResult(null);
 
-    // จำลองเวลาโหลดข้อมูล 1.5 วินาที เพื่อให้เห็น Loading Animation สวยๆ
-    setTimeout(() => {
+    try {
+      // เรียกใช้งานผ่าน Query Parameter ตามเงื่อนไขของ API: searchParams.get('trackingNumber')
+      const response = await fetch(`/api/tracking?trackingNumber=${searchInput.trim().toUpperCase()}`);
+      const jsonRes = await response.json();
+
+      if (!response.ok) {
+        // หากส่ง 404 หรือข้อผิดพลาดอื่นๆ กลับมาจากหลังบ้าน ให้ดึงข้อความ Error มาแสดง
+        throw new Error(jsonRes.error || 'ไม่พบข้อมูลพัสดุในระบบ');
+      }
+
+      if (jsonRes.success && jsonRes.data) {
+        setResult(jsonRes.data);
+      } else {
+        throw new Error('โครงสร้างข้อมูลไม่ถูกต้อง');
+      }
+      
+    } catch (err: any) {
+      setError(err.message || 'ไม่พบหมายเลขพัสดุนี้ในระบบ หรือเกิดข้อผิดพลาดในการเชื่อมต่อ');
+      setResult(null);
+    } finally {
       setIsLoading(false);
-      // ในระบบจริงตรงนี้จะยิง API ไปเช็คข้อมูลครับ ตอนนี้ใช้ Mock Data ไปก่อน
-      setResult({ ...mockTrackingData, trackingNumber: searchInput.toUpperCase() });
-    }, 1500);
+    }
+  };
+
+  // ฟังก์ชันแปลงรูปแบบวันที่ที่มาจากฐานข้อมูลให้แสดงผลอ่านง่ายเป็นภาษาไทย
+  const formatThaiDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('th-TH', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }) + ' น.';
+    } catch (e) {
+      return dateString;
+    }
+  };
+
+  // ฟังก์ชันเลือก Icon และคลาสสีให้เหมาะสมกับข้อความสถานะแต่ละแบบอัตโนมัติ
+  const getStatusConfig = (status: string, isLatest: boolean) => {
+    const text = status.toLowerCase();
+    if (text.includes('สำเร็จ') || text.includes('delivered') || text.includes('รับแล้ว')) {
+      return { icon: 'fa-box-check', color: 'text-green-600', bg: 'bg-green-100' };
+    }
+    if (text.includes('จัดส่ง') || text.includes('delivery') || text.includes('นำจ่าย')) {
+      return { icon: 'fa-truck-ramp-box', color: 'text-amber-600', bg: 'bg-amber-100' };
+    }
+    if (text.includes('ด่าน') || text.includes('ศุลกากร') || text.includes('customs')) {
+      return { icon: 'fa-file-signature', color: 'text-sky-600', bg: 'bg-sky-100' };
+    }
+    // ค่าเริ่มต้นหากเป็นสถานะทั่วไป
+    return isLatest 
+      ? { icon: 'fa-truck-fast', color: 'text-blue-600', bg: 'bg-blue-100' }
+      : { icon: 'fa-circle-dot', color: 'text-gray-400', bg: 'bg-gray-100' };
   };
 
   return (
@@ -58,10 +102,9 @@ export default function TrackAndTracePage() {
       <main className="min-h-screen font-prompt bg-[#f8fafc] pt-20 lg:pt-28 pb-20">
         
         {/* ============================================================================
-            🔍 1. SEARCH HERO SECTION (ส่วนค้นหาดีไซน์ล้ำสมัย)
+            🔍 1. SEARCH HERO SECTION
         ============================================================================ */}
         <section className="relative bg-[#0a2540] pt-20 pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-          {/* พื้นหลังลายตาราง (Grid Pattern) แบจางๆ ให้ดูมีความเป็น Tech / Logistics */}
           <div className="absolute inset-0 z-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
           
           <div className="relative z-10 max-w-4xl mx-auto text-center animate-fade-in-up">
@@ -73,10 +116,9 @@ export default function TrackAndTracePage() {
               ระบบติดตามสถานะพัสดุ <span className="text-[#00e5ff]">Real-Time</span>
             </h1>
             <p className="text-gray-300 text-lg mb-10 font-light">
-              กรอกหมายเลข Tracking Number ของคุณเพื่อตรวจสอบสถานะการจัดส่งแบบวินาทีต่อวินาที
+              กรอกหมายเลข Tracking Number ของคุณเพื่อตรวจสอบสถานะการจัดส่งข้ามแดนจากระบบฐานข้อมูลกลาง
             </p>
 
-            {/* กล่องค้นหา (Search Box) */}
             <form onSubmit={handleSearch} className="relative max-w-3xl mx-auto">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-blue-500 rounded-full blur-md opacity-25 group-hover:opacity-50 transition-opacity duration-500"></div>
@@ -84,7 +126,7 @@ export default function TrackAndTracePage() {
                   type="text" 
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="กรอกหมายเลขพัสดุ เช่น THN123456789" 
+                  placeholder="กรอกหมายเลขพัสดุ เช่น THN12345678" 
                   className="relative w-full bg-white/10 backdrop-blur-xl border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#00e5ff] rounded-full px-8 py-5 text-lg md:text-xl shadow-2xl transition-all uppercase tracking-wider"
                 />
                 <button 
@@ -102,7 +144,6 @@ export default function TrackAndTracePage() {
                   )}
                 </button>
               </div>
-              {/* Alert Message กรณีไม่ได้กรอกเลข */}
               {error && (
                 <div className="absolute -bottom-10 left-0 w-full text-center text-red-400 text-sm font-bold animate-bounce">
                   <i className="fas fa-exclamation-circle mr-1"></i> {error}
@@ -113,88 +154,78 @@ export default function TrackAndTracePage() {
         </section>
 
         {/* ============================================================================
-            📊 2. TRACKING RESULT (แสดงผลการค้นหา)
+            📊 2. TRACKING RESULT (แสดงประวัติจากฐานข้อมูลจริง)
         ============================================================================ */}
         {result && (
           <section className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20">
             <div className="bg-white rounded-[2rem] shadow-2xl border border-gray-100 p-6 md:p-10 animate-fade-in-up">
               
-              {/* หัวข้อพัสดุ */}
+              {/* บาร์หัวข้อ */}
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-100 pb-6 mb-8 gap-4">
                 <div>
                   <h2 className="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">หมายเลขพัสดุ / Tracking Number</h2>
                   <div className="text-3xl md:text-4xl font-black text-[#0a2540] tracking-widest">{result.trackingNumber}</div>
                 </div>
-                <div className="bg-emerald-50 text-emerald-600 border border-emerald-200 px-6 py-3 rounded-full flex items-center gap-3 shadow-sm">
-                  <div className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                {result.histories.length > 0 && (
+                  <div className="bg-emerald-50 text-emerald-600 border border-emerald-200 px-6 py-3 rounded-full flex items-center gap-3 shadow-sm">
+                    <div className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </div>
+                    <span className="font-bold">สถานะปัจจุบัน: {result.history[0]?.status || result.histories[0].status}</span>
                   </div>
-                  <span className="font-bold">{result.statusText}</span>
-                </div>
+                )}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+              {/* ส่วนประวัติการเดินทาง */}
+              <div className="w-full">
+                <h3 className="font-black text-[#0a2540] mb-8 text-lg border-l-4 border-red-500 pl-3">เส้นทางและสถานะพัสดุแบบละเอียด (Tracking Timeline)</h3>
                 
-                {/* ฝั่งซ้าย: ข้อมูลพัสดุ และ Progress Bar */}
-                <div className="lg:col-span-1 space-y-8">
-                  {/* ข้อมูลการจัดส่ง */}
-                  <div className="bg-slate-50 rounded-2xl p-6 border border-gray-100">
-                    <h3 className="font-black text-[#0a2540] mb-4 text-lg border-l-4 border-[#00249c] pl-3">ข้อมูลการจัดส่ง</h3>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <div className="text-xs text-gray-400 font-bold uppercase mb-1">บริการ</div>
-                        <div className="text-sm font-semibold text-[#0a2540]">{result.serviceType}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-400 font-bold uppercase mb-1">กำหนดส่งโดยประมาณ</div>
-                        <div className="text-sm font-black text-red-600 bg-red-50 inline-block px-3 py-1 rounded-md">{result.estimatedDelivery}</div>
-                      </div>
-                      <div className="pt-4 border-t border-gray-200">
-                        <div className="text-xs text-gray-400 font-bold uppercase mb-1"><i className="fas fa-map-marker-alt text-gray-400 mr-1"></i> ต้นทาง (Origin)</div>
-                        <div className="text-sm font-bold text-[#0a2540]">{result.origin}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-400 font-bold uppercase mb-1"><i className="fas fa-flag-checkered text-gray-400 mr-1"></i> ปลายทาง (Destination)</div>
-                        <div className="text-sm font-bold text-[#0a2540]">{result.destination}</div>
-                      </div>
-                      <div className="pt-4 border-t border-gray-200">
-                        <div className="text-xs text-gray-400 font-bold uppercase mb-1">น้ำหนักรวม</div>
-                        <div className="text-sm font-bold text-[#0a2540]">{result.weight}</div>
-                      </div>
-                    </div>
+                {result.histories.length === 0 ? (
+                  <div className="text-center py-10 text-gray-400 font-medium">
+                    <i className="fas fa-folder-open text-4xl mb-3 block"></i>
+                    พัสดุเข้าระบบแล้ว แต่ยังไม่มีการบันทึกประวัติสถานะการเดินทาง
                   </div>
-                </div>
-
-                {/* ฝั่งขวา: Timeline ประวัติการเดินทาง */}
-                <div className="lg:col-span-2">
-                  <h3 className="font-black text-[#0a2540] mb-6 text-lg border-l-4 border-red-500 pl-3">ประวัติการเดินทาง (Tracking History)</h3>
-                  
+                ) : (
                   <div className="relative border-l-2 border-gray-100 ml-4 md:ml-6 space-y-8 pb-4">
-                    {result.history.map((item, index) => (
-                      <div key={item.id} className="relative pl-8 md:pl-10">
-                        {/* จุดวงกลม Timeline */}
-                        <div className={`absolute -left-[17px] top-1 w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-sm ${item.bg} ${item.color}`}>
-                          <i className={`fas ${item.icon} text-xs`}></i>
-                        </div>
-                        
-                        <div className={`bg-white p-5 rounded-2xl border ${index === 0 ? 'border-blue-100 shadow-md' : 'border-gray-50 shadow-sm'} transition-all hover:shadow-md`}>
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-2">
-                            <span className={`font-black ${index === 0 ? 'text-[#00249c]' : 'text-gray-700'} text-base`}>
-                              {item.status}
-                            </span>
-                            <span className="text-xs font-bold text-gray-400 bg-gray-50 px-3 py-1 rounded-full w-max">
-                              {item.date} • {item.time}
-                            </span>
+                    {result.histories.map((item, index) => {
+                      const isLatest = index === 0;
+                      const config = getStatusConfig(item.status, isLatest);
+                      
+                      return (
+                        <div key={item.id} className="relative pl-8 md:pl-10">
+                          {/* บับเบิ้ลไอคอนจำแนกสีตามสถานะดึงดูดสายตา */}
+                          <div className={`absolute -left-[17px] top-1 w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-sm ${config.bg} ${config.color} ${isLatest ? 'scale-110 ring-4 ring-blue-50' : ''}`}>
+                            <i className={`fas ${config.icon} text-xs`}></i>
+                          </div>
+                          
+                          <div className={`bg-white p-5 rounded-2xl border ${isLatest ? 'border-blue-100 shadow-md ring-1 ring-blue-50' : 'border-gray-50 shadow-sm'} transition-all hover:shadow-md`}>
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                              <div className="space-y-1">
+                                <div className={`font-black ${isLatest ? 'text-[#00249c] text-lg' : 'text-gray-700 text-base'}`}>
+                                  {item.status}
+                                </div>
+                                <div className="text-sm text-gray-500 flex items-center gap-1.5 font-medium">
+                                  <i className="fas fa-location-dot text-gray-400"></i> สถานที่: {item.location}
+                                </div>
+                                {item.description && (
+                                  <div className="text-xs text-gray-400 mt-1 bg-slate-50 p-2.5 rounded-lg italic">
+                                    หมายเหตุ: {item.description}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="text-xs font-bold text-gray-400 bg-gray-50 border border-gray-100 px-4 py-1.5 rounded-full h-max w-max shrink-0 shadow-inner">
+                                <i className="far fa-clock mr-1"></i> {formatThaiDate(item.createdAt)}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
-                </div>
-
+                )}
               </div>
+
             </div>
           </section>
         )}
