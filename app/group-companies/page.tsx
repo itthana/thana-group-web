@@ -29,7 +29,7 @@ const groupCompaniesData = [
     name: 'บริษัท ธนาโลจิสติกส์ จำกัด',
     abbr: '',
     description: 'ให้บริการขนส่งระหว่างประเทศ (Cross-border Transport) ครอบคลุมไทย-ลาว-อาเซียน ด้วยกองทัพรถบรรทุกมาตรฐานสากล',
-    logo: 'LOGO-TLT.png',
+    logo: '0000.png',
     contact: {
       tel: '045-222-222',
       line: '@thanagroup',
