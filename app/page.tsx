@@ -107,7 +107,7 @@ export default function Home() {
               <div className="group bg-white rounded-[2rem] overflow-hidden shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                 <div className="h-56 overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540] to-transparent z-10"></div>
-                  <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+                  <img src="LOGO-TLT.png" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
                   <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">
                     <div className="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl"><i className="fas fa-truck-fast"></i></div>
                   </div>
