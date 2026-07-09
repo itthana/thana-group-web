@@ -203,6 +203,9 @@ export default function Navbar() {
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-pink-700">6. จำหน่ายสินค้าอุปโภคบริโภค</span>
                     </Link>
                   </div>
+                  <Link href="/calculator" className="font-bold text-gray-700 hover:text-[#00249c] transition-colors">
+  ประเมินราคา
+</Link>
                   <Link href="/services/express" className="mt-4 flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-red-100 border border-red-200 rounded-xl hover:shadow-md transition-all group/highlight">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-red-600 text-white rounded-xl flex items-center justify-center shadow-md group-hover/highlight:scale-110 transition-transform"><i className="fas fa-bolt text-xl"></i></div>
