@@ -29,7 +29,7 @@ const groupCompaniesData = [
     name: 'บริษัท ธนาโลจิสติกส์ จำกัด',
     abbr: 'TLT',
     description: 'ให้บริการขนส่งระหว่างประเทศ (Cross-border Transport) ครอบคลุมไทย-ลาว-อาเซียน ด้วยกองทัพรถบรรทุกมาตรฐานสากล',
-    logo: 'https://placehold.co/400x200/ffffff/ff0000?text=TLT+Logo',
+    logo: 'LOGO-TLT.png',
     contact: {
       tel: '045-222-222',
       line: '@thanagroup',
