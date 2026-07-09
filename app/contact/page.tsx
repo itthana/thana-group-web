@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 export default function ContactHubPage() {
-  // State สำหรับจัดการฟอร์มติดต่อ
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -15,32 +14,38 @@ export default function ContactHubPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [alert, setAlert] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
 
-  // ฟังก์ชันจัดการตอนกดส่งฟอร์ม (จำลองการยิง API)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setAlert({ type: null, message: '' });
 
-    // จำลองเวลาส่งข้อมูลเข้า API หลังบ้าน 1.5 วินาที
-    setTimeout(() => {
-      if (formData.name && formData.phone && formData.message) {
+    try {
+      // 🚀 แก้ไขกลับมาใช้ fetch เพื่อยิงข้อมูลไปส่งอีเมลจริงๆ แล้วครับ
+      // หมายเหตุ: ถ้า API เดิมของพี่ไม่ได้ชื่อ '/api/contact' รบกวนเปลี่ยนให้ตรงกับของเดิมนะครับ
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
         setAlert({ 
           type: 'success', 
-          message: 'ส่งข้อความสำเร็จ! เจ้าหน้าที่จะติดต่อกลับภายใน 24 ชั่วโมงครับ' 
+          message: 'ส่งข้อความสำเร็จ! ระบบได้ส่งอีเมลแจ้งเตือนเจ้าหน้าที่เรียบร้อยแล้วครับ' 
         });
-        // เคลียร์ฟอร์ม
         setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
       } else {
-        setAlert({ 
-          type: 'error', 
-          message: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน' 
-        });
+        throw new Error('เกิดข้อผิดพลาดในการส่งข้อมูล');
       }
+    } catch (error) {
+      setAlert({ 
+        type: 'error', 
+        message: 'ระบบเชื่อมต่อขัดข้อง หรือส่งอีเมลไม่สำเร็จ กรุณาลองใหม่อีกครั้งครับ' 
+      });
+    } finally {
       setIsSubmitting(false);
-      
-      // ซ่อนแจ้งเตือนอัตโนมัติ
       setTimeout(() => setAlert({ type: null, message: '' }), 5000);
-    }, 1500);
+    }
   };
 
   return (
@@ -49,75 +54,26 @@ export default function ContactHubPage() {
       {/* ==========================================
           1. HERO SECTION (ส่วนหัวของหน้า)
       ========================================== */}
-      <div className="relative bg-[#0a2540] py-24 overflow-hidden">
-        {/* Background Pattern */}
+      <div className="relative bg-[#0a2540] py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:30px_30px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
           <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-[#00e5ff] text-sm font-bold tracking-wider mb-4 border border-blue-400/30">
-            CONTACT & NETWORK HUB
+            CONTACT US
           </span>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-wide">
-            ศูนย์บริการลูกค้าและเครือข่าย <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-blue-400">THANA GROUP</span>
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-wide">
+            ติดต่อ <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-blue-400">THANA GROUP</span>
           </h1>
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-            เราพร้อมให้คำปรึกษาด้านโลจิสติกส์และการค้าระหว่างประเทศแบบครบวงจร ด้วยเครือข่ายที่ครอบคลุมและทีมงานมืออาชีพ
+            สอบถามข้อมูล บริการด้านโลจิสติกส์ หรือขอใบเสนอราคา เราพร้อมให้บริการคุณเสมอ
           </p>
         </div>
       </div>
 
       {/* ==========================================
-          2. BRANCH & NETWORK CARDS (จุดติดต่อและสาขา)
+          2. CONTACT FORM & MAP (ฟอร์มและแผนที่)
       ========================================== */}
-      <div className="max-w-7xl mx-auto px-6 -mt-10 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Card 1: สำนักงานใหญ่ */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-[#00249c] text-2xl mb-6">
-              <i className="fas fa-building"></i>
-            </div>
-            <h3 className="text-xl font-black text-[#0a2540] mb-3">สำนักงานใหญ่ (Headquarters)</h3>
-            <div className="space-y-3 text-gray-600 font-medium text-sm">
-              <p className="flex items-start gap-3"><i className="fas fa-location-dot mt-1 text-gray-400"></i> 123 อาคารธนากรุ๊ป ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพมหานคร 10310</p>
-              <p className="flex items-center gap-3"><i className="fas fa-phone text-gray-400"></i> 02-XXX-XXXX (ฝ่ายบริการลูกค้า)</p>
-              <p className="flex items-center gap-3"><i className="fas fa-envelope text-gray-400"></i> contact@thanagroup.com</p>
-            </div>
-          </div>
-
-          {/* Card 2: ศูนย์ขนส่งข้ามแดน (หนองคาย) */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-            <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 text-2xl mb-6">
-              <i className="fas fa-truck-fast"></i>
-            </div>
-            <h3 className="text-xl font-black text-[#0a2540] mb-3">ศูนย์ขนส่งข้ามแดน (หนองคาย)</h3>
-            <div className="space-y-3 text-gray-600 font-medium text-sm">
-              <p className="flex items-start gap-3"><i className="fas fa-location-dot mt-1 text-gray-400"></i> ศูนย์กระจายสินค้าชายแดน ใกล้สะพานมิตรภาพไทย-ลาว แห่งที่ 1 จังหวัดหนองคาย</p>
-              <p className="flex items-center gap-3"><i className="fas fa-phone text-gray-400"></i> 042-XXX-XXXX</p>
-              <p className="flex items-center gap-3"><i className="fas fa-clock text-gray-400"></i> จันทร์ - เสาร์ (08:00 - 18:00 น.)</p>
-            </div>
-          </div>
-
-          {/* Card 3: สาขา สปป.ลาว */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-            <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-2xl mb-6">
-              <i className="fas fa-earth-asia"></i>
-            </div>
-            <h3 className="text-xl font-black text-[#0a2540] mb-3">สาขาเวียงจันทน์ (สปป.ลาว)</h3>
-            <div className="space-y-3 text-gray-600 font-medium text-sm">
-              <p className="flex items-start gap-3"><i className="fas fa-location-dot mt-1 text-gray-400"></i> นครหลวงเวียงจันทน์ สปป.ลาว (ศูนย์ปฏิบัติการกระจายสินค้า)</p>
-              <p className="flex items-center gap-3"><i className="fas fa-phone text-gray-400"></i> +856-20-XXXX-XXXX</p>
-              <p className="flex items-center gap-3"><i className="fas fa-headset text-gray-400"></i> รองรับภาษาไทย / ลาว / อังกฤษ</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* ==========================================
-          3. CONTACT FORM & MAP (ฟอร์มและแผนที่)
-      ========================================== */}
-      <div className="max-w-7xl mx-auto px-6 mt-20">
+      <div className="max-w-7xl mx-auto px-6 mt-12">
         <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden flex flex-col lg:flex-row">
           
           {/* ซ้าย: แผนที่ Google Maps */}
@@ -142,7 +98,7 @@ export default function ContactHubPage() {
           <div className="lg:w-1/2 p-8 md:p-12">
             <div className="mb-8">
               <h2 className="text-3xl font-black text-[#0a2540] mb-2">ส่งข้อความถึงเรา</h2>
-              <p className="text-gray-500 font-medium text-sm">สอบถามค่าขนส่ง ปรึกษาเรื่องการนำเข้า-ส่งออก หรือแจ้งปัญหาการใช้งาน</p>
+              <p className="text-gray-500 font-medium text-sm">กรุณากรอกข้อมูลด้านล่าง เพื่อให้ทีมงานติดต่อกลับโดยเร็วที่สุด</p>
             </div>
 
             {alert.type && (
