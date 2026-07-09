@@ -28,36 +28,42 @@ export default function ContactHubPage() {
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setAlert({ type: null, message: '' });
+  e.preventDefault();
+  
+  // (ถ้าของเดิมพี่มี setIsSubmitting(true) ก็ใส่ไว้ได้เหมือนเดิมเลยนะครับ)
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+  try {
+    // 1. จัดเตรียมข้อมูลให้ตรงกับที่ API ของเรารับ (API เรารับ name, company, service)
+    // ผมขอจับคู่ "เบอร์โทร" ไปใส่ช่อง company และรวม "หัวข้อ+รายละเอียด" ไปใส่ช่อง service ให้นะครับ จะได้เก็บครบๆ
+    const payload = {
+      name: formData.name,
+      company: `โทร: ${formData.phone} (อีเมล: ${formData.email || '-'})`, 
+      service: `หัวข้อ: ${formData.subject} | รายละเอียด: ${formData.message}`
+    };
 
-      if (response.ok) {
-        setAlert({ 
-          type: 'success', 
-          message: 'ส่งข้อความสำเร็จ! ระบบได้ส่งข้อมูลแจ้งเตือนเจ้าหน้าที่เรียบร้อยแล้วครับ' 
-        });
-        setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
-      } else {
-        throw new Error('เกิดข้อผิดพลาดในการส่งข้อมูล');
-      }
-    } catch (error) {
-      setAlert({ 
-        type: 'error', 
-        message: 'ระบบเชื่อมต่อขัดข้อง หรือส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้งครับ' 
-      });
-    } finally {
-      setIsSubmitting(false);
-      setTimeout(() => setAlert({ type: null, message: '' }), 6000);
+    // 2. ยิงข้อมูลไปที่ API ที่เราเพิ่งสร้าง
+    const response = await fetch('/api/quotations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    // 3. เช็คผลลัพธ์
+    if (response.ok) {
+      alert("✅ ส่งข้อมูลเข้าฐานข้อมูลสำเร็จแล้วครับ!");
+      
+      // เคลียร์ค่าในช่องฟอร์มให้ว่างเปล่า
+      setFormData({ name: '', phone: '', email: '', subject: '', message: '' }); 
+    } else {
+      alert("❌ ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อ");
+  } finally {
+    // (ถ้าของเดิมพี่มี setIsSubmitting(false) ก็ใส่ไว้เหมือนเดิมเลยครับ)
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-50 font-prompt pb-24">
