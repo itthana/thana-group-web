@@ -1,7 +1,8 @@
+TypeScript
 'use client';
 
-import Navbar from '../../../components/layout/Navbar';
-import Footer from '../../../components/layout/Footer';
+import Navbar from '../../components/layout/Navbar';
+import Footer from '../../components/layout/Footer';
 
 // ==========================================
 // 👥 ข้อมูลทีมผู้ชำนาญการ (Team of Experts)
