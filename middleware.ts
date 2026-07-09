@@ -1,32 +1,12 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { withAuth } from "next-auth/middleware";
 
-const handler = NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        // 💡 กำหนด Username และ Password สำหรับแอดมินตรงนี้ครับ
-        if (credentials?.username === "admin" && credentials?.password === "123456") {
-          // ถ้าถูก ให้ส่งข้อมูล User กลับไป
-          return { id: "1", name: "Admin THANA", role: "admin" };
-        }
-        // ถ้าผิด ส่งค่า null กลับไป (ระบบจะตีกลับว่าเข้าสู่ระบบไม่สำเร็จ)
-        return null;
-      }
-    })
-  ],
+export default withAuth({
   pages: {
-    signIn: '/admin/login', // บอกระบบว่าหน้าล็อคอินเราอยู่ที่ไหน
+    signIn: "/admin/login", // ถ้ายังไม่ล็อกอิน ให้เด้งไปหน้านี้
   },
-  session: {
-    strategy: "jwt", // ใช้ระบบ JWT (JSON Web Token) สอดคล้องกับ Middleware
-  },
-  secret: process.env.NEXTAUTH_SECRET || "ThanaGroupSuperSecretKey2026",
 });
 
-export { handler as GET, handler as POST };
+export const config = {
+  // บล็อกการเข้าถึงหน้า /admin และหน้าย่อยทั้งหมด
+  matcher: ["/admin", "/admin/:path*"],
+};
