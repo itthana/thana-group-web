@@ -42,7 +42,7 @@ const groupCompaniesData = [
     name: 'บริษัท ทีที อินเตอร์เทรดดิ้ง จำกัด',
     abbr: 'TT',
     description: 'ให้บริการนำเข้า-ส่งออกสินค้าอุปโภค บริโภค และเป็นตัวแทนจัดจำหน่าย (Distributor) กระจายสินค้าครอบคลุมทุกพื้นที่',
-    logo: 'https://placehold.co/400x200/ffffff/0a2540?text=TT+Logo',
+    logo: 'LOGO-TT.png',
     contact: {
       tel: '045-333-333',
       line: '@tt-intertrade',
@@ -55,7 +55,7 @@ const groupCompaniesData = [
     name: 'บริษัท ทีเอสพี จำกัด',
     abbr: 'TSP',
     description: 'ให้บริการด้านพิธีการศุลกากร ตรวจปล่อยสินค้า และชิปปิ้ง (Customs Clearance) ดำเนินการเอกสารรวดเร็ว ถูกต้องตามกฎหมาย',
-    logo: 'https://placehold.co/400x200/ffffff/f59e0b?text=TSP+Logo',
+    logo: 'LOGO-TSP.png',
     contact: {
       tel: '045-444-444',
       line: '@tsp-shipping',
@@ -68,7 +68,7 @@ const groupCompaniesData = [
     name: 'บริษัท ธนาเอ็กเพรส จำกัด',
     abbr: 'TEX',
     description: 'ให้บริการเกี่ยวกับการขนส่งสินค้าภายในประเทศ (Domestic Express) จัดส่งรวดเร็ว ปลอดภัย ถึงมือผู้รับตรงเวลา',
-    logo: 'https://placehold.co/400x200/ffffff/10b981?text=TEX+Logo',
+    logo: 'LOGO TLK.png',
     contact: {
       tel: '045-555-555',
       line: '@thanaexpress',
