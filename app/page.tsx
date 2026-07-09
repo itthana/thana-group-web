@@ -70,10 +70,17 @@ export default function Home() {
                     {slide.subtitle}
                   </p>
                   
-                  <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                  {/* 🚀 ชุดปุ่ม 3 ปุ่มที่จัดเรียงใหม่อย่างสวยงามและลงตัว */}
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                     <Link href="/track" className="bg-gradient-to-r from-[#da251d] to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-full transition-all shadow-[0_8px_20px_rgba(218,37,29,0.4)] hover:shadow-[0_10px_30px_rgba(218,37,29,0.6)] hover:-translate-y-1 flex items-center justify-center gap-2 text-lg">
                       <i className="fas fa-search"></i> ติดตามสถานะพัสดุ
                     </Link>
+                    
+                    {/* 🆕 ปุ่มประเมินราคา (สีน้ำเกลือเข้มตัดกันอย่างลงตัวตามลำดับสายตา) */}
+                    <Link href="/calculator" className="bg-gradient-to-r from-[#00249c] to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-full transition-all shadow-[0_8px_20px_rgba(0,36,156,0.4)] hover:shadow-[0_10px_30px_rgba(0,36,156,0.6)] hover:-translate-y-1 flex items-center justify-center gap-2 text-lg group">
+                      <i className="fas fa-calculator text-[#00e5ff] group-hover:scale-110 transition-transform"></i> ประเมินราคาค่าขนส่ง
+                    </Link>
+
                     <Link href="/services" className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold py-4 px-8 rounded-full transition-all hover:-translate-y-1 flex items-center justify-center gap-2 text-lg">
                       บริการของเรา <i className="fas fa-arrow-right"></i>
                     </Link>
@@ -92,7 +99,7 @@ export default function Home() {
         </section>
 
         {/* ============================================================================
-            📦 2. OUR CORE SERVICES (ส่วนแนะนำบริการ - เพิ่มใหม่ให้เว็บดูเต็ม)
+            📦 2. OUR CORE SERVICES (ส่วนแนะนำบริการ)
         ============================================================================ */}
         <section className="py-20 bg-slate-50 relative z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -162,12 +169,11 @@ export default function Home() {
           
           <div className="max-w-7xl mx-auto relative z-10">
             
-            {/* หัวข้อ (เหลือป้าย Why Choose แค่อันเดียว) */}
+            {/* หัวข้อ */}
             <div className="text-center mb-20">
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-100 text-[#ff0000] text-sm font-bold tracking-widest uppercase mb-6 shadow-sm">
                 <i className="fas fa-award"></i> Why Choose THANA GROUP
               </div>
-              
               <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#0a2540] tracking-tight lg:whitespace-nowrap">
                 ประสบการณ์ที่มากกว่า <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00249c] to-[#ff0000] drop-shadow-sm">20 ปี</span> ในวงการโลจิสติกส์ ไทย-ลาว
               </h3>
@@ -201,6 +207,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+
         {/* ============================================================================
             📞 4. CALL TO ACTION (ส่วนติดต่อเราด้านล่าง)
         ============================================================================ */}
