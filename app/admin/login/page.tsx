@@ -1,156 +1,102 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
-  const router = useRouter();
-  
-  // ==========================================
-  // 1. State Management (จัดการสถานะข้อมูล)
-  // ==========================================
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // ==========================================
-  // 2. Submit Handler (ฟังก์ชันจัดการเมื่อกดปุ่มเข้าสู่ระบบ)
-  // ==========================================
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // ป้องกันหน้าเว็บรีเฟรช
-    
-    // Client-side Validation (ตรวจสอบเบื้องต้นก่อนส่งข้อมูล)
-    if (!username.trim() || !password.trim()) {
-      setError('กรุณากรอกชื่อผู้ใช้งานและรหัสผ่านให้ครบถ้วน');
-      return;
-    }
-
-    setIsLoading(true);
+    e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
-      // เรียกใช้ API ของ NextAuth เพื่อตรวจสอบรหัสผ่าน
-      const result = await signIn('credentials', {
-        redirect: false,
-        username: username,
-        password: password,
+      // 🚨 ยิงเข้า API ยืนยันตัวตนหลังบ้านของพี่
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
       });
 
-      // จัดการกรณี Error (รหัสผ่านผิด หรือ ระบบขัดข้อง)
-      if (result?.error) {
-        setError('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
-        setIsLoading(false);
+      const data = await response.json();
+
+      if (response.ok) {
+        // 🔥 แก้ไขจุดนี้: บังคับเบราว์เซอร์ล้างแคชและกระโดดไปหน้า Admin ทันที ขจัดปัญหารีเฟรชซ้ำ
+        window.location.href = '/admin';
       } else {
-        // กรณีสำเร็จ: บังคับรีเฟรชเพื่อเคลียร์ Cache และพาไปหน้า Dashboard
-        router.push('/admin');
-        router.refresh();
+        setError(data.error || 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+        setIsLoading(false);
       }
     } catch (err) {
-      setError('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
+      setError('ระบบเชื่อมข้อมูลขัดข้อง กรุณาลองใหม่อีกครั้ง');
       setIsLoading(false);
     }
   };
 
-  // ==========================================
-  // 3. UI Template (ส่วนแสดงผล)
-  // ==========================================
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center font-prompt p-4 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
-      
-      {/* กล่อง Login หลัก (รองรับ Mobile Responsive) */}
-      <div className="bg-white p-8 md:p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,36,156,0.1)] w-full max-w-md border border-gray-100 animate-slide-up">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center font-prompt p-4 bg-[linear-gradient(rgba(241,245,249,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(241,245,249,0.8)_1px,transparent_1px)] bg-[size:30px_30px]">
+      <div className="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(10,37,64,0.05)] border border-gray-100 p-8 md:p-12 w-full max-w-md text-center animate-fade-in-up">
         
-        {/* ส่วน Header และ Logo */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-[#00249c] rounded-2xl flex items-center justify-center text-white text-3xl mx-auto mb-4 shadow-lg shadow-blue-900/30">
-            <i className="fas fa-truck-fast"></i>
-          </div>
-          <h1 className="text-2xl font-black text-[#0a2540] uppercase tracking-wider">THANA GROUP</h1>
-          <p className="text-gray-500 text-sm mt-1">Admin Management Portal</p>
+        {/* Logo */}
+        <div className="w-16 h-16 mx-auto bg-[#00249c] rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg mb-6 shadow-blue-600/20">
+          <i className="fas fa-truck-fast"></i>
         </div>
 
-        {/* ส่วนแสดงข้อความแจ้งเตือน Error (Alert) */}
+        <h1 className="text-2xl md:text-3xl font-black text-[#0a2540] mb-2 tracking-wide">THANA GROUP</h1>
+        <p className="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-8">Admin Management Portal</p>
+
         {error && (
-          <div className="mb-6 bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 flex items-start gap-3 text-sm font-medium animate-fade-in">
-            <i className="fas fa-circle-exclamation mt-0.5 text-lg"></i> 
-            <span>{error}</span>
+          <div className="mb-6 p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm font-bold flex items-center gap-2 justify-center">
+            <i className="fas fa-circle-exclamation"></i> {error}
           </div>
         )}
 
-        {/* ฟอร์มกรอกข้อมูล */}
-        <form onSubmit={handleLogin} className="space-y-5">
-          
-          {/* ช่อง Username */}
+        <form onSubmit={handleLogin} className="space-y-6 text-left">
           <div>
-            <label htmlFor="username" className="block text-sm font-bold text-gray-700 mb-2">
-              ชื่อผู้ใช้งาน (Username)
-            </label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">ชื่อผู้ใช้งาน (Username)</label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                <i className="fas fa-user"></i>
-              </div>
-              <input 
-                id="username"
-                type="text" 
+              <i className="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="text"
+                required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                disabled={isLoading}
-                className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 transition-all text-gray-800 font-medium disabled:opacity-60"
-                placeholder="กรอกชื่อผู้ใช้งาน..."
-                autoComplete="username"
+                placeholder="ระบุชื่อผู้ใช้งาน"
+                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all font-semibold"
               />
             </div>
           </div>
 
-          {/* ช่อง Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-bold text-gray-700 mb-2">
-              รหัสผ่าน (Password)
-            </label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">รหัสผ่าน (Password)</label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                <i className="fas fa-lock"></i>
-              </div>
-              <input 
-                id="password"
-                type="password" 
+              <i className="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="password"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                disabled={isLoading}
-                className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 transition-all text-gray-800 font-medium disabled:opacity-60"
-                placeholder="กรอกรหัสผ่าน..."
-                autoComplete="current-password"
+                placeholder="••••••"
+                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all font-semibold"
               />
             </div>
           </div>
 
-          {/* ปุ่ม Submit (เปลี่ยนสถานะได้ตาม Loading) */}
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isLoading}
-            className="w-full bg-[#0a2540] hover:bg-[#00249c] text-white font-bold py-4 rounded-xl transition-all duration-300 flex justify-center items-center gap-2 mt-6 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-[#0a2540] to-blue-900 hover:from-blue-900 hover:to-slate-900 text-white font-black text-base py-4 rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-80 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             {isLoading ? (
-              <>
-                <i className="fas fa-spinner fa-spin text-lg"></i>
-                กำลังตรวจสอบข้อมูล...
-              </>
+              <><i className="fas fa-circle-notch fa-spin"></i> กำลังตรวจสอบข้อมูล...</>
             ) : (
-              <>
-                <i className="fas fa-sign-in-alt text-lg"></i>
-                เข้าสู่ระบบ (Sign In)
-              </>
+              <><i className="fas fa-right-to-bracket"></i> เข้าสู่ระบบควบคุม panel</>
             )}
           </button>
         </form>
-
-      </div>
-      
-      {/* Footer เล็กๆ ด้านล่าง */}
-      <div className="fixed bottom-4 text-center w-full text-xs text-gray-400 font-medium pointer-events-none">
-        &copy; 2026 THANA GROUP Logistics. All rights reserved.
       </div>
     </div>
   );
