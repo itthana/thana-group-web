@@ -1,290 +1,204 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '../../components/layout/Navbar';
-import Footer from '../../components/layout/Footer';
 
-export default function ContactPage() {
-  // State สำหรับเก็บข้อมูลฟอร์ม
+export default function ContactHubPage() {
+  // State สำหรับจัดการฟอร์มติดต่อ
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    department: '',
+    subject: '',
     message: ''
   });
-
-  // State สำหรับจัดการสถานะการส่ง
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [alert, setAlert] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
+  // ฟังก์ชันจัดการตอนกดส่งฟอร์ม (จำลองการยิง API)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus('idle');
+    setAlert({ type: null, message: '' });
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', phone: '', email: '', department: '', message: '' });
+    // จำลองเวลาส่งข้อมูลเข้า API หลังบ้าน 1.5 วินาที
+    setTimeout(() => {
+      if (formData.name && formData.phone && formData.message) {
+        setAlert({ 
+          type: 'success', 
+          message: 'ส่งข้อความสำเร็จ! เจ้าหน้าที่จะติดต่อกลับภายใน 24 ชั่วโมงครับ' 
+        });
+        // เคลียร์ฟอร์ม
+        setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
       } else {
-        setSubmitStatus('error');
+        setAlert({ 
+          type: 'error', 
+          message: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน' 
+        });
       }
-    } catch (error) {
-      console.error("Failed to submit form:", error);
-      setSubmitStatus('error');
-    } finally {
       setIsSubmitting(false);
-    }
+      
+      // ซ่อนแจ้งเตือนอัตโนมัติ
+      setTimeout(() => setAlert({ type: null, message: '' }), 5000);
+    }, 1500);
   };
 
   return (
-    <>
-      <Navbar />
+    <div className="min-h-screen bg-slate-50 font-prompt pb-20">
       
-      <main className="min-h-screen bg-slate-50 font-prompt pb-24">
+      {/* ==========================================
+          1. HERO SECTION (ส่วนหัวของหน้า)
+      ========================================== */}
+      <div className="relative bg-[#0a2540] py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:30px_30px]"></div>
         
-        {/* =========================================
-            1. HERO BANNER
-        ========================================= */}
-        <section 
-          className="relative h-[350px] flex items-center justify-center bg-cover bg-center pt-16"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop')" }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a2540]/95 to-[#00249c]/80"></div>
-          <div className="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in">
-            <span className="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#00e5ff] text-xs font-bold tracking-widest uppercase mb-4">
-              Get In Touch
-            </span>
-            <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-wide drop-shadow-md">
-              ติดต่อเรา
-            </h1>
-            <div className="h-1 w-20 bg-[#ff0000] mx-auto rounded-full mb-6"></div>
-            <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed">
-              ยินดีต้อนรับสู่ศูนย์บริการลูกค้าสัมพันธ์ THANA GROUP <br className="hidden md:block" />
-              เชื่อมต่อทุกช่องทางการสื่อสารอย่างไร้รอยต่อ เพื่อให้บริการโลจิสติกส์ที่ดีที่สุดสำหรับคุณ
-            </p>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+          <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-[#00e5ff] text-sm font-bold tracking-wider mb-4 border border-blue-400/30">
+            CONTACT & NETWORK HUB
+          </span>
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-wide">
+            ศูนย์บริการลูกค้าและเครือข่าย <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-blue-400">THANA GROUP</span>
+          </h1>
+          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+            เราพร้อมให้คำปรึกษาด้านโลจิสติกส์และการค้าระหว่างประเทศแบบครบวงจร ด้วยเครือข่ายที่ครอบคลุมและทีมงานมืออาชีพ
+          </p>
+        </div>
+      </div>
+
+      {/* ==========================================
+          2. BRANCH & NETWORK CARDS (จุดติดต่อและสาขา)
+      ========================================== */}
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Card 1: สำนักงานใหญ่ */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-[#00249c] text-2xl mb-6">
+              <i className="fas fa-building"></i>
+            </div>
+            <h3 className="text-xl font-black text-[#0a2540] mb-3">สำนักงานใหญ่ (Headquarters)</h3>
+            <div className="space-y-3 text-gray-600 font-medium text-sm">
+              <p className="flex items-start gap-3"><i className="fas fa-location-dot mt-1 text-gray-400"></i> 123 อาคารธนากรุ๊ป ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพมหานคร 10310</p>
+              <p className="flex items-center gap-3"><i className="fas fa-phone text-gray-400"></i> 02-XXX-XXXX (ฝ่ายบริการลูกค้า)</p>
+              <p className="flex items-center gap-3"><i className="fas fa-envelope text-gray-400"></i> contact@thanagroup.com</p>
+            </div>
           </div>
-        </section>
 
-        {/* =========================================
-            2. TWO-COLUMN CONTACT SECTION
-        ========================================= */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* 2.1 ฝั่งซ้าย: ข้อมูลการติดต่อ & โซเชียลมีเดีย (4 คอลัมน์) */}
-            <div className="lg:col-span-4 space-y-6 animate-slide-up">
-              
-              {/* การ์ดข้อมูลติดต่อหลัก */}
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-2 h-full bg-[#00249c]"></div>
-                <h3 className="text-xl font-black text-[#0a2540] mb-6 flex items-center gap-2">
-                  <i className="fas fa-building text-[#00249c]"></i> สำนักงานใหญ่
-                </h3>
-                <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
-                  <p className="font-bold text-gray-800">บริษัท ธนาโลจิสติกส์ จำกัด (THANA GROUP)</p>
-                  <p>จังหวัดอุบลราชธานี ประเทศไทย</p>
-                  <div className="h-px bg-gray-100 my-4"></div>
-                  
-                  {/* ช่องทางด่วน โทรศัพท์ */}
-                  <a href="tel:0930237931" className="flex items-center gap-3 font-bold text-gray-800 hover:text-[#00249c] transition-colors py-1 group">
-                    <span className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-[#00249c] group-hover:text-white transition-all shadow-sm">
-                      <i className="fas fa-phone-alt text-xs"></i>
-                    </span>
-                    093-023-7931 (Hotline)
-                  </a>
+          {/* Card 2: ศูนย์ขนส่งข้ามแดน (หนองคาย) */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+            <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 text-2xl mb-6">
+              <i className="fas fa-truck-fast"></i>
+            </div>
+            <h3 className="text-xl font-black text-[#0a2540] mb-3">ศูนย์ขนส่งข้ามแดน (หนองคาย)</h3>
+            <div className="space-y-3 text-gray-600 font-medium text-sm">
+              <p className="flex items-start gap-3"><i className="fas fa-location-dot mt-1 text-gray-400"></i> ศูนย์กระจายสินค้าชายแดน ใกล้สะพานมิตรภาพไทย-ลาว แห่งที่ 1 จังหวัดหนองคาย</p>
+              <p className="flex items-center gap-3"><i className="fas fa-phone text-gray-400"></i> 042-XXX-XXXX</p>
+              <p className="flex items-center gap-3"><i className="fas fa-clock text-gray-400"></i> จันทร์ - เสาร์ (08:00 - 18:00 น.)</p>
+            </div>
+          </div>
 
-                  {/* ช่องทางด่วน LINE */}
-                  <a href="https://line.me/ti/p/~@thanagroup" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 font-bold text-gray-800 hover:text-[#00c300] transition-colors py-1 group">
-                    <span className="w-8 h-8 rounded-full bg-green-50 text-[#00c300] flex items-center justify-center group-hover:bg-[#00c300] group-hover:text-white transition-all shadow-sm">
-                      <i className="fab fa-line text-base"></i>
-                    </span>
-                    @thanagroup (มี @)
-                  </a>
+          {/* Card 3: สาขา สปป.ลาว */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+            <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-2xl mb-6">
+              <i className="fas fa-earth-asia"></i>
+            </div>
+            <h3 className="text-xl font-black text-[#0a2540] mb-3">สาขาเวียงจันทน์ (สปป.ลาว)</h3>
+            <div className="space-y-3 text-gray-600 font-medium text-sm">
+              <p className="flex items-start gap-3"><i className="fas fa-location-dot mt-1 text-gray-400"></i> นครหลวงเวียงจันทน์ สปป.ลาว (ศูนย์ปฏิบัติการกระจายสินค้า)</p>
+              <p className="flex items-center gap-3"><i className="fas fa-phone text-gray-400"></i> +856-20-XXXX-XXXX</p>
+              <p className="flex items-center gap-3"><i className="fas fa-headset text-gray-400"></i> รองรับภาษาไทย / ลาว / อังกฤษ</p>
+            </div>
+          </div>
 
-                  {/* ช่องทางด่วน WhatsApp */}
-                  <a href="https://wa.me/66930237931" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 font-bold text-gray-800 hover:text-emerald-600 transition-colors py-1 group">
-                    <span className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm">
-                      <i className="fab fa-whatsapp text-base"></i>
-                    </span>
-                    WhatsApp Chat
-                  </a>
+        </div>
+      </div>
 
-                  {/* ช่องทางด่วน Email */}
-                  <a href="mailto:logistics@thanagroup.com" className="flex items-center gap-3 font-bold text-gray-800 hover:text-gray-900 transition-colors py-1 group">
-                    <span className="w-8 h-8 rounded-full bg-gray-50 text-gray-500 flex items-center justify-center group-hover:bg-gray-700 group-hover:text-white transition-all shadow-sm">
-                      <i className="fas fa-envelope text-xs"></i>
-                    </span>
-                    logistics@thanagroup.com
-                  </a>
-                </div>
-              </div>
+      {/* ==========================================
+          3. CONTACT FORM & MAP (ฟอร์มและแผนที่)
+      ========================================== */}
+      <div className="max-w-7xl mx-auto px-6 mt-20">
+        <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden flex flex-col lg:flex-row">
+          
+          {/* ซ้าย: แผนที่ Google Maps */}
+          <div className="lg:w-1/2 h-[400px] lg:h-auto bg-gray-100 relative">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15502.73024844331!2d100.5636049!3d13.7381591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29e8bc41f92c3%3A0x6751221b6a37803d!2sHuai%20Khwang%2C%20Bangkok!5e0!3m2!1sen!2sth!4v1680000000000!5m2!1sen!2sth" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 grayscale hover:grayscale-0 transition-all duration-700"
+            ></iframe>
+            <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-white/20">
+              <h4 className="font-bold text-[#0a2540] mb-1">HQ Location</h4>
+              <p className="text-xs text-gray-500 font-medium">คลิกที่แผนที่เพื่อดูเส้นทางผ่าน Google Maps</p>
+            </div>
+          </div>
 
-              {/* การ์ดเวลาทำการ */}
-              <div className="bg-gray-900 text-gray-300 rounded-3xl shadow-xl p-8 relative overflow-hidden">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <i className="far fa-clock text-[#00e5ff]"></i> เวลาทำการ (Working Hours)
-                </h3>
-                <div className="space-y-2 text-xs md:text-sm">
-                  <div className="flex justify-between border-b border-gray-800 pb-2">
-                    <span>เปิดบริการทุกวัน (Hotline)</span>
-                    <span className="text-[#00e5ff] font-bold">24 ชั่วโมง</span>
-                  </div>
-                  <div className="flex justify-between border-b border-gray-800 pb-2 pt-1">
-                    <span>ฝ่ายบริการลูกค้า (CS)</span>
-                    <span>08:00 - 17:00 น.</span>
-                  </div>
-                  <div className="flex justify-between pt-1">
-                    <span>ด่านขนส่งสินค้าข้ามแดน</span>
-                    <span>เปิดตามเวลาด่านสากล</span>
-                  </div>
-                </div>
-              </div>
-
+          {/* ขวา: ฟอร์มติดต่อ */}
+          <div className="lg:w-1/2 p-8 md:p-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-black text-[#0a2540] mb-2">ส่งข้อความถึงเรา</h2>
+              <p className="text-gray-500 font-medium text-sm">สอบถามค่าขนส่ง ปรึกษาเรื่องการนำเข้า-ส่งออก หรือแจ้งปัญหาการใช้งาน</p>
             </div>
 
-            {/* 2.2 ฝั่งขวา: ฟอร์มฝากข้อความผ่านอีเมล (8 คอลัมน์) */}
-            <div className="lg:col-span-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 md:p-10">
-                
-                <div className="mb-8 border-b border-gray-50 pb-4">
-                  <h2 className="text-2xl font-black text-[#00249c]">ฝากข้อความถึงเรา</h2>
-                  <p className="text-gray-500 text-sm mt-1">เลือกแผนกที่ต้องการติดต่อ ทีมงานจะรีบตอบกลับผ่านอีเมลหรือโทรศัพท์โดยเร็วที่สุด</p>
-                </div>
-
-                {/* แจ้งสถานะ */}
-                {submitStatus === 'success' && (
-                  <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 font-medium rounded-xl flex items-center gap-3">
-                    <i className="fas fa-check-circle text-lg"></i> ส่งข้อความสำเร็จ! ระบบได้ส่งข้อมูลเข้าอีเมลส่วนกลางเรียบร้อยแล้วครับ
-                  </div>
-                )}
-                {submitStatus === 'error' && (
-                  <div className="mb-6 bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 flex items-center gap-4 font-medium">
-                    <i className="fas fa-exclamation-circle text-lg"></i> เกิดข้อผิดพลาด ไม่สามารถส่งอีเมลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* ชื่อ-นามสกุล */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-bold text-[#0a2540]">ชื่อ - นามสกุล <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="กรุณากรอกชื่อ" 
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 transition-all"
-                      />
-                    </div>
-
-                    {/* เบอร์โทรศัพท์ */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-bold text-[#0a2540]">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
-                      <input 
-                        type="tel"
-                        name="phone"
-                        required
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="08X-XXX-XXXX" 
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* อีเมล */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-bold text-[#0a2540]">อีเมล (ถ้ามี)</label>
-                      <input 
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="email@company.com" 
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 transition-all"
-                      />
-                    </div>
-
-                    {/* ติดต่อแผนก */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-bold text-[#0a2540]">ติดต่อแผนก <span className="text-red-500">*</span></label>
-                      <select
-                        name="department"
-                        required
-                        value={formData.department}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00249c] focus:ring-2 focus:ring-[#00249c]/20 transition-all cursor-pointer appearance-none"
-                        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em' }}
-                      >
-                        <option value="" disabled>เลือกแผนกที่ต้องการติดต่อ...</option>
-                        <option value="ฝ่ายขายและการตลาด (Sales)">ฝ่ายขายและการตลาด (Sales)</option>
-                        <option value="ฝ่ายบริการลูกค้าสัมพันธ์ (CS)">ฝ่ายบริการลูกค้าสัมพันธ์ (CS)</option>
-                        <option value="ฝ่ายพิธีการศุลกากร (Shipping)">ฝ่ายพิธีการศุลกากร (Shipping)</option>
-                        <option value="ติดต่อผู้บริหาร / อื่นๆ">ติดต่อผู้บริหาร / อื่นๆ</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* ข้อความ/รายละเอียด */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-bold text-[#0a2540]">ข้อความ / สิ่งที่ต้องการสอบถาม <span className="text-red-500">*</span></label>
-                    <textarea 
-                      name="message"
-                      rows={5}
-                      required
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="พิมพ์ข้อความของคุณที่นี่..."
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#00249c]/20 outline-none transition-all resize-none"
-                    ></textarea>
-                  </div>
-
-                  {/* ปุ่มส่งข้อความสีแดงเด่นชัดบรรทัดเดียว */}
-                  <button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className={`w-full font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 text-lg text-white shadow-lg whitespace-nowrap ${
-                      isSubmitting 
-                        ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-[#da251c] hover:bg-red-700 hover:shadow-red-500/30 hover:-translate-y-1'
-                    }`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <i className="fas fa-circle-notch fa-spin"></i> กำลังส่งข้อความ...
-                      </>
-                    ) : (
-                      <>
-                        <i className="fas fa-paper-plane"></i> ส่งข้อความ
-                      </>
-                    )}
-                  </button>
-
-                </form>
+            {alert.type && (
+              <div className={`mb-6 p-4 rounded-xl border flex items-center gap-3 animate-fade-in-up font-bold text-sm ${alert.type === 'success' ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700'}`}>
+                <i className={`fas ${alert.type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'} text-lg`}></i>
+                {alert.message}
               </div>
-            </div>
+            )}
 
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">ชื่อ - นามสกุล <span className="text-red-500">*</span></label>
+                  <input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium" placeholder="เช่น สมชาย ใจดี" />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
+                  <input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium" placeholder="เช่น 0812345678" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">อีเมล (ถ้ามี)</label>
+                  <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium" placeholder="example@email.com" />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">หัวข้อเรื่อง</label>
+                  <select value={formData.subject} onChange={(e) => setFormData({...formData, subject: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium text-gray-600 appearance-none">
+                    <option value="">-- เลือกหัวข้อที่ต้องการติดต่อ --</option>
+                    <option value="สอบถามค่าขนส่ง">สอบถามค่าขนส่ง / ขอใบเสนอราคา</option>
+                    <option value="ติดตามพัสดุ">ติดตามพัสดุ / แจ้งปัญหา</option>
+                    <option value="ปรึกษาพิธีการศุลกากร">ปรึกษาเรื่องพิธีการศุลกากร</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">รายละเอียด <span className="text-red-500">*</span></label>
+                <textarea required rows={4} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium resize-none" placeholder="ระบุรายละเอียดที่คุณต้องการให้เราช่วยเหลือ..."></textarea>
+              </div>
+
+              <button type="submit" disabled={isSubmitting} className="w-full bg-[#0a2540] hover:bg-[#00249c] text-white font-black text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3">
+                {isSubmitting ? (
+                  <><i className="fas fa-circle-notch fa-spin"></i> กำลังส่งข้อความ...</>
+                ) : (
+                  <><i className="fas fa-paper-plane"></i> ส่งข้อความถึงเรา</>
+                )}
+              </button>
+            </form>
           </div>
-        </section>
-      </main>
 
-      <Footer />
-    </>
+        </div>
+      </div>
+
+    </div>
   );
 }
