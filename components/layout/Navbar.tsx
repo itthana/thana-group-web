@@ -156,7 +156,6 @@ export default function Navbar() {
                   <Link href="/branches" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-[#ff0000] hover:text-[#0a2540] hover:bg-red-50 flex items-center gap-2 border-l-4 border-[#ff0000] bg-red-50/30">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
                   </Link>
-                  <Link href="/executives" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">ทีมผู้บริหารระดับสูง</Link>
                   <Link href="/group-companies" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-[#00249c] hover:bg-blue-50">บริษัทในเครือ</Link>
                   <Link href="/other-ventures" className="whitespace-nowrap px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-amber-600 hover:bg-amber-50 flex items-center gap-2">
                     <i className="fas fa-coffee text-amber-500"></i> ธุรกิจอื่นๆ (CC1971)
@@ -296,7 +295,6 @@ export default function Navbar() {
                   <Link href="/branches" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-[#ff0000] flex items-center gap-2 bg-red-50 p-2 rounded-md border-l-4 border-[#ff0000]">
                     <i className="fas fa-map-location-dot"></i> สาขาของเรา (Branches)
                   </Link>
-                  <Link href="/executives" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">ทีมผู้บริหารระดับสูง</Link>
                   <Link href="/group-companies" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600">บริษัทในเครือ</Link>
                   <Link href="/other-ventures" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-amber-700 flex items-center gap-2">
                     <i className="fas fa-coffee"></i> ธุรกิจอื่นๆ (CC1971)
