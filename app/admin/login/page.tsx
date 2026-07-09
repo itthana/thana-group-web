@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { signIn } from 'next-auth/react'; // 🔥 นำเข้าฟังก์ชันของ NextAuth
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState('');
@@ -14,21 +15,19 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      // 🚨 ยิงเข้า API ยืนยันตัวตนหลังบ้านของพี่
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+      // 🚀 ใช้ฟังก์ชัน signIn ของ NextAuth แทนการยิง fetch ปกติ
+      const res = await signIn('credentials', {
+        redirect: false, // ปิดการเด้งอัตโนมัติ เพื่อให้เราจัดการเอง
+        username,
+        password,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // 🔥 แก้ไขจุดนี้: บังคับเบราว์เซอร์ล้างแคชและกระโดดไปหน้า Admin ทันที ขจัดปัญหารีเฟรชซ้ำ
-        window.location.href = '/admin';
-      } else {
-        setError(data.error || 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+      if (res?.error) {
+        setError('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
         setIsLoading(false);
+      } else if (res?.ok) {
+        // ✅ ถ้าสำเร็จ NextAuth จะจัดการบัตรคิวให้แล้ว เราแค่บังคับรีไดเรกต์ไปหน้า Admin
+        window.location.href = '/admin';
       }
     } catch (err) {
       setError('ระบบเชื่อมข้อมูลขัดข้อง กรุณาลองใหม่อีกครั้ง');
