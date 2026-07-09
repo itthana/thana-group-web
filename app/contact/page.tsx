@@ -14,14 +14,25 @@ export default function ContactHubPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [alert, setAlert] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
 
+  // รายการช่องทางการติดต่อออนไลน์
+  const onlineChannels = [
+    { name: 'Facebook', icon: 'fab fa-facebook-f', color: 'bg-[#1877F2]', hover: 'hover:shadow-[#1877F2]/40', link: '#' },
+    { name: 'LINE Official', icon: 'fab fa-line', color: 'bg-[#00C300]', hover: 'hover:shadow-[#00C300]/40', link: '#' },
+    { name: 'WhatsApp', icon: 'fab fa-whatsapp', color: 'bg-[#25D366]', hover: 'hover:shadow-[#25D366]/40', link: '#' },
+    { name: 'Telegram', icon: 'fab fa-telegram', color: 'bg-[#229ED9]', hover: 'hover:shadow-[#229ED9]/40', link: '#' },
+    { name: 'TikTok', icon: 'fab fa-tiktok', color: 'bg-black', hover: 'hover:shadow-black/40', link: '#' },
+    { name: 'YouTube', icon: 'fab fa-youtube', color: 'bg-[#FF0000]', hover: 'hover:shadow-[#FF0000]/40', link: '#' },
+    { name: 'อีเมล (Email)', icon: 'fas fa-envelope', color: 'bg-slate-600', hover: 'hover:shadow-slate-600/40', link: 'mailto:contact@thanagroup.com' },
+    { name: 'เบอร์โทรศัพท์', icon: 'fas fa-phone', color: 'bg-blue-600', hover: 'hover:shadow-blue-600/40', link: 'tel:021234567' },
+    { name: 'Hotline 24 ชม.', icon: 'fas fa-headset', color: 'bg-orange-500', hover: 'hover:shadow-orange-500/40', link: 'tel:1234' },
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setAlert({ type: null, message: '' });
 
     try {
-      // 🚀 แก้ไขกลับมาใช้ fetch เพื่อยิงข้อมูลไปส่งอีเมลจริงๆ แล้วครับ
-      // หมายเหตุ: ถ้า API เดิมของพี่ไม่ได้ชื่อ '/api/contact' รบกวนเปลี่ยนให้ตรงกับของเดิมนะครับ
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -31,7 +42,7 @@ export default function ContactHubPage() {
       if (response.ok) {
         setAlert({ 
           type: 'success', 
-          message: 'ส่งข้อความสำเร็จ! ระบบได้ส่งอีเมลแจ้งเตือนเจ้าหน้าที่เรียบร้อยแล้วครับ' 
+          message: 'ส่งข้อความสำเร็จ! ระบบได้ส่งข้อมูลแจ้งเตือนเจ้าหน้าที่เรียบร้อยแล้วครับ' 
         });
         setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
       } else {
@@ -40,11 +51,11 @@ export default function ContactHubPage() {
     } catch (error) {
       setAlert({ 
         type: 'error', 
-        message: 'ระบบเชื่อมต่อขัดข้อง หรือส่งอีเมลไม่สำเร็จ กรุณาลองใหม่อีกครั้งครับ' 
+        message: 'ระบบเชื่อมต่อขัดข้อง หรือส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้งครับ' 
       });
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setAlert({ type: null, message: '' }), 5000);
+      setTimeout(() => setAlert({ type: null, message: '' }), 6000);
     }
   };
 
@@ -52,26 +63,50 @@ export default function ContactHubPage() {
     <div className="min-h-screen bg-slate-50 font-prompt pb-20">
       
       {/* ==========================================
-          1. HERO SECTION (ส่วนหัวของหน้า)
+          1. HERO SECTION
       ========================================== */}
       <div className="relative bg-[#0a2540] py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:30px_30px]"></div>
-        
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-[#00e5ff] text-sm font-bold tracking-wider mb-4 border border-blue-400/30">
-            CONTACT US
-          </span>
+          <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-[#00e5ff] text-sm font-bold tracking-wider mb-4 border border-blue-400/30">CONTACT US</span>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-wide">
             ติดต่อ <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-blue-400">THANA GROUP</span>
           </h1>
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-            สอบถามข้อมูล บริการด้านโลจิสติกส์ หรือขอใบเสนอราคา เราพร้อมให้บริการคุณเสมอ
+            สอบถามข้อมูล บริการด้านโลจิสติกส์ หรือขอใบเสนอราคา เราพร้อมให้บริการคุณผ่านทุกช่องทาง
           </p>
         </div>
       </div>
 
       {/* ==========================================
-          2. CONTACT FORM & MAP (ฟอร์มและแผนที่)
+          2. ONLINE CHANNELS (ช่องทางติดต่อออนไลน์)
+      ========================================== */}
+      <div className="max-w-7xl mx-auto px-6 -mt-8 relative z-20">
+        <div className="bg-white rounded-[2rem] shadow-xl shadow-blue-900/5 border border-gray-100 p-8 md:p-10">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-black text-[#0a2540]">ช่องทางการติดต่อออนไลน์</h2>
+            <p className="text-gray-500 font-medium mt-2">คลิกที่ไอคอนเพื่อติดต่อเราผ่านช่องทางที่คุณสะดวกที่สุด</p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {onlineChannels.map((channel, index) => (
+              <a 
+                key={index} 
+                href={channel.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-28 h-28 md:w-32 md:h-32 flex flex-col items-center justify-center rounded-2xl text-white ${channel.color} ${channel.hover} shadow-lg transition-all duration-300 hover:-translate-y-2 group cursor-pointer`}
+              >
+                <i className={`${channel.icon} text-3xl md:text-4xl mb-3 group-hover:scale-110 transition-transform`}></i>
+                <span className="font-bold text-xs md:text-sm text-center px-2">{channel.name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ==========================================
+          3. CONTACT FORM & MAP
       ========================================== */}
       <div className="max-w-7xl mx-auto px-6 mt-12">
         <div className="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden flex flex-col lg:flex-row">
@@ -80,12 +115,7 @@ export default function ContactHubPage() {
           <div className="lg:w-1/2 h-[400px] lg:h-auto bg-gray-100 relative">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15502.73024844331!2d100.5636049!3d13.7381591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29e8bc41f92c3%3A0x6751221b6a37803d!2sHuai%20Khwang%2C%20Bangkok!5e0!3m2!1sen!2sth!4v1680000000000!5m2!1sen!2sth" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen={false} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
+              width="100%" height="100%" style={{ border: 0 }} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 grayscale hover:grayscale-0 transition-all duration-700"
             ></iframe>
             <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-white/20">
@@ -102,8 +132,8 @@ export default function ContactHubPage() {
             </div>
 
             {alert.type && (
-              <div className={`mb-6 p-4 rounded-xl border flex items-center gap-3 animate-fade-in-up font-bold text-sm ${alert.type === 'success' ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700'}`}>
-                <i className={`fas ${alert.type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'} text-lg`}></i>
+              <div className={`mb-6 p-4 rounded-xl border flex items-center gap-3 animate-fade-in-up font-bold text-sm ${alert.type === 'success' ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-300 text-red-700'}`}>
+                <i className={`fas ${alert.type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'} text-xl`}></i>
                 {alert.message}
               </div>
             )}
@@ -128,10 +158,9 @@ export default function ContactHubPage() {
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">หัวข้อเรื่อง</label>
                   <select value={formData.subject} onChange={(e) => setFormData({...formData, subject: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium text-gray-600 appearance-none">
-                    <option value="">-- เลือกหัวข้อที่ต้องการติดต่อ --</option>
+                    <option value="">-- เลือกหัวข้อ --</option>
                     <option value="สอบถามค่าขนส่ง">สอบถามค่าขนส่ง / ขอใบเสนอราคา</option>
                     <option value="ติดตามพัสดุ">ติดตามพัสดุ / แจ้งปัญหา</option>
-                    <option value="ปรึกษาพิธีการศุลกากร">ปรึกษาเรื่องพิธีการศุลกากร</option>
                     <option value="อื่นๆ">อื่นๆ</option>
                   </select>
                 </div>
@@ -139,19 +168,14 @@ export default function ContactHubPage() {
 
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">รายละเอียด <span className="text-red-500">*</span></label>
-                <textarea required rows={4} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium resize-none" placeholder="ระบุรายละเอียดที่คุณต้องการให้เราช่วยเหลือ..."></textarea>
+                <textarea required rows={4} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full px-5 py-3.5 bg-slate-50 border border-gray-200 rounded-xl focus:border-[#00249c] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-medium resize-none" placeholder="รายละเอียด..."></textarea>
               </div>
 
-              <button type="submit" disabled={isSubmitting} className="w-full bg-[#0a2540] hover:bg-[#00249c] text-white font-black text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3">
-                {isSubmitting ? (
-                  <><i className="fas fa-circle-notch fa-spin"></i> กำลังส่งข้อความ...</>
-                ) : (
-                  <><i className="fas fa-paper-plane"></i> ส่งข้อความถึงเรา</>
-                )}
+              <button type="submit" disabled={isSubmitting} className="w-full bg-[#0a2540] hover:bg-[#00249c] text-white font-black text-lg py-4 rounded-xl shadow-lg transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3">
+                {isSubmitting ? <><i className="fas fa-circle-notch fa-spin"></i> กำลังส่ง...</> : <><i className="fas fa-paper-plane"></i> ส่งข้อความถึงเรา</>}
               </button>
             </form>
           </div>
-
         </div>
       </div>
 
