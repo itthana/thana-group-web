@@ -59,3 +59,27 @@ model TrackingHistory {
   // บรรทัดนี้เพิ่มมาเพื่อผูกกลับไปหาตารางหลัก
   parcel         Tracking? @relation(fields: [parcelId], references: [id])
 }
+// ==========================================
+// 📰 ตารางสำหรับจัดการข่าวสาร (News & Activities)
+// ==========================================
+model News {
+  id        Int      @id @default(autoincrement())
+  title     String
+  status    String   @default("PUBLISHED") // สถานะ: PUBLISHED (เผยแพร่), HIDDEN (ซ่อน)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==========================================
+// 📝 ตารางสำหรับเก็บคำขอใบเสนอราคา (Quotations)
+// ==========================================
+model Quotation {
+  id        Int      @id @default(autoincrement())
+  qNumber   String   @unique 
+  name      String
+  company   String?
+  service   String
+  status    String   @default("PENDING") 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
