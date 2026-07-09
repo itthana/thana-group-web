@@ -130,7 +130,7 @@ export default function AboutUsPage() {
                 {/* กรอบรูปภาพผู้บริหารแบบพรีเมียมหรูหรา */}
                 <div className="w-64 h-64 mx-auto rounded-[2rem] bg-gradient-to-tr from-[#0a2540] to-blue-900 border-4 border-white shadow-2xl overflow-hidden relative group">
                   <div className="absolute inset-0 bg-blue-600/10 mix-blend-multiply"></div>
-                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=500&auto=format&fit=crop" alt="CEO THANA GROUP" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="ลงเวป.jpg" alt="CEO THANA GROUP" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="mt-6">
                   <h4 className="text-xl font-black text-[#0a2540] mb-1">คณะผู้บริหารระดับสูง</h4>
