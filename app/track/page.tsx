@@ -122,7 +122,8 @@ export default function TrackAndTracePage() {
               <i className="fas fa-box-tracking text-white text-4xl -rotate-3"></i>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight drop-shadow-md">
+           {/* แก้ไขขนาดตัวอักษร และใส่ whitespace-nowrap เพื่อบังคับให้อยู่บรรทัดเดียว */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 tracking-tight drop-shadow-md md:whitespace-nowrap">
               ระบบติดตามพัสดุอัจฉริยะ <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-blue-400">THANA TRACK</span>
             </h1>
             <p className="text-gray-300 text-lg md:text-xl mb-12 font-light max-w-2xl mx-auto leading-relaxed">

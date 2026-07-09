@@ -8,7 +8,7 @@ export default function WelcomeScreen() {
   // ==========================================
   // 🔥 เปิดโหมดทดสอบ (เปลี่ยนเป็น false เมื่อพร้อมใช้งานจริง)
   // ==========================================
-  const FORCE_SHOW_FOR_TESTING = true; 
+  const FORCE_SHOW_FOR_TESTING = false; 
 
   useEffect(() => {
     if (FORCE_SHOW_FOR_TESTING) {
