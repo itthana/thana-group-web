@@ -7,64 +7,128 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm font-prompt">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20">
+    <>
+      {/* ==========================================
+          1. TOP BAR (แถบสีดำด้านบน ตามต้นฉบับ 100%)
+      ========================================== */}
+      <div className="bg-[#1e293b] text-gray-300 text-[11px] md:text-xs py-2 px-4 font-prompt border-b border-gray-800">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
           
-          {/* โลโก้ */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-12 h-12 bg-gradient-to-tr from-[#00249c] to-blue-500 rounded-xl flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
-                <i className="fas fa-truck-fast"></i>
-              </div>
-              <span className="font-black text-2xl text-[#0a2540] tracking-wide">THANA<span className="text-[#00e5ff]">GROUP</span></span>
-            </Link>
+          {/* ฝั่งซ้าย: ข้อมูล Real-time */}
+          <div className="flex flex-wrap items-center gap-4 md:gap-6">
+            <div className="flex items-center gap-2">
+               <span className="text-red-500 font-bold animate-pulse"><i className="fas fa-satellite-dish"></i> LIVE UPDATES:</span>
+               <span className="text-amber-400 font-medium hidden sm:inline">Moderate Traffic</span>
+            </div>
+            <div className="hidden lg:flex items-center gap-6">
+               <span className="flex items-center gap-1.5"><i className="fas fa-building-shield text-gray-400"></i> ด่านหนองคาย: <span className="text-green-400 font-bold">Normal</span></span>
+               <span className="flex items-center gap-1.5"><i className="fas fa-gas-pump text-gray-400"></i> FSC (Fuel Surcharge): <span className="text-red-400 font-bold">24.5% <i className="fas fa-chevron-down text-[9px] ml-1"></i></span></span>
+            </div>
           </div>
 
-          {/* เมนูสำหรับคอมพิวเตอร์ */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="font-bold text-gray-600 hover:text-[#00249c] transition-colors">หน้าแรก</Link>
-            <Link href="/contact" className="font-bold text-gray-600 hover:text-[#00249c] transition-colors">ติดต่อเรา</Link>
-            
-            {/* 🆕 ปุ่มประเมินราคาที่เพิ่มเข้ามาใหม่ */}
-            <Link href="/calculator" className="bg-blue-50 hover:bg-[#00249c] text-[#00249c] hover:text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all border border-blue-100 flex items-center gap-2">
-              <i className="fas fa-calculator"></i> ประเมินราคา
+          {/* ฝั่งขวา: Login & Language */}
+          <div className="flex items-center gap-4 font-bold tracking-wider text-[10px] md:text-xs">
+            <Link href="/admin/login" className="flex items-center gap-1.5 text-amber-500 hover:text-amber-400 transition-colors bg-amber-500/10 px-3 py-1 rounded">
+              <i className="fas fa-user-lock"></i> STAFF ONLY
             </Link>
-
-            {/* ปุ่มเข้าสู่ระบบ Admin เดิม */}
-            <Link href="/admin/login" className="bg-[#0a2540] hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-md transition-all flex items-center gap-2">
-              <i className="fas fa-user-shield"></i> ผู้ดูแลระบบ
+            <Link href="#" className="flex items-center gap-1.5 text-[#00e5ff] hover:text-blue-300 transition-colors">
+              <i className="fas fa-globe"></i> E-SERVICES LOGIN
             </Link>
+            <div className="flex items-center gap-1.5 border-l border-gray-600 pl-4 cursor-pointer hover:text-white">
+              <img src="https://flagcdn.com/w20/th.png" alt="TH" className="w-4 h-3 rounded-[2px]" /> TH <i className="fas fa-chevron-down text-[9px]"></i>
+            </div>
           </div>
-
-          {/* ปุ่มเมนูสำหรับมือถือ (Hamburger) */}
-          <div className="flex items-center md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-[#0a2540] focus:outline-none text-2xl">
-              <i className={`fas ${isOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
-            </button>
-          </div>
-
         </div>
       </div>
 
-      {/* เมนูมือถือเมื่อกดปุ่ม Hamburger */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
-          <div className="px-4 pt-2 pb-6 space-y-2">
-            <Link href="/" className="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-[#00249c] hover:bg-blue-50">หน้าแรก</Link>
-            <Link href="/contact" className="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-[#00249c] hover:bg-blue-50">ติดต่อเรา</Link>
+      {/* ==========================================
+          2. MAIN NAVBAR (เมนูหลักสีขาว)
+      ========================================== */}
+      <nav className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm font-prompt">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-20 md:h-24">
             
-            {/* 🆕 ปุ่มประเมินราคาสำหรับมือถือ */}
-            <Link href="/calculator" className="block px-3 py-3 rounded-md text-base font-bold text-[#00249c] bg-blue-50 hover:bg-blue-100 mt-2">
-              <i className="fas fa-calculator mr-2"></i> ประเมินราคาขนส่ง
-            </Link>
+            {/* โลโก้ และ ป้ายขนส่งด่วน */}
+            <div className="flex items-center gap-5">
+               <Link href="/" className="flex flex-col justify-center">
+                 <div className="flex items-center">
+                    <span className="text-4xl md:text-5xl font-black text-[#00249c] italic tracking-tighter">TLT</span>
+                    <i className="fas fa-paper-plane text-red-600 text-xl md:text-2xl -ml-2 -mt-4"></i>
+                 </div>
+                 <span className="text-[7px] md:text-[9px] font-black text-gray-800 uppercase tracking-widest mt-1">THANA LOGISTICS CO.,LTD.</span>
+               </Link>
+               
+               <div className="hidden md:flex flex-col items-center justify-center border-l-2 border-gray-200 pl-5">
+                  <span className="text-xs font-bold text-gray-700 mb-0.5">ขนส่งด่วน</span>
+                  <span className="text-[10px] bg-[#e62e2d] text-white px-2 py-0.5 rounded font-black tracking-widest">ไทย - ลาว</span>
+               </div>
+            </div>
 
-            <Link href="/admin/login" className="block px-3 py-3 rounded-md text-base font-bold text-white bg-[#0a2540] hover:bg-slate-800 mt-4 text-center">
-              <i className="fas fa-user-shield mr-2"></i> เข้าสู่ระบบผู้ดูแล
-            </Link>
+            {/* เมนูกลาง */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <Link href="/" className="text-sm font-bold text-gray-700 hover:text-red-600 transition-colors">หน้าแรก</Link>
+              
+              <div className="relative group h-full flex items-center">
+                <button className="text-sm font-bold text-gray-700 group-hover:text-red-600 flex items-center gap-1.5 outline-none transition-colors">
+                  องค์กร <i className="fas fa-chevron-down text-[9px] text-gray-400 group-hover:text-red-600 transition-transform group-hover:rotate-180"></i>
+                </button>
+              </div>
+
+              <div className="relative group h-full flex items-center">
+                <button className="text-sm font-bold text-gray-700 group-hover:text-red-600 flex items-center gap-1.5 outline-none transition-colors">
+                  บริการ <i className="fas fa-chevron-down text-[9px] text-gray-400 group-hover:text-red-600 transition-transform group-hover:rotate-180"></i>
+                </button>
+                {/* แอบซ่อนลิงก์ ประเมินราคา ไว้ในดรอปดาวน์บริการ เพื่อไม่ให้หน้าตาเปลี่ยน */}
+                <div className="absolute top-[65px] -left-4 w-48 bg-white border border-gray-100 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all p-2 z-50">
+                   <Link href="/services" className="block px-4 py-2.5 text-sm font-bold text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg">ขนส่งข้ามแดน</Link>
+                   <Link href="/calculator" className="block px-4 py-2.5 text-sm font-bold text-[#00249c] hover:bg-blue-50 rounded-lg"><i className="fas fa-calculator mr-2"></i> ประเมินราคา</Link>
+                </div>
+              </div>
+
+              <div className="relative group h-full flex items-center">
+                <button className="text-sm font-bold text-gray-700 group-hover:text-red-600 flex items-center gap-1.5 outline-none transition-colors">
+                  ข้อมูล <i className="fas fa-chevron-down text-[9px] text-gray-400 group-hover:text-red-600 transition-transform group-hover:rotate-180"></i>
+                </button>
+              </div>
+
+              <Link href="#" className="text-sm font-bold text-gray-700 hover:text-red-600 transition-colors">แผนการทำงาน</Link>
+            </div>
+
+            {/* ฝั่งขวา: เบอร์โทร + ปุ่มติดต่อเรา */}
+            <div className="hidden lg:flex items-center gap-6">
+               <div className="flex items-center gap-3">
+                  <div className="text-red-500 text-xl"><i className="fas fa-headset"></i></div>
+                  <div className="flex flex-col">
+                     <span className="text-[10px] text-gray-400 font-bold uppercase">24/7 Hotline - ติดต่อสอบถาม</span>
+                     <a href="tel:0930237931" className="text-[#e62e2d] font-black text-lg hover:text-red-800 transition-colors tracking-wide">093-023-7931</a>
+                  </div>
+               </div>
+               <Link href="/contact" className="bg-[#e62e2d] hover:bg-red-700 text-white px-8 py-3 rounded-lg font-bold text-sm transition-all shadow-md">
+                 ติดต่อเรา
+               </Link>
+            </div>
+
+            {/* ปุ่มมือถือ */}
+            <div className="flex items-center lg:hidden">
+               <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 focus:outline-none text-2xl w-10 h-10">
+                  <i className={`fas ${isOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+               </button>
+            </div>
           </div>
         </div>
-      )}
-    </nav>
+
+        {/* เมนูมือถือ */}
+        {isOpen && (
+          <div className="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-2xl pb-4">
+            <div className="px-4 py-2 space-y-1">
+              <Link href="/" className="block px-4 py-3 rounded-xl text-sm font-bold text-gray-700 hover:bg-red-50">หน้าแรก</Link>
+              <Link href="/services" className="block px-4 py-3 rounded-xl text-sm font-bold text-gray-700 hover:bg-red-50">บริการของเรา</Link>
+              <Link href="/calculator" className="block px-4 py-3 rounded-xl text-sm font-bold text-[#00249c] bg-blue-50">ประเมินราคาค่าขนส่ง</Link>
+              <Link href="/contact" className="block px-4 py-3 mt-4 rounded-xl text-sm font-bold text-white bg-[#e62e2d] text-center">ติดต่อเรา</Link>
+            </div>
+          </div>
+        )}
+      </nav>
+    </>
   );
 }
