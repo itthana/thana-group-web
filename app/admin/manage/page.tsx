@@ -159,8 +159,12 @@ export default function ManageParcelsPage() {
                             {latestHistory?.createdAt ? new Date(latestHistory.createdAt).toLocaleString('th-TH') : '-'}
                           </td>
                           <td className="p-5 text-center">
-                            {/* ปุ่มคัดลอกเลขพัสดุเพื่อนำไปอัปเดตสถานะในหน้าหลัก */}
-                            <Link href={`/admin`} className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer" title="อัปเดตสถานะ">
+                            {/* ส่งเลขพัสดุ และสถานะล่าสุด แนบไปกับ URL */}
+                            <Link 
+                              href={`/admin?tracking=${parcel.trackingNumber}&currentStatus=${encodeURIComponent(latestHistory?.status || '')}`} 
+                              className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer shadow-sm hover:shadow-md" 
+                              title="อัปเดตสถานะ"
+                            >
                               <i className="fas fa-pen-to-square"></i>
                             </Link>
                           </td>
