@@ -50,16 +50,16 @@ export default function ContactHubPage() {
 
     // 3. เช็คผลลัพธ์
     if (response.ok) {
-      alert("✅ ส่งข้อมูลเข้าฐานข้อมูลสำเร็จแล้วครับ!");
+      window.alert("✅ ส่งข้อมูลเข้าฐานข้อมูลสำเร็จแล้วครับ!");
       
       // เคลียร์ค่าในช่องฟอร์มให้ว่างเปล่า
       setFormData({ name: '', phone: '', email: '', subject: '', message: '' }); 
     } else {
-      alert("❌ ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
+      window.alert("❌ ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
     }
   } catch (error) {
     console.error("Error:", error);
-    alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อ");
+    window.alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อ");
   } finally {
     // (ถ้าของเดิมพี่มี setIsSubmitting(false) ก็ใส่ไว้เหมือนเดิมเลยครับ)
   }
