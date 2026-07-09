@@ -182,15 +182,15 @@ export default function Navbar() {
                       <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors"><i className="fas fa-globe-asia"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-blue-700">1. ขนส่งระหว่างประเทศ</span>
                     </Link>
-                    <Link href="/services" className="flex items-center gap-3 p-3 hover:bg-emerald-50 rounded-xl transition-colors group/item">
+                    <Link href="/services/domestic" className="flex items-center gap-3 p-3 hover:bg-emerald-50 rounded-xl transition-colors group/item">
                       <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors"><i className="fas fa-truck-pickup"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-emerald-700">2. ขนส่งภายในประเทศ</span>
                     </Link>
-                    <Link href="/services" className="flex items-center gap-3 p-3 hover:bg-amber-50 rounded-xl transition-colors group/item">
+                    <Link href="/services/import-export" className="flex items-center gap-3 p-3 hover:bg-amber-50 rounded-xl transition-colors group/item">
                       <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-amber-600 group-hover/item:text-white transition-colors"><i className="fas fa-ship"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-amber-700">3. นำเข้าและส่งออก</span>
                     </Link>
-                    <Link href="/services" className="flex items-center gap-3 p-3 hover:bg-purple-50 rounded-xl transition-colors group/item">
+                    <Link href="/services/online-order" className="flex items-center gap-3 p-3 hover:bg-purple-50 rounded-xl transition-colors group/item">
                       <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-purple-600 group-hover/item:text-white transition-colors"><i className="fas fa-cart-shopping"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-purple-700">4. รับสั่งสินค้าออนไลน์</span>
                     </Link>
@@ -198,7 +198,7 @@ export default function Navbar() {
                       <div className="w-10 h-10 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-sky-600 group-hover/item:text-white transition-colors"><i className="fas fa-file-signature"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-sky-700">5. ชิปปิ้งครบวงจร ตรวจปล่อย</span>
                     </Link>
-                    <Link href="/services" className="flex items-center gap-3 p-3 hover:bg-pink-50 rounded-xl transition-colors group/item">
+                    <Link href="/services/trading" className="flex items-center gap-3 p-3 hover:bg-pink-50 rounded-xl transition-colors group/item">
                       <div className="w-10 h-10 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:bg-pink-600 group-hover/item:text-white transition-colors"><i className="fas fa-store"></i></div>
                       <span className="font-bold text-sm text-gray-700 group-hover/item:text-pink-700">6. จำหน่ายสินค้าอุปโภคบริโภค</span>
                     </Link>
@@ -308,22 +308,22 @@ export default function Navbar() {
               <div>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">บริการของเรา</h3>
                 <div className="flex flex-col gap-3 pl-4 border-l-2 border-gray-100">
-                  <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
+                  <Link href="/services/international" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
                     <i className="fas fa-globe-asia w-5 text-center text-blue-600"></i> 1. ขนส่งระหว่างประเทศ
                   </Link>
-                  <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
+                  <Link href="/services/domestic" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
                     <i className="fas fa-truck-pickup w-5 text-center text-emerald-600"></i> 2. ขนส่งภายในประเทศ
                   </Link>
-                  <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
+                  <Link href="/services/import-export" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
                     <i className="fas fa-ship w-5 text-center text-amber-600"></i> 3. นำเข้าและส่งออก
                   </Link>
-                  <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
+                  <Link href="/services/online-order"onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
                     <i className="fas fa-cart-shopping w-5 text-center text-purple-600"></i> 4. รับสั่งสินค้าออนไลน์
                   </Link>
-                  <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
+                  <Link href="/services/customs"onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
                     <i className="fas fa-file-signature w-5 text-center text-sky-600"></i> 5. ชิปปิ้งครบวงจร
                   </Link>
-                  <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
+                  <Link href="/services/trading" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-gray-600 flex items-center gap-2">
                     <i className="fas fa-store w-5 text-center text-pink-600"></i> 6. จำหน่ายสินค้าอุปโภคบริโภค
                   </Link>
                   <Link href="/services/express" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-[#ff0000] flex items-center gap-2 bg-red-50 p-2 rounded-md border-l-4 border-[#ff0000] mt-1 shadow-sm">
