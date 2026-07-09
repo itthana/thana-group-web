@@ -27,7 +27,7 @@ const groupCompaniesData = [
   {
     id: 'tlt',
     name: 'บริษัท ธนาโลจิสติกส์ จำกัด',
-    abbr: 'TLT',
+    abbr: '',
     description: 'ให้บริการขนส่งระหว่างประเทศ (Cross-border Transport) ครอบคลุมไทย-ลาว-อาเซียน ด้วยกองทัพรถบรรทุกมาตรฐานสากล',
     logo: 'LOGO-TLT.png',
     contact: {
