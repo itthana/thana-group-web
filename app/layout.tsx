@@ -42,6 +42,26 @@ export default function RootLayout({
         
         {/* เนื้อหาของแต่ละหน้าจะมาแสดงตรงนี้ */}
         {children}
+        import './globals.css';
+// 🌟 1. นำเข้า Analytics ที่บรรทัดบนสุด
+import { Analytics } from '@vercel/analytics/react';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="th">
+      <body>
+        {children}
+        
+        {/* 🌟 2. วาง Analytics ไว้ตรงนี้ครับ (ก่อนปิด body) */}
+        <Analytics />
+      </body>
+    </html>
+  );
+}
         
       </body>
     </html>
