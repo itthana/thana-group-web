@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import Link from 'next/link'; // 🌟 เพิ่ม import Link เรียบร้อยครับ
 
 export default async function ParcelsAdminPage() {
   // 📥 ดึงข้อมูลพัสดุทั้งหมดจาก Database มาโชว์ในตาราง
@@ -118,14 +119,16 @@ export default async function ParcelsAdminPage() {
       </div>
 
       {/* ==========================================
-          ส่วนที่ 2: ตารางแสดงข้อมูลพัสดุ (รอดึงข้อมูลจริง)
+          ส่วนที่ 2: ตารางแสดงข้อมูลพัสดุ (ดึงข้อมูลจริง)
       ========================================== */}
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-[#0a2540]">📦 จัดการสถานะพัสดุทั้งหมด</h2>
+          
+          {/* 🌟 ปุ่มเปลี่ยนไปใช้ Link เพื่อลิงก์ไปหน้าสร้างพัสดุใหม่ */}
           <Link href="/admin/parcels/new" className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 shadow-sm">
-  <i className="fas fa-plus"></i> เพิ่มพัสดุใหม่
-</Link>
+            <i className="fas fa-plus"></i> เพิ่มพัสดุใหม่
+          </Link>
         </div>
         
         <div className="overflow-x-auto">
