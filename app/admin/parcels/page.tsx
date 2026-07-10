@@ -123,9 +123,9 @@ export default async function ParcelsAdminPage() {
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-[#0a2540]">📦 จัดการสถานะพัสดุทั้งหมด</h2>
-          <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 shadow-sm">
-            <i className="fas fa-plus"></i> เพิ่มพัสดุใหม่
-          </button>
+          <Link href="/admin/parcels/new" className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 shadow-sm">
+  <i className="fas fa-plus"></i> เพิ่มพัสดุใหม่
+</Link>
         </div>
         
         <div className="overflow-x-auto">
