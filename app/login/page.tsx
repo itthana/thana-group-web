@@ -23,7 +23,7 @@ export default function LoginPage() {
       });
 
       if (res.ok) {
-        router.push('/admin/packages');
+        router.push('/admin/parcels');
       } else {
         const data = await res.json();
         setError(data.error || 'เข้าสู่ระบบไม่สำเร็จ');
