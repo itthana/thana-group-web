@@ -25,7 +25,7 @@ export default function LoginPage({
       });
       redirect('/admin/parcels');
     } else {
-      redirect('/admin/login?error=1');
+      redirect('/login?error=1');
     }
   }
 
