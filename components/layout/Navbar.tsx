@@ -86,7 +86,7 @@ export default function Navbar() {
         </div>
         
         <div className="flex items-center gap-4 flex-shrink-0">
-          <Link href="/admin" className="whitespace-nowrap text-[#facc15] hover:text-black transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-[#facc15]/10 px-3 py-1 rounded-sm border border-[#facc15]/20 hover:bg-[#facc15]">
+          <Link href="/login" className="whitespace-nowrap text-[#facc15] hover:text-black transition-colors flex items-center gap-1.5 font-bold tracking-wider uppercase bg-[#facc15]/10 px-3 py-1 rounded-sm border border-[#facc15]/20 hover:bg-[#facc15]">
             <i className="fas fa-user-shield text-base"></i> <span>Staff Only</span>
           </Link>
 
