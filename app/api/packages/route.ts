@@ -66,3 +66,4 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: 'ลบรายการไม่สำเร็จ' }, { status: 500 });
   }
 }
+// บังคับให้ Git รู้จักการอัปเดต
