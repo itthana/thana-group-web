@@ -36,8 +36,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'ไม่สามารถบันทึกเอกสารได้' }, { status: 500 });
   }
 }
-
-// 3. ฟังก์ชัน DELETE: สำหรับ "ลบ" เอกสาร (แก้ Error 405 เวลาลบ)
+// 3. ฟังก์ชัน DELETE: สำหรับ "ลบ" เอกสาร
 export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -45,8 +44,9 @@ export async function DELETE(request: Request) {
 
     if (!id) return NextResponse.json({ error: 'ไม่พบ ID เอกสาร' }, { status: 400 });
 
+    // 🌟 แก้ตรงนี้: เปลี่ยนจาก String(id) เป็น Number(id) เพื่อให้ตรงกับฐานข้อมูล
     await prisma.document.delete({
-      where: { id: String(id) }
+      where: { id: Number(id) } 
     });
 
     return NextResponse.json({ message: 'ลบสำเร็จ' }, { status: 200 });
