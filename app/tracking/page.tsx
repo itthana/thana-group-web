@@ -3,6 +3,21 @@
 import { useState, useEffect, FormEvent } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
+// 1. Import ไว้ด้านบนสุดของไฟล์
+import TrackingTimeline from '@/app/components/TrackingTimeline';
+
+export default function TrackingPage() {
+  return (
+    <div className="...">
+      {/* ... โค้ดเดิมของการ์ดสีดำ (ภาพที่พี่ส่งมา) ... */}
+      
+      {/* 2. เรียกใช้ Timeline Component ใต้การ์ด */}
+      <div className="mt-6">
+        <TrackingTimeline />
+      </div>
+    </div>
+  );
+}
 
 // ============================================================================
 // 📦 1. Interfaces & Types (โครงสร้างข้อมูล)
