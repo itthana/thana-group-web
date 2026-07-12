@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 export async function GET() {
   try {
     const packages = await prisma.tracking.findMany({
-      orderBy: { id: 'desc' } // เรียงรายการใหม่ล่าสุดขึ้นก่อน
+      orderBy: { id: 'desc' }
     });
     return NextResponse.json(packages);
   } catch (error: any) {
@@ -22,22 +22,22 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { trackingNumber, currentStatus, origin, destination, sender, receiver, estimatedDelivery, serviceType } = body;
 
-    if (!trackingNumber || !receiver) {
+    if (!body.trackingNumber || !body.receiver) {
       return NextResponse.json({ error: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน' }, { status: 400 });
     }
 
+    // 🌟 แก้ปัญหา Type Error โดยใช้ String() ครอบข้อมูลเพื่อยืนยันกับ Vercel ว่าเป็นข้อความ
     const newPackage = await prisma.tracking.create({
       data: {
-        trackingNumber,
-        currentStatus: currentStatus || "รอรับเข้าระบบ",
-        origin: origin || "กรุงเทพฯ",
-        destination: destination || "เวียงจันทน์",
-        sender: sender || "-",
-        receiver,
-        estimatedDelivery: estimatedDelivery || "-",
-        serviceType: serviceType || "Standard",
+        trackingNumber: String(body.trackingNumber),
+        currentStatus: body.currentStatus ? String(body.currentStatus) : "รอรับเข้าระบบ",
+        origin: body.origin ? String(body.origin) : "กรุงเทพฯ",
+        destination: body.destination ? String(body.destination) : "เวียงจันทน์",
+        sender: body.sender ? String(body.sender) : "-",
+        receiver: String(body.receiver),
+        estimatedDelivery: body.estimatedDelivery ? String(body.estimatedDelivery) : "-",
+        serviceType: body.serviceType ? String(body.serviceType) : "Standard",
       }
     });
 
@@ -57,7 +57,7 @@ export async function DELETE(request: Request) {
     if (!id) return NextResponse.json({ error: 'ไม่พบ ID พัสดุ' }, { status: 400 });
 
     await prisma.tracking.delete({
-      where: { id }
+      where: { id: String(id) }
     });
 
     return NextResponse.json({ message: 'ลบสำเร็จ' });
