@@ -6,9 +6,8 @@ generator client {
 
 // ตั้งค่าให้ใช้ PostgreSQL บน Cloud (Neon / Vercel)
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_UNPOOLED")
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL") // เปลี่ยนจาก DATABASE_URL เป็นชื่อนี้แทน
 }
 
 // ==========================================
