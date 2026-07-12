@@ -3,123 +3,68 @@
 import { useState } from 'react';
 
 // ==========================================
-// 1. ข้อมูลจำลองสำหรับ Timeline
+// 1. ข้อมูลจำลองสำหรับ Timeline สไตล์ขนส่งชั้นนำ
 // ==========================================
-const mockTimelineEvents = [
+const trackingHistory = [
   {
     id: 1,
-    title: 'จัดส่งสำเร็จ (Delivered)',
-    description: 'พัสดุถูกจัดส่งถึงมือผู้รับเรียบร้อยแล้ว',
-    date: 'รอการอัปเดต',
-    time: '-',
+    date: '12 ก.ค. 2026',
+    time: '14:30',
+    status: 'จัดส่งสำเร็จ (Delivered)',
+    desc: 'พัสดุถูกจัดส่งถึงมือผู้รับเรียบร้อยแล้ว ผู้รับ: คุณบัวคำ',
     location: 'เวียงจันทน์',
-    icon: 'fas fa-check-circle',
-    isCompleted: false,
-    isCurrent: false,
+    icon: 'fas fa-check',
+    isCurrent: true, // สถานะล่าสุด
+    isCompleted: true,
   },
   {
     id: 2,
-    title: 'กำลังจัดส่ง (Out for Delivery)',
-    description: 'พนักงานกำลังนำพัสดุไปส่งให้ผู้รับ',
     date: '12 ก.ค. 2026',
     time: '09:00',
+    status: 'กำลังนำจ่าย (Out for Delivery)',
+    desc: 'พนักงานกำลังนำพัสดุไปส่งให้ผู้รับ (พนักงาน: ท้าวคำสิงห์ 020-5xxx-xxxx)',
     location: 'เวียงจันทน์',
     icon: 'fas fa-motorcycle',
-    isCompleted: false,
-    isCurrent: true,
+    isCurrent: false,
+    isCompleted: true,
   },
   {
     id: 3,
-    title: 'ถึงศูนย์คัดแยกสินค้าปลายทาง',
-    description: 'พัสดุเดินทางมาถึงศูนย์กระจายสินค้า เวียงจันทน์',
     date: '11 ก.ค. 2026',
     time: '18:45',
-    location: 'เวียงจันทน์',
-    icon: 'fas fa-building-circle-check',
-    isCompleted: true,
+    status: 'พัสดุถึงศูนย์คัดแยกปลายทาง',
+    desc: 'พัสดุเดินทางมาถึงศูนย์กระจายสินค้า Vientiane SOC',
+    location: 'เวียงจันทน์ (VTE)',
+    icon: 'fas fa-building',
     isCurrent: false,
+    isCompleted: true,
   },
   {
     id: 4,
-    title: 'อยู่ระหว่างการขนส่งข้ามแดน',
-    description: 'พัสดุกำลังเดินทางผ่านด่านพรมแดน ไทย-ลาว',
     date: '10 ก.ค. 2026',
     time: '22:15',
+    status: 'อยู่ระหว่างการขนส่งข้ามแดน',
+    desc: 'พัสดุออกจากศูนย์คัดแยก กำลังเดินทางผ่านด่านพรมแดน ไทย-ลาว',
     location: 'ด่านศุลกากร หนองคาย',
     icon: 'fas fa-truck-fast',
-    isCompleted: true,
     isCurrent: false,
+    isCompleted: true,
   },
   {
     id: 5,
-    title: 'รับพัสดุเข้าระบบ (Item Accepted)',
-    description: 'รับพัสดุเข้าสู่ระบบ THANA LOGISTICS เรียบร้อย',
     date: '10 ก.ค. 2026',
     time: '10:30',
-    location: 'กรุงเทพฯ',
+    status: 'รับพัสดุเข้าระบบ (Item Accepted)',
+    desc: 'พัสดุเข้าสู่ระบบ THANA LOGISTICS สาขาต้นทางเรียบร้อย',
+    location: 'กรุงเทพฯ (BKK)',
     icon: 'fas fa-box',
-    isCompleted: true,
     isCurrent: false,
+    isCompleted: true,
   },
 ];
 
 // ==========================================
-// 2. Component Timeline (เอาไว้ใช้ในไฟล์เดียวกัน จะได้ไม่ Error)
-// ==========================================
-function TrackingTimeline() {
-  return (
-    <div className="w-full mt-6 bg-[#0d1424] rounded-3xl p-6 md:p-8 border border-gray-800 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
-      <h3 className="text-xl font-bold text-white mb-8 border-b border-gray-800 pb-4">
-        <i className="fas fa-route text-blue-500 mr-3"></i>
-        สถานะการจัดส่ง (Tracking History)
-      </h3>
-
-      <div className="relative pl-4 md:pl-0">
-        {mockTimelineEvents.map((event, index) => {
-          const isLast = index === mockTimelineEvents.length - 1;
-          return (
-            <div key={event.id} className="relative flex flex-col md:flex-row mb-8 group">
-              <div className="md:w-32 flex-shrink-0 md:text-right md:pr-8 mb-2 md:mb-0 pt-1">
-                <div className={`text-sm font-bold ${event.isCompleted || event.isCurrent ? 'text-blue-400' : 'text-gray-500'}`}>
-                  {event.date}
-                </div>
-                <div className="text-xs text-gray-500">{event.time}</div>
-              </div>
-
-              <div className="absolute left-[7px] md:left-32 md:ml-[5px] top-2 bottom-[-2rem] flex flex-col items-center">
-                <div className="relative flex items-center justify-center">
-                  {event.isCurrent && (
-                    <div className="absolute w-6 h-6 bg-blue-500 rounded-full animate-ping opacity-40"></div>
-                  )}
-                  <div className={`relative z-10 w-4 h-4 rounded-full border-4 flex items-center justify-center ${event.isCurrent ? 'bg-[#0d1424] border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.8)]' : event.isCompleted ? 'bg-blue-500 border-blue-500' : 'bg-[#0d1424] border-gray-700'}`}></div>
-                </div>
-                {!isLast && (
-                  <div className={`w-0.5 h-full mt-2 ${event.isCompleted ? 'bg-gradient-to-b from-blue-500 to-blue-500/50' : 'bg-gray-800 border-l border-dashed border-gray-700'}`}></div>
-                )}
-              </div>
-
-              <div className="ml-10 md:ml-12 flex-1 pt-0.5">
-                <div className={`text-lg font-bold ${event.isCompleted || event.isCurrent ? 'text-white' : 'text-gray-400'}`}>
-                  {event.title}
-                </div>
-                <div className="text-sm text-gray-400 mt-1 mb-2">
-                  {event.description}
-                </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#15233e] border border-gray-700 text-xs text-gray-300">
-                  <i className={`${event.icon} text-blue-400`}></i>
-                  {event.location}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ==========================================
-// 3. หน้าเว็บหลัก (มี export default ตัวเดียวเท่านั้น!)
+// 2. หน้าเว็บหลัก + Timeline
 // ==========================================
 export default function TrackingPage() {
   const [searchQuery, setSearchQuery] = useState('THN2026THLA001');
@@ -128,8 +73,8 @@ export default function TrackingPage() {
     <div className="min-h-screen bg-[#070b14] p-4 md:p-8 font-prompt flex justify-center">
       <div className="max-w-4xl w-full mt-10">
         
-        {/* ช่องค้นหา */}
-        <div className="bg-[#131b2c] p-2 rounded-full flex items-center shadow-lg border border-gray-800 mb-4">
+        {/* ================= ส่วนที่ 1: ช่องค้นหา ================= */}
+        <div className="bg-[#131b2c] p-2 rounded-full flex items-center shadow-lg border border-gray-800 mb-4 transition-all focus-within:border-blue-500 focus-within:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
           <div className="pl-6 text-gray-400">
             <i className="fas fa-box-open"></i>
           </div>
@@ -137,58 +82,119 @@ export default function TrackingPage() {
             type="text" 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 bg-transparent border-none outline-none text-white px-4 font-bold tracking-wider"
+            className="flex-1 bg-transparent border-none outline-none text-white px-4 font-bold tracking-wider uppercase"
             placeholder="กรอกหมายเลขพัสดุ..."
           />
-          <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-            <i className="fas fa-search mr-2"></i> ตรวจสอบ
+          <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(37,99,235,0.5)] flex items-center gap-2">
+            <i className="fas fa-search"></i> <span className="hidden md:inline">ตรวจสอบ</span>
           </button>
         </div>
         
-        <p className="text-[#00e5ff] text-sm mb-8 pl-4">
-          <i className="fas fa-info-circle mr-2"></i> เลขอ้างอิงทดสอบระบบ: THN2026THLA001
+        <p className="text-[#00e5ff] text-sm mb-8 pl-4 flex items-center gap-2">
+          <i className="fas fa-info-circle"></i> เลขอ้างอิงทดสอบระบบ: {searchQuery}
         </p>
 
-        {/* การ์ดแสดงผลพัสดุ (ส่วนบน) */}
-        <div className="bg-[#0d1424] border-t-4 border-blue-600 border-x border-b border-gray-800 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+        {/* ================= ส่วนที่ 2: การ์ดสรุปข้อมูลพัสดุ ================= */}
+        <div className="bg-[#0d1424] border-t-4 border-blue-600 border-x border-b border-gray-800 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden mb-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
             <div>
-              <p className="text-gray-400 text-sm font-bold tracking-widest mb-1">TRACKING NUMBER</p>
+              <p className="text-gray-400 text-xs font-bold tracking-widest mb-1">TRACKING NUMBER</p>
               <h2 className="text-3xl md:text-4xl font-black text-white tracking-wider">{searchQuery}</h2>
             </div>
-            <div className="mt-4 md:mt-0 px-4 py-2 bg-[#1a2942] rounded-full border border-blue-900 flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
-              <span className="text-blue-400 font-bold text-sm">กำลังขนส่ง</span>
+            <div className="mt-4 md:mt-0 px-4 py-2 bg-[#1a2942] rounded-full border border-blue-900 flex items-center gap-2 shadow-inner">
+              <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(74,222,128,0.8)]"></div>
+              <span className="text-blue-300 font-bold text-sm">จัดส่งสำเร็จ</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-[#131b2c] p-6 rounded-2xl border border-gray-800 flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 text-2xl">
+            <div className="bg-[#131b2c] p-6 rounded-2xl border border-gray-800 flex items-center gap-4 hover:border-gray-700 transition-colors">
+              <div className="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 text-xl">
                 <i className="fas fa-plane-departure"></i>
               </div>
               <div>
-                <p className="text-gray-500 text-sm font-bold mb-1">ต้นทาง (Origin)</p>
-                <h4 className="text-white text-xl font-bold">กรุงเทพฯ</h4>
+                <p className="text-gray-500 text-xs font-bold mb-1">ต้นทาง (Origin)</p>
+                <h4 className="text-white text-lg font-bold">กรุงเทพฯ</h4>
                 <p className="text-gray-400 text-xs mt-1">ผู้ส่ง: คุณสมชาย</p>
               </div>
             </div>
             
-            <div className="bg-[#131b2c] p-6 rounded-2xl border border-gray-800 flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#0a2e2c] rounded-xl flex items-center justify-center text-[#2dd4bf] text-2xl">
+            <div className="bg-[#131b2c] p-6 rounded-2xl border border-gray-800 flex items-center gap-4 hover:border-gray-700 transition-colors">
+              <div className="w-12 h-12 bg-[#0a2e2c] rounded-xl flex items-center justify-center text-[#2dd4bf] text-xl">
                 <i className="fas fa-plane-arrival"></i>
               </div>
               <div>
-                <p className="text-gray-500 text-sm font-bold mb-1">ปลายทาง (Destination)</p>
-                <h4 className="text-white text-xl font-bold">เวียงจันทน์</h4>
+                <p className="text-gray-500 text-xs font-bold mb-1">ปลายทาง (Destination)</p>
+                <h4 className="text-white text-lg font-bold">เวียงจันทน์</h4>
                 <p className="text-gray-400 text-xs mt-1">ผู้รับ: คุณบัวคำ</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* เรียกใช้ Timeline (ส่วนล่าง) */}
-        <TrackingTimeline />
+        {/* ================= ส่วนที่ 3: Timeline สไตล์แอปชั้นนำ ================= */}
+        <div className="bg-[#0d1424] rounded-3xl p-6 md:p-8 border border-gray-800 shadow-[0_0_40px_rgba(0,0,0,0.3)]">
+          <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-500">
+              <i className="fas fa-list-ul"></i>
+            </div>
+            รายละเอียดการจัดส่ง
+          </h3>
+
+          <div className="relative">
+            {/* เส้นแนวตั้งที่เป็นแกนหลักของ Timeline */}
+            <div className="absolute left-[27px] md:left-[147px] top-4 bottom-4 w-0.5 bg-gray-800"></div>
+
+            <div className="space-y-8">
+              {trackingHistory.map((item, index) => {
+                const isLast = index === trackingHistory.length - 1;
+                
+                return (
+                  <div key={item.id} className="relative flex flex-col md:flex-row group">
+                    
+                    {/* [ฝั่งซ้าย] วันที่และเวลา (Desktop จะอยู่ซ้าย, Mobile จะอยู่บน) */}
+                    <div className="md:w-32 flex-shrink-0 md:text-right md:pr-8 mb-2 md:mb-0 pt-0.5 pl-14 md:pl-0">
+                      <div className={`text-sm font-bold ${item.isCurrent ? 'text-blue-400' : 'text-gray-400'}`}>
+                        {item.date}
+                      </div>
+                      <div className="text-xs text-gray-500 font-medium">{item.time}</div>
+                    </div>
+
+                    {/* [ตรงกลาง] ไอคอนสถานะ */}
+                    <div className="absolute left-0 md:left-[120px] top-0 flex items-center justify-center w-14 md:w-14 h-full pointer-events-none">
+                      <div className={`
+                        relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-sm transition-all duration-300
+                        ${item.isCurrent 
+                          ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.6)] ring-4 ring-[#0d1424]' 
+                          : 'bg-[#1a2942] text-gray-400 border border-gray-700 group-hover:bg-[#203354] ring-4 ring-[#0d1424]'
+                        }
+                      `}>
+                        <i className={item.icon}></i>
+                      </div>
+                    </div>
+
+                    {/* [ฝั่งขวา] รายละเอียดสถานะ */}
+                    <div className="ml-14 md:ml-12 flex-1 bg-[#131b2c] p-4 rounded-2xl border border-gray-800/50 hover:border-gray-700 transition-colors">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1">
+                        <h4 className={`text-base font-bold ${item.isCurrent ? 'text-white' : 'text-gray-300'}`}>
+                          {item.status}
+                        </h4>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0a1120] border border-gray-800 text-[11px] text-gray-400 w-fit">
+                          <i className="fas fa-location-dot text-blue-500/70"></i>
+                          {item.location}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
