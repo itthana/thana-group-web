@@ -19,8 +19,8 @@ const salesZones = [
     description: 'ศูนย์กลางโลจิสติกส์เชื่อมต่อภาคอีสานตอนล่างและลาวใต้',
     members: [
       { id: 1, name: 'คุณเสาวลักษ์ บัวงาม', role: 'หัวหน้าฝ่ายขาย (Zone Manager)', tel: '0812345670', lineId: 'somchai.thana', email: 'somchai@thanagroup.com', image: 'แอมมี่.png' }, // แอมมี่ (ใส่รูปจำลองไว้ให้ก่อนเพื่อไม่ให้พัง สามารถเปลี่ยน url รูปจริงได้ตรงนี้)
-      { id: 2, name: 'คุณณัฐฐา จรรยากรณณ์', role: 'ฝ่ายขาย Telesales', tel: '0812345671', lineId: 'wipawee.sales', email: 'wipawee@thanagroup.com', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop' },
-      { id: 3, name: 'คุณอุไรรักษ์ ปะพรม', role: 'เจ้าหน้าที่การขาย', tel: '0812345672', lineId: 'natthapon.t', email: 'natthapon@thanagroup.com', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop' },
+      { id: 2, name: 'คุณณัฐฐา จรรยากรณณ์', role: 'ฝ่ายขาย Telesales', tel: '0812345671', lineId: 'wipawee.sales', email: 'wipawee@thanagroup.com', image: 'แอม.png' },
+      { id: 3, name: 'คุณอุไรรักษ์ ปะพรม', role: 'เจ้าหน้าที่การขาย', tel: '0812345672', lineId: 'natthapon.t', email: 'natthapon@thanagroup.com', image: 'ตู่.png' },
       { id: 4, name: 'คุณสุวิมล  แต้มทา', role: 'เจ้าหน้าที่การขาย', tel: '0812345673', lineId: 'pornpan.sale', email: 'pornpan@thanagroup.com', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop' },
       { id: 5, name: 'คุณสายพลอย  แก้วพรไช', role: 'เจ้าหน้าที่บริการแอดมิน', tel: '0812345674', lineId: 'anon.cs', email: 'anon@thanagroup.com', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop' },
     ]
