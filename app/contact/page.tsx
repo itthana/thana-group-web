@@ -17,13 +17,13 @@ export default function ContactHubPage() {
 
   // 🌐 รายการช่องทางการติดต่อออนไลน์
   const onlineChannels = [
-    { name: 'Facebook', icon: 'fab fa-facebook-f', color: 'bg-[#1877F2]', shadow: 'hover:shadow-[#1877F2]/40', link: '#' },
-    { name: 'LINE Official', icon: 'fab fa-line', color: 'bg-[#00C300]', shadow: 'hover:shadow-[#00C300]/40', link: '#' },
+    { name: 'Facebook', icon: 'fab fa-facebook-f', color: 'bg-[#1877F2]', shadow: 'hover:shadow-[#1877F2]/40', link: 'https://web.facebook.com/ThanaLogistics?locale=th_TH' },
+    { name: 'LINE Official', icon: 'fab fa-line', color: 'bg-[#00C300]', shadow: 'hover:shadow-[#00C300]/40', link: 'thana_logistics' },
     { name: 'WhatsApp', icon: 'fab fa-whatsapp', color: 'bg-[#25D366]', shadow: 'hover:shadow-[#25D366]/40', link: '#' },
     { name: 'Telegram', icon: 'fab fa-telegram', color: 'bg-[#229ED9]', shadow: 'hover:shadow-[#229ED9]/40', link: '#' },
-    { name: 'TikTok', icon: 'fab fa-tiktok', color: 'bg-black', shadow: 'hover:shadow-black/40', link: '#' },
-    { name: 'YouTube', icon: 'fab fa-youtube', color: 'bg-[#FF0000]', shadow: 'hover:shadow-[#FF0000]/40', link: '#' },
-    { name: 'อีเมล', icon: 'fas fa-envelope', color: 'bg-slate-600', shadow: 'hover:shadow-slate-600/40', link: 'mailto:contact@thanagroup.com' },
+    { name: 'TikTok', icon: 'fab fa-tiktok', color: 'bg-black', shadow: 'hover:shadow-black/40', link: 'https://www.tiktok.com/@thana_logistics?fbclid=IwY2xjawTB2KFleHRuA2FlbQIxMABicmlkETFUeTlQU2VuVGtlMkpZejJrc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHoiNxQ58MyXxv3-xSBqyrJ2m6TqKcXwyoRWvZ6aO9IJlsJ_a-k9gkDA2OeyQ_aem_qqbhgl8d1_cFDx3raRohyQ' },
+    { name: 'YouTube', icon: 'fab fa-youtube', color: 'bg-[#FF0000]', shadow: 'hover:shadow-[#FF0000]/40', link: 'https://www.youtube.com/watch?v=2JWYvjnALnE' },
+    { name: 'อีเมล', icon: 'fas fa-envelope', color: 'bg-slate-600', shadow: 'hover:shadow-slate-600/40', link: 'thana.logistics6688.com' },
     { name: 'โทรศัพท์', icon: 'fas fa-phone', color: 'bg-blue-600', shadow: 'hover:shadow-blue-600/40', link: 'tel:0930237931' },
   ];
 
