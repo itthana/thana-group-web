@@ -129,7 +129,7 @@ export default function DepartmentsPage() {
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
               <div className="h-48 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/90 to-transparent z-10"></div>
-                <img src="จัดซื้อ.JPG" alt="Purchasing" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src="จัดซื้อ1.JPG" alt="Purchasing" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute bottom-4 left-6 z-20 flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff0000] rounded-lg flex items-center justify-center text-white"><i className="fas fa-cart-shopping"></i></div>
                   <h4 className="text-white font-black text-lg">ฝ่ายจัดซื้อ</h4>
