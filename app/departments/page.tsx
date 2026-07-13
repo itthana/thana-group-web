@@ -64,7 +64,7 @@ export default function DepartmentsPage() {
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
               <div className="h-48 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/90 to-transparent z-10"></div>
-                <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=800&auto=format&fit=crop" alt="Operations" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src="ขนส่ง.JPG" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute bottom-4 left-6 z-20 flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff0000] rounded-lg flex items-center justify-center text-white"><i className="fas fa-truck-fast"></i></div>
                   <h4 className="text-white font-black text-lg">ฝ่ายปฏิบัติการขนส่ง</h4>
@@ -77,7 +77,7 @@ export default function DepartmentsPage() {
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
               <div className="h-48 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/90 to-transparent z-10"></div>
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop" alt="CS" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src="ฝ่ายบริการ.JPG" alt="CS" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute bottom-4 left-6 z-20 flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff0000] rounded-lg flex items-center justify-center text-white"><i className="fas fa-headset"></i></div>
                   <h4 className="text-white font-black text-lg">ฝ่ายบริการลูกค้า</h4>
@@ -103,7 +103,7 @@ export default function DepartmentsPage() {
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
               <div className="h-48 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/90 to-transparent z-10"></div>
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="HR" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src="ฝ่ายบุคคล.JPG" alt="HR" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute bottom-4 left-6 z-20 flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff0000] rounded-lg flex items-center justify-center text-white"><i className="fas fa-users"></i></div>
                   <h4 className="text-white font-black text-lg">ฝ่ายทรัพยากรบุคคล</h4>
@@ -116,7 +116,7 @@ export default function DepartmentsPage() {
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
               <div className="h-48 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/90 to-transparent z-10"></div>
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" alt="IT" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src="ฝ่ายไอที.JPG" alt="IT" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute bottom-4 left-6 z-20 flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff0000] rounded-lg flex items-center justify-center text-white"><i className="fas fa-laptop-code"></i></div>
                   <h4 className="text-white font-black text-lg">ฝ่ายเทคโนโลยีสารสนเทศ</h4>
@@ -129,7 +129,7 @@ export default function DepartmentsPage() {
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
               <div className="h-48 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/90 to-transparent z-10"></div>
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop" alt="Purchasing" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src="ฝ่ายจัดซื้อ.JPG" alt="Purchasing" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute bottom-4 left-6 z-20 flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff0000] rounded-lg flex items-center justify-center text-white"><i className="fas fa-cart-shopping"></i></div>
                   <h4 className="text-white font-black text-lg">ฝ่ายจัดซื้อ</h4>
